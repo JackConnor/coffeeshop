@@ -1,0 +1,31 @@
+
+<ion-view>
+  <ion-content>
+    <div class="vendorDashboardContainer">
+      <div class="vendorHeader">
+        <h2>Incoming Orders</h2>
+      </div>
+      <div class="vendorOrderList">
+        <div class='orderCell' ng-repeat='order in allOrders'>
+          <div class="col-sm-6 col-xs-12 orderSection">
+            <div class="col-xs-4 orderSection">
+              <i class="fa fa-coffee sizeIcon"></i><span class='coffeeSize'>{{getSize(order)}}</span>
+            </div>
+            <div class="nameItem col-xs-5 orderSection">
+              <div class="orderItemName">
+                <h4>{{order.title}}</h4>
+              </div>
+              <div class="orderItemPerson">
+                {{order.name}}
+              </div>
+              <div class="upLine"></div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xs-12 orderSection">
+            <span class='orderShots'>Espresso Shots: {{order.shots}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
