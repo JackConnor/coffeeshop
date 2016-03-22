@@ -20,6 +20,10 @@ mongoose.connect( DB )
 //===========================
 var User = require( './models/userModel.js' )
 
+
+
+var Item = require( './models/itemModel.js' )
+
 //MIDDLEWARE
 //===========================
 app.use( cors() )
@@ -31,6 +35,9 @@ app.use( morgan( 'dev' ) )
 var apiRoutes = require( './routes/routes.js' )
 
 app.use( '', apiRoutes )
+app.use( '*', function( req, res ) {
+	res.json( 'No Endpoint found' )
+} )
 
 //SERVER
 //===========================
