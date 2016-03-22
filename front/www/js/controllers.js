@@ -22,6 +22,7 @@ angular.module('starter.controllers', [])
   $scope.optionsModal = false;
   $scope.moreOptions  = false;
   $scope.totalShots   = 0;
+  $scope.currentOrder = [];
 
   $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
 
@@ -58,30 +59,88 @@ angular.module('starter.controllers', [])
   $scope.subtractShot = subtractShot;
 
   function choseSize(evt){
+    $('.sizeSmall').removeClass('selected');
+    $('.sizeSmall').css({
+      backgroundColor: 'white'
+    })
+    $('.sizeMedium').removeClass('selected');
+    $('.sizeMedium').css({
+      backgroundColor: 'white'
+    })
+    $('.sizeLarge').removeClass('selected');
+    $('.sizeLarge').css({
+      backgroundColor: 'white'
+    })
     if($(evt.currentTarget).hasClass('sizeSmall')){
-      console.log('small');
-      $(evt.currentTarget).css({
-        backgroundColor: 'gray'
-      })
+      if($(evt.currentTarget).hasClass('selected')){
+        $(evt.currentTarget).css({
+          backgroundColor: 'white'
+        })
+        $(evt.currentTarget).removeClass('selected')
+      }
+      else {
+        console.log('med');
+        $(evt.currentTarget).css({
+          backgroundColor: 'gray'
+        })
+        $(evt.currentTarget).addClass('selected')
+      }
     }
     else if($(evt.currentTarget).hasClass('sizeMedium')){
-      console.log('med');
-      $(evt.currentTarget).css({
-        backgroundColor: 'gray'
-      })
+      if($(evt.currentTarget).hasClass('selected')){
+        $(evt.currentTarget).css({
+          backgroundColor: 'white'
+        })
+        $(evt.currentTarget).removeClass('selected')
+      }
+      else {
+        console.log('med');
+        $(evt.currentTarget).css({
+          backgroundColor: 'gray'
+        })
+        $(evt.currentTarget).addClass('selected')
+      }
     }
     else if($(evt.currentTarget).hasClass('sizeLarge')){
-      console.log('large');
-      $(evt.currentTarget).css({
-        backgroundColor: 'gray'
-      })
+      if($(evt.currentTarget).hasClass('selected')){
+        $(evt.currentTarget).css({
+          backgroundColor: 'white'
+        })
+        $(evt.currentTarget).removeClass('selected')
+      }
+      else {
+        console.log('med');
+        $(evt.currentTarget).css({
+          backgroundColor: 'gray'
+        })
+        $(evt.currentTarget).addClass('selected')
+      }
     }
   }
   $scope.choseSize = choseSize;
 
   function submitDrinkOptions() {
-
+    var drinkDetails = {size: '', flavours: '', toppings: '', shots: 0}
+    var sizeEl = $('.selected');
+    if(sizeEl.hasClass('sizeSmall')){
+      drinkDetails.size = 'small';
+    }
+    else if(sizeEl.hasClass('sizeMedium')){
+      drinkDetails.size = 'medium';
+    }
+    else if(sizeEl.hasClass('sizeLarge')){
+      drinkDetails.size = 'large';
+    }
+    drinkDetails.flavours = $('.flavourDropdown').val();
+    drinkDetails.toppings = $('.toppingDropdown').val();
+    drinkDetails.shots = $scope.totalShots;
+    console.log(drinkDetails);
+    $scope.optionsModal = false;
+    $scope.moreOptions  = false;
+    $scope.totalShots   = 0;
+    $scope.currentOrder.push(drinkDetails)
   }
+  $scope.submitDrinkOptions = submitDrinkOptions;
 
 
 
