@@ -35,6 +35,9 @@ app.use( morgan( 'dev' ) )
 var apiRoutes = require( './routes/routes.js' )
 
 app.use( '', apiRoutes )
+app.use( '*', function( req, res ) {
+	res.json( 'No Endpoint found' )
+} )
 
 //SERVER
 //===========================

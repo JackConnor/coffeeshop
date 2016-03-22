@@ -2,16 +2,16 @@
 //===========================
 var noAuth   = require( 'express' ).Router()
 var Auth     = require( 'express' ).Router()
-var userCtrl = require( '../controllers/itemController.js' )
+var itemCtrl = require( '../controllers/itemController.js' )
 
 Auth.route( '' )
-		.get( userCtrl.index )
-		.post( userCtrl.create )
+		.get( itemCtrl.index )
+		.post( itemCtrl.create )
 
 Auth.route( '/one' )
-	.get( userCtrl.show )
-	.put( userCtrl.update )
-	.delete( userCtrl.destroy )
+	.post( itemCtrl.show )
+	.put( itemCtrl.update )
+	.delete( itemCtrl.destroy )
 
 
 

@@ -20,12 +20,10 @@ function create( req, res ) {
 	var item = req.body.item
 	var promise = Item.create( item )
 			promise.then( function( data ) {
-				var token = auth( item )
 				res.json( {
 					error: null,
 					status: 200,
 					message: 'Here is the item you created!',
-					token : token,
 					data: data
 				} )
 			} )
@@ -50,13 +48,13 @@ function index( req, res ) {
 }
 
 function show( req, res ) {
-	var itemId = req.body.item.id
+	var itemId = req.body.item.id || req.headers[ 'item' ].id
 	var promise = Item.findById( itemId ).exec()
 	promise.then( function( data ) {
 		res.json( {
 					error: null,
 					status: 200,
-					message: 'Here is the user you wanted!',
+					message: 'Here is the item you wanted!',
 					data: data
 				} )
 	} )
@@ -67,12 +65,12 @@ function show( req, res ) {
 
 function update( req, res ) {
 	var item = req.body.item
-	var promise = Item.findByIdAndUpdate( item.id, item ).exec()
+	var promise = Item.findByIdAndUpdate( item.id, item, { new: true } ).exec()
 	promise.then( function( data ) {
 		res.json( {
 					error: null,
 					status: 200,
-					message: 'Here is the user you updated!',
+					message: 'Here is the item you updated!',
 					data: data
 				} )
 	} )
@@ -83,12 +81,12 @@ function update( req, res ) {
 
 function destroy( req, res ) {
 	var id = req.body.item.id
-	var promise = User.findByIdAndRemove( id ).exec()
+	var promise = Item.findByIdAndRemove( id ).exec()
 	promise.then( function( data ) {
 		res.json( {
 					error: null,
 					status: 200,
-					message: 'Successfully Deleted User!',
+					message: 'Successfully Deleted Item!',
 					data: data
 				} )
 	} )

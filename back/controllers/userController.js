@@ -70,7 +70,7 @@ function show( req, res ) {
 function update( req, res ) {
 	var user = req.body.user
 	var id   = req.decoded.id
-	var promise = User.findByIdAndUpdate( id, user ).exec()
+	var promise = User.findByIdAndUpdate( id, user, { new: true } ).exec()
 	promise.then( function( data ) {
 		res.json( {
 					error: null,
