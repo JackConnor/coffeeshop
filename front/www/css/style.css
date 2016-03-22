@@ -32,6 +32,14 @@
   font-size: 22px;
 }
 
+.coffeeSize {
+  color: white;
+  font-size: 35px;
+  margin-left: -61px;
+  position: absolute;
+  padding-top: 18px
+}
+
 .drinkCell{
   height: 70px;
   padding: 10px 0;
@@ -114,6 +122,10 @@
   border: 2px solid orange;
 }
 
+.noPadding {
+  padding: 0px;
+}
+
 .openMore {
   height: 50px;
   outline: 2px solid gray;
@@ -140,6 +152,19 @@
   background-color: white;
   position: fixed;
   z-index: 6;
+}
+
+.orderCell {
+  height: 80px;
+  width: 100%;
+  border-bottom: 2px dashed gray;
+}
+
+.orderSection
+
+.orderShots {
+  border-right: 2px dashed gray;
+  height: 100%;
 }
 
 .removeItemIcon {
@@ -177,6 +202,10 @@
   height: 75px;
 }
 
+.sizeIcon {
+  font-size: 75px;
+}
+
 .submitButton {
   height: 80%;
   margin-top 10%;
@@ -185,4 +214,20 @@
 
 .submitButtonContainer {
   height: 50px;
+}
+
+.vendorHeader {
+  height: 55px;
+  background-color: blue;
+  text-align: center;
+}
+
+.vendorHeader h2 {
+  color: white;
+  font-size: 28px;
+  padding-top: 10px;
+}
+
+.vendorOrderList {
+  height: auto;
 }
