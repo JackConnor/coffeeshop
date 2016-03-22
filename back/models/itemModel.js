@@ -6,6 +6,7 @@ var Item
 Item = new mongoose.Schema( {
 	name : { type: String, unique: false },
 	type : { type: String },
+  quantity: { type: Number, default: 0 },
 	price: { type: Number },
 	description: { type: String }
 } )
