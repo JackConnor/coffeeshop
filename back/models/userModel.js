@@ -23,6 +23,7 @@ User.pre( 'save', function( next ) {
 	var user = this
 	if ( user.isModified( 'password' ) ) {
 		user.genHash( user.password, next )
+    next()
 	} else {
 		next()
 	}

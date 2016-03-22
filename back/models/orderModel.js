@@ -21,6 +21,7 @@ Order.pre( 'save', function( next ) {
     order.items = order.items.map(function(item){
       return item._id
     })
+    next()
   } else {
     next()
   }

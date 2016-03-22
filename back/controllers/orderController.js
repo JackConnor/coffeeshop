@@ -48,13 +48,20 @@ function create( req, res ) {
 		// io.emit( 'new order', data )
 		// console.log( mainSocket )
 		// mainSocket.emit( 'new order', data )
-    mongoose.model( 'User' ).findByIdAndUpdate( req.decoded.id, {currentOrder: data._id }).exec()
-		res.json( {
-          error: null,
-          status: 200,
-          message: 'Order has been placed!',
-          data: data
-        } )
+      mongoose.model( 'User' ).findOne( { _id: req.decoded.id }).exec(function(err, user){
+        user.currentOrder = data._id
+        user.orderHistory.push( user.currentOrder )
+        if(user.orderHistory.length % 10 != 0) {
+          user.rewards++
+        }
+        user.save()
+        res.json( {
+              error: null,
+              status: 200,
+              message: 'Order has been placed!',
+              data: data
+            } )
+          } )
       } )
       .catch( function( err ) {
         sendErr(err, res)
