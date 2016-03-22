@@ -1,7 +1,17 @@
 /* Empty. Add your own CSS if you like */
+
+.closeOptions {
+  position: absolute;
+  height: 15px;
+  font-size: 20px;
+  text-align: right;
+}
+
 .drinkCell {
   height: 200px;
   outline: 2px solid black;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .drinkPhotoHolder {
@@ -12,4 +22,47 @@
 .drinkPhoto {
   height: 200px;
   position: absolute;
+}
+
+.drinkRepeatContainer {
+  height: auto;
+  padding: 0px;
+}
+
+.moreOptionsContainer {
+  height: 200px;
+  background-color: yellow;
+}
+
+.openMore {
+  height: 50px;
+  outline: 2px solid gray;
+  text-align: center;
+  font-size: 23px;
+  color: gray;
+  padding-top: 10px;
+}
+
+.optionsModal {
+  height: auto;
+  width: 100%;
+  margin-top: 50px;
+  border: 2px solid black;
+  background-color: white;
+  position: fixed;
+  z-index: 2;
+}
+
+.sizeCell {
+  border: 2px solid blue;
+  height: 100%;
+  text-align: center;
+  font-size: 19px;
+  padding: 0px;
+  padding-top: 15px;
+
+}
+
+.sizeContainer {
+  height: 75px;
 }

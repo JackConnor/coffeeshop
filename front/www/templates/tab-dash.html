@@ -1,10 +1,38 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
     <h2>menu</h2>
-    <div class="drinkRepeatContainer">
-      <div class="drinkCell col-xs-12" ng-repeat='menuitem in data'>
+    <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
+    <div class="drinkRepeatContainer col-xs-12">
+      <div class="optionsModal" ng-if='optionsModal'>
+        <div class="optionsHeader">
+          <div class="col-xs-8">
+            Choose Your Size
+          </div>
+          <div class="col-xs-4">
+            <p class='fa fa-times'></p>
+          </div>
+        </div>
+        <div class="sizeContainer col-xs-12">
+          <div class="sizeCell sizeSmall col-xs-4">
+            Small
+          </div>
+          <div class="sizeCell sizeMedium col-xs-4">
+            Medium
+          </div>
+          <div class="sizeCell sizeLarge col-xs-4">
+            Large
+          </div>
+        </div>
+        <div class="moreOptionsContainer col-xs-12" ng-if='moreOptions'>
+
+        </div>
+        <div class="col-xs-12 openMore" ng-click='openMoreOptions()'>
+          More Drink Options
+        </div>
+      </div>
+      <div class="col-xs-12 drinkCell" ng-repeat='menuitem in data'>
         <div class="drinkPhotoHolder">
-          <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" />
+          <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" ng-click='openOptionsModal()'/>
         </div>
         {{menuitem.price}}
       </div>

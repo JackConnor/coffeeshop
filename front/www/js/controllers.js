@@ -18,11 +18,32 @@ angular.module('starter.controllers', [])
 })
 
 .controller('clientCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-  console.log('yooooo');
+  // $scope.chat = Chats.get($stateParams.chatId);
+  $scope.optionsModal = false;
+  $scope.moreOptions  = false;
+
+  $scope.data = [{id: 1, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}, {id: 2, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}, {id: 3, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}];
+
+  function openOptionsModal(){
+    $scope.optionsModal = true;
+  }
+  $scope.openOptionsModal = openOptionsModal;
+
+  function openMoreOptions(){
+    if(!$scope.moreOptions){
+      $scope.moreOptions = true;
+    }
+    else {
+      $scope.moreOptions = false;
+    }
+  }
+  $scope.openMoreOptions = openMoreOptions;
 
 
-  $scope.data = [{id: 1, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}, {id: 2, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}, {id: 3, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}]
+//////end client side controller
+  function expandModal(){
+    // $('.optionsModal').height(450px)
+  }
 })
 
 .controller('AccountCtrl', function($scope) {
