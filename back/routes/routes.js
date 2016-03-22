@@ -10,12 +10,12 @@ var itemRoutes = require( './itemRoutes.js' )
 
 Router.use( '/users', userRoutes.noAuth )
 Router.use( '/items', itemRoutes )
+Router.use( '/orders', orderRoutes )
 Router.route( '/authenticate' ).post( authCtrl.authenticate )
 
 Router.use( authCtrl.isAuthentic )
 
 Router.use( '/users', userRoutes.auth )
-Router.use( '/orders', orderRoutes.auth )
 
 
 module.exports = Router

@@ -3,8 +3,16 @@
 var auth   = require( 'express' ).Router()
 var orderCtrl = require( '../controllers/orderController.js' )
 
-auth.route('').post( orderCtrl.create )
+auth.route('')
+    .get( orderCtrl.index )
+    .post( orderCtrl.create )
 
-module.exports = {
-  auth : auth
-}
+auth.route('/one')
+    .post( orderCtrl.show )
+    .put( orderCtrl.update )
+    .delete( orderCtrl.destroy )
+
+module.exports = auth
+// {
+//   auth : auth
+// }
