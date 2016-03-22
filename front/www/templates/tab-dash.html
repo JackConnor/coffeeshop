@@ -24,7 +24,52 @@
           </div>
         </div>
         <div class="moreOptionsContainer col-xs-12" ng-if='moreOptions'>
-
+          <div class="optionCell">
+            <div class="optionEspressoShot ">
+              <div class="col-xs-6">
+                Espresso Shot
+              </div>
+              <div class="col-xs-6 espressoMath">
+                <span class='fa fa-minus' ng-click='subtractShot()'></span><span>{{totalShots}}</span><span class='fa fa-plus' ng-click='addShot()'></span>
+              </div>
+            </div>
+          </div>
+          <div class="optionCell">
+            <div class="optionFlavor">
+              <div class="col-xs-6">
+                Add a Flavour
+              </div>
+              <div class="col-xs-6">
+                <select class="flavourDropdown" name="">
+                  <option value="almond">Almond</option>
+                  <option value="chocolate">Chocolate</option>
+                  <option value="caramel">Caramel</option>
+                  <option value="pumpkin_spice">Pumpkin Spice</option>
+                  <option value="white_chocolate">White Chocolate</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="optionCell">
+            <div class="optionTopping ">
+              <div class="col-xs-6">
+                Add a Topping
+              </div>
+              <div class="col-xs-6">
+                <select class="toppingDropdown" name="">
+                  <option value="almond">Almond</option>
+                  <option value="chocolate">Chocolate</option>
+                  <option value="caramel">Caramel</option>
+                  <option value="white_chocolate">White Chocolate</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="submitButtonContainer col-xs-12">
+          <div class="submitButton col-xs-4 col-xs-offset-8">
+            Submit
+          </div>
         </div>
         <div class="col-xs-12 openMore" ng-click='openMoreOptions()'>
           More Drink Options

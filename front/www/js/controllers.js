@@ -21,6 +21,7 @@ angular.module('starter.controllers', [])
   // $scope.chat = Chats.get($stateParams.chatId);
   $scope.optionsModal = false;
   $scope.moreOptions  = false;
+  $scope.totalShots   = 0;
 
   $scope.data = [{id: 1, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}, {id: 2, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}, {id: 3, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}];
 
@@ -42,14 +43,22 @@ angular.module('starter.controllers', [])
   function closeModal(){
     $scope.optionsModal = false;
     $scope.moreOptions  = false;
+    $scope.totalShots   = 0;
   }
   $scope.closeModal = closeModal;
 
+  function addShot(){
+    $scope.totalShots++;
+  }
+  $scope.addShot = addShot;
+
+  function subtractShot(){
+    $scope.totalShots--;
+  }
+  $scope.subtractShot = subtractShot;
+
 
 //////end client side controller
-  function expandModal(){
-    // $('.optionsModal').height(450px)
-  }
 })
 
 .controller('AccountCtrl', function($scope) {
