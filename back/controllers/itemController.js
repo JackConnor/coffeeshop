@@ -1,8 +1,7 @@
 //DECLARING VARIABLES
 //===========================
 var mongoose       = require( 'mongoose' )
-var User           = mongoose.model( 'User' )
-var auth           = require( './authController.js' ).signJwt
+var Item           = mongoose.model( 'Item' )
 
 //FUNCTIONS
 //===========================
@@ -18,16 +17,13 @@ function sendErr( err, res ) {
 //CRUD
 //===========================
 function create( req, res ) {
-	console.log('WE got it!', req.body )
-	var user = req.body.user
-	var promise = User.create( user )
+	var item = req.body.item
+	var promise = Item.create( item )
 			promise.then( function( data ) {
-				var token = auth( user )
 				res.json( {
 					error: null,
 					status: 200,
-					message: 'Here is the user you created!',
-					token : token,
+					message: 'Here is the item you created!',
 					data: data
 				} )
 			} )
@@ -37,12 +33,12 @@ function create( req, res ) {
 }
 
 function index( req, res ) {
-	var promise = User.find().exec()
+	var promise = Item.find().exec()
 	promise.then( function( data ) {
 		res.json( {
 			error: null,
 			status: 200,
-			message: 'Here are all the users you wanted',
+			message: 'Here are all the items you wanted',
 			data: data
 		} )
 	} )
@@ -52,13 +48,13 @@ function index( req, res ) {
 }
 
 function show( req, res ) {
-	var userId = req.decoded.id
-	var promise = User.findById( userId ).exec()
+	var itemId = req.body.item.id || req.headers[ 'item' ].id
+	var promise = Item.findById( itemId ).exec()
 	promise.then( function( data ) {
 		res.json( {
 					error: null,
 					status: 200,
-					message: 'Here is the user you wanted!',
+					message: 'Here is the item you wanted!',
 					data: data
 				} )
 	} )
@@ -68,14 +64,13 @@ function show( req, res ) {
 }
 
 function update( req, res ) {
-	var user = req.body.user
-	var id   = req.decoded.id
-	var promise = User.findByIdAndUpdate( id, user, { new: true } ).exec()
+	var item = req.body.item
+	var promise = Item.findByIdAndUpdate( item.id, item, { new: true } ).exec()
 	promise.then( function( data ) {
 		res.json( {
 					error: null,
 					status: 200,
-					message: 'Here is the user you updated!',
+					message: 'Here is the item you updated!',
 					data: data
 				} )
 	} )
@@ -85,13 +80,13 @@ function update( req, res ) {
 }
 
 function destroy( req, res ) {
-	var id = req.decoded.id
-	var promise = User.findByIdAndRemove( id ).exec()
+	var id = req.body.item.id
+	var promise = Item.findByIdAndRemove( id ).exec()
 	promise.then( function( data ) {
 		res.json( {
 					error: null,
 					status: 200,
-					message: 'Successfully Deleted User!',
+					message: 'Successfully Deleted Item!',
 					data: data
 				} )
 	} )
