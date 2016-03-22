@@ -39,6 +39,12 @@ angular.module('starter.controllers', [])
   }
   $scope.openMoreOptions = openMoreOptions;
 
+  function closeModal(){
+    $scope.optionsModal = false;
+    $scope.moreOptions  = false;
+  }
+  $scope.closeModal = closeModal;
+
 
 //////end client side controller
   function expandModal(){
