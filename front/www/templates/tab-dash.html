@@ -1,8 +1,35 @@
 <ion-view view-title="Dashboard">
-  <ion-content class="padding">
-    <h2>menu</h2>
-    <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
+  <ion-content>
+    <div class='col-xs-8'>
+      <h2>menu</h2>
+    </div>
+    <div class='col-xs-4 cartIcon'>
+      <i class='fa fa-shopping-cart' ng-click='openCart()'></i>
+    </div>
+    <!-- /////////shopping cart modal -->
+    <div class="shoppingCartModal" ng-if='cartModal'>
+      <div class="exitCart col-xs-3" ng-click='closeCart()'>
+        Back
+      </div>
+      <h2>Your Cart</h2>
+      <div class="shoppingCartList">
+        <div class="shoppingCartCell" ng-repeat='item in currentOrder'>
+          <div class="cartPhotoHolder col-xs-2">
+            <img src="{{item.photo}}" alt="" />
+          </div>
+          <div class='cartContent col-xs-4'>
+            {{item.title}}
+          </div>
+          <div class="cartPrice col-xs-6">
+            <span class='fa fa-pencil-square-o editIcon'></span>
+            <span class='fa fa-times removeItemIcon'></span>
+            <span>{{item.price | currency}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="drinkRepeatContainer col-xs-12">
+      <!-- //////begin  options modal -->
       <div class="optionsModal" ng-if='optionsModal'>
         <div class="optionsHeader">
           <div class="col-xs-8">
@@ -77,7 +104,7 @@
       </div>
       <div class="col-xs-12 drinkCell" ng-repeat='menuitem in data'>
         <div class="drinkPhotoHolder">
-          <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" ng-click='openOptionsModal()'/>
+          <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" ng-click='openOptionsModal(menuitem)'/>
         </div>
         <div class="drinkInfo">
           <div class="drinkInfo-name">{{menuitem.name}}</div>

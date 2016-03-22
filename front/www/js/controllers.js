@@ -21,12 +21,15 @@ angular.module('starter.controllers', [])
   // $scope.chat = Chats.get($stateParams.chatId);
   $scope.optionsModal = false;
   $scope.moreOptions  = false;
+  $scope.cartModal    = false;
   $scope.totalShots   = 0;
+  $scope.currentDrink = {}
   $scope.currentOrder = [];
 
   $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
 
-  function openOptionsModal(){
+  function openOptionsModal(currentDrink){
+    $scope.currentDrink = currentDrink;
     $scope.optionsModal = true;
   }
   $scope.openOptionsModal = openOptionsModal;
@@ -134,7 +137,11 @@ angular.module('starter.controllers', [])
     drinkDetails.flavours = $('.flavourDropdown').val();
     drinkDetails.toppings = $('.toppingDropdown').val();
     drinkDetails.shots = $scope.totalShots;
+    drinkDetails.photo = $scope.currentDrink.photourl;
+    drinkDetails.price = $scope.currentDrink.price;
+    drinkDetails.title = $scope.currentDrink.name;
     console.log(drinkDetails);
+    ///////put all settings back to zero
     $scope.optionsModal = false;
     $scope.moreOptions  = false;
     $scope.totalShots   = 0;
@@ -142,7 +149,28 @@ angular.module('starter.controllers', [])
   }
   $scope.submitDrinkOptions = submitDrinkOptions;
 
+  //////function to open shopping cart
+  function openCart(){
+    console.log('ipeing');
+    $scope.cartModal = true;
+    setTimeout(function(){
+      $('.shoppingCartModal').animate({
+        marginLeft: '0px'
+      }, 300);
+    }, 5);
+  }
+  $scope.openCart = openCart;
 
+  function closeCart(){
+    console.log('clising');
+    $('.shoppingCartModal').animate({
+      marginLeft: '110%'
+    }, 300);
+    setTimeout(function(){
+      $scope.cartModal = false;
+    }, 300);
+  }
+  $scope.closeCart = closeCart;
 
 
 //////end client side controller

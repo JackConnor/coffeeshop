@@ -3,6 +3,29 @@
 var mongoose       = require( 'mongoose' )
 var Order          = mongoose.model( 'Order' )
 
+
+var app   = require( 'express' )()
+var server = require( 'http' ).Server( app )
+var io = require( 'socket.io' )( server )
+// var nsp = io.of( '/' )
+var mainSocket
+io.on( 'connection', function( socket ) {
+	mainSocket = socket
+	socket.on( 'test', function( data ) {
+		console.log( 'Test!' )
+	} )
+
+	socket.on( 'new order', function( data ) {
+		console.log( 'NNNNNNNNNNNNNNNNN', data )
+	} )
+
+} )
+
+// io.on( 'new order', function( data ) {
+// 		console.log( 'NNNNNNNNNNNNNNNNN', data )
+// 	} )
+
+// var socket             = require( '../socket.js' ).socket
 //FUNCTIONS
 //===========================
 function sendErr( err, res ) {
@@ -18,9 +41,14 @@ function sendErr( err, res ) {
 //===========================
 function create( req, res ) {
   var order = req.body.order
+  order.uId = req.decoded.id
   var promise = Order.create( order )
       promise.then( function( data ) {
-        res.json( {
+        // SOCKET!!!
+		io.emit( 'new order', data )
+		console.log( mainSocket )
+		mainSocket.emit( 'new order', data )
+		res.json( {
           error: null,
           status: 200,
           message: 'Order has been placed!',
@@ -33,7 +61,7 @@ function create( req, res ) {
 }
 
 function index( req, res ) {
-  var promise = Order.find().exec()
+  var promise = Order.find( { completed: false } ).exec()
   promise.then( function( data ) {
     res.json( {
       error: null,
@@ -45,6 +73,22 @@ function index( req, res ) {
   .catch( function( err ) {
     sendErr( err, res )
   } )
+}
+
+function allUser( req, res ) {
+	var user = req.decoded
+	var promise = Order.find( { uId: user.id } ).exec()
+		promise.then( function( data ) {
+			res.json( {
+				error: null,
+				status: 200,
+				message: 'Here are your orders!',
+				data: data
+			} )
+		} )
+		.catch( function( err ) {
+			sendErr( err, res )
+		} )
 }
 
 function show( req, res ) {
@@ -63,12 +107,32 @@ function show( req, res ) {
   } )
 }
 
+function completed( req, res ) {
+	var orderId = req.body.order.id
+	var promise = Order.findByIdAndUpdate( orderId, { completed: true }, { new: true } ).exec()
+	promise.then( function( data ) {
+		// SOCKET!!
+		io.emit( 'completed order', data )
+		res.json( {
+			error: null,
+			status: 200,
+			message: 'Here is the order you updated!',
+			data: data
+			} )
+	} )
+	.catch( function( err ) {
+		sendErr( err, res )
+	} )
+}
+
 function update( req, res ) {
   var order = req.body.order
   var orderId   = req.body.order.id
   var promise = Order.findByIdAndUpdate( orderId, order, {new: true} ).exec()
   promise.then( function( data ) {
-    res.json( {
+    // SOCKET!!
+	io.emit( 'updated order', data )
+	res.json( {
           error: null,
           status: 200,
           message: 'Here is the order you updated!',
@@ -100,6 +164,8 @@ function destroy( req, res ) {
 module.exports = {
   create: create,
   index: index,
+  allUser: allUser,
+  completed : completed,
   show: show,
   update: update,
   destroy: destroy
