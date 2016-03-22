@@ -6,7 +6,11 @@
         <div class="drinkPhotoHolder">
           <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" />
         </div>
-        {{menuitem.price}}
+        <div class="drinkInfo">
+          <div class="drinkInfo-name">{{menuitem.name}}</div>
+          <div class="drinkInfo-price">${{menuitem.price}}</div>
+        </div>
+        <div class="drinkAction"><i class="fa fa-plus-circle"></i></div>
       </div>
     </div>
   </ion-content>
