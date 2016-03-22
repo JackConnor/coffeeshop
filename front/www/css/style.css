@@ -1,1 +1,15 @@
 /* Empty. Add your own CSS if you like */
+.drinkCell {
+  height: 200px;
+  outline: 2px solid black;
+}
+
+.drinkPhotoHolder {
+  width: 200px;
+  height: 200px;
+}
+
+.drinkPhoto {
+  height: 200px;
+  position: absolute;
+}
