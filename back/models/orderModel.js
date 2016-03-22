@@ -6,11 +6,9 @@ var Order
 //SCHEMA
 //===========================
 Order = new mongoose.Schema({
-  uId         : {type: String, ref: 'User'},
+  uId         : String, //require true later required: true, ref: 'User'
   items       : [],
   total       : Number,
-  created     : {type: Date, default: Date.now },
-  updated     : {type: Date},
   cleared     : Date
 }, {timestamps: true}) //testing timestamps
 

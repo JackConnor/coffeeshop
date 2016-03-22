@@ -1,9 +1,10 @@
 //DECLARING VARIABLES
 //===========================
 var mongoose       = require( 'mongoose' )
-var Order           = mongoose.model( 'Order' )
+var Order          = mongoose.model( 'Order' )
 
 function create( req, res ) {
+  console.log('getting to create order')
   var order = req.body.order
   var promise = Order.create( order )
       promise.then( function( data ) {

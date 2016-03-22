@@ -19,6 +19,7 @@ mongoose.connect( DB )
 //MODELS
 //===========================
 var User = require( './models/userModel.js' )
+var Order = require( './models/orderModel.js')
 
 //MIDDLEWARE
 //===========================

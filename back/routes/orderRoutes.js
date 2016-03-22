@@ -1,12 +1,10 @@
 //DECLARING VARIABLES
 //===========================
-var Auth   = require( 'express' ).Router()
+var auth   = require( 'express' ).Router()
 var orderCtrl = require( '../controllers/orderController.js' )
 
-Auth.route( '/orders' )
-    .post( orderCtrl.create )
-
+auth.route('').post( orderCtrl.create )
 
 module.exports = {
-  Auth : Auth
+  auth : auth
 }
