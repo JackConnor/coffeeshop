@@ -11,9 +11,20 @@
       <div class="exitCart col-xs-3" ng-click='closeCart()'>
         Back
       </div>
+      <h2>Your Cart</h2>
       <div class="shoppingCartList">
         <div class="shoppingCartCell" ng-repeat='item in currentOrder'>
-          {{item}}
+          <div class="cartPhotoHolder col-xs-2">
+            <img src="{{item.photo}}" alt="" />
+          </div>
+          <div class='cartContent col-xs-4'>
+            {{item.title}}
+          </div>
+          <div class="cartPrice col-xs-6">
+            <span class='fa fa-pencil-square-o editIcon'></span>
+            <span class='fa fa-times removeItemIcon'></span>
+            <span>{{item.price | currency}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -93,7 +104,7 @@
       </div>
       <div class="col-xs-12 drinkCell" ng-repeat='menuitem in data'>
         <div class="drinkPhotoHolder">
-          <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" ng-click='openOptionsModal()'/>
+          <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" ng-click='openOptionsModal(menuitem)'/>
         </div>
         <div class="drinkInfo">
           <div class="drinkInfo-name">{{menuitem.name}}</div>

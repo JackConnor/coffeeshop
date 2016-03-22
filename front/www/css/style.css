@@ -6,6 +6,23 @@
   text-align: right;
 }
 
+.cartPhotoHolder {
+  padding: 0px;
+  height: 55px;
+}
+
+.cartPhotoHolder img{
+  width: 49px;
+  margin-top: 3px;
+  margin-left: 3px;
+  position: absolute;
+  border-radius: 3px;
+}
+
+.cartPrice {
+  text-align: center;
+}
+
 .drinkCell{
   height: 70px;
   padding: 10px 0;
@@ -52,6 +69,11 @@
 	font-size: 30px;
 	line-height: 50px;
 	color: #1abc9c;
+}
+
+.editIcon {
+  font-size: 25px;
+  margin-left: 10px;
 }
 
 
@@ -111,11 +133,23 @@
   z-index: 2;
 }
 
+.removeItemIcon {
+  font-size: 25px;
+  margin-left: 10px;
+}
+
+.shoppingCartCell {
+  height: 55px;
+  width: 100%;
+  border-bottom: 2px dotted gray;
+}
+
 .shoppingCartModal {
   width: 100%;
   margin-left: 110%;
   height: 700px;
-  background-color: gray;
+  border: 3px solid green;
+  background-color: white;
   z-index: 5;
   position: absolute;
 }

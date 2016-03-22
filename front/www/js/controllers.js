@@ -23,11 +23,13 @@ angular.module('starter.controllers', [])
   $scope.moreOptions  = false;
   $scope.cartModal    = false;
   $scope.totalShots   = 0;
+  $scope.currentDrink = {}
   $scope.currentOrder = [];
 
   $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
 
-  function openOptionsModal(){
+  function openOptionsModal(currentDrink){
+    $scope.currentDrink = currentDrink;
     $scope.optionsModal = true;
   }
   $scope.openOptionsModal = openOptionsModal;
@@ -135,7 +137,11 @@ angular.module('starter.controllers', [])
     drinkDetails.flavours = $('.flavourDropdown').val();
     drinkDetails.toppings = $('.toppingDropdown').val();
     drinkDetails.shots = $scope.totalShots;
+    drinkDetails.photo = $scope.currentDrink.photourl;
+    drinkDetails.price = $scope.currentDrink.price;
+    drinkDetails.title = $scope.currentDrink.name;
     console.log(drinkDetails);
+    ///////put all settings back to zero
     $scope.optionsModal = false;
     $scope.moreOptions  = false;
     $scope.totalShots   = 0;
