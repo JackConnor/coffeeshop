@@ -1,7 +1,15 @@
 //DECLARING VARIABLES
 //===========================
 var braintree = require('braintree')
+ var Dev = require( '../.Dev.js' )
 
+
+var gateway = braintree.connect({
+  environment: braintree.Environment.Sandbox,
+  merchantId: Dev.merchantId,
+  publicKey: Dev.publicKey,
+  privateKey: Dev.privateKey
+})
 //FUNCTIONS
 //===========================
 
