@@ -155,7 +155,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller( 'LoginCtrl' , function( $scope, $http, $location, $ionicPopup, $location ) {
+.controller( 'LoginCtrl' , function( $scope, $http, $location, $ionicPopup ) {
 
     $scope.data = {}
     
