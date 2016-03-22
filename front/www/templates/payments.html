@@ -2,26 +2,34 @@
   <ion-content>
     <ion-list>
       <div>
-        <form name="payment">
-                
+        
+
+          <div class="card">
+  <div class="item item-text-wrap">
+      <form name="payment">
           <div class="list list-inset">
+          <span>{{message}}</span>
             <label class="item item-input">
-    <input type="text" placeholder="Amount ($XX.XX)" ng-model="amount">
-  </label>
-  
+              <input type="text" placeholder="Amount ($XX.XX)" ng-model="paymentCtrl.amount">
+            </label>
+          
+
+      <!-- Add Dropin here -->
+          <div id="checkout"></div>
+
+          <button class="button button-full button-positive">
+            Pay {{paymentCtrl.amount}}
+          </button>
+          </div>
+        </form>
+        
+
+    
+  </div>
 </div>
 
-                <!-- Add Dropin here -->
-                <div id="checkout"></div>
-
-                
-                <button class="button button-full button-positive">
-                Pay {{amount}}
-</button>
-
-              </form>
-              <span>{{message}}</span>
-            </div>
-        </ion-list>
-      </ion-content>
-    </ion-view>
+          
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

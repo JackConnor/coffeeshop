@@ -210,20 +210,22 @@ angular.module('starter.controllers', [])
 
 .controller('paymentCtrl', function($scope, $http){
 
+  var vm = this
+    $scope.message = 'Please use the form below to pay:';
 
-  $scope.message = 'Please use the form below to pay:';
+
     
     $scope.isError = false;
     $scope.isPaid = false;
 
     $scope.getToken = function () {
-
       $http({
         method: 'POST',
-        url: 'http://localhost:8080/token'
+        url: 'http://localhost:3000/payments/token'
       }).success(function (data) {
 
         console.log(data.client_token);
+
 
         braintree.setup(data.client_token, 'dropin', {
           container: 'checkout' ,
@@ -235,13 +237,13 @@ angular.module('starter.controllers', [])
 
             $http({
               method: 'POST',
-              url: 'http://localhost:8080/process',
+              url: 'http://localhost:3000/payments/process',
               data: {
-                amount: $scope.amount,
+                amount: vm.amount,
                 payment_method_nonce: nonce
               }
             }).success(function (data) {
-
+              console.log(vm.amount)
               console.log(data.success);
 
               if (data.success) {
@@ -251,6 +253,7 @@ angular.module('starter.controllers', [])
 
               } else {
                 // implement your solution to handle payment failures
+                console.log(vm.amount)
                 $scope.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
                 $scope.isError = true;
               }

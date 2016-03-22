@@ -69,7 +69,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .state('payment', {
         url: '/payment',
         templateUrl: 'templates/payments.html',
-        controller: 'paymentCtrl'
+        controller: 'paymentCtrl as paymentCtrl'
     })
 
     .state('tab.chat-detail', {
