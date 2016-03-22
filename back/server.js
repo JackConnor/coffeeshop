@@ -20,6 +20,10 @@ mongoose.connect( DB )
 //===========================
 var User = require( './models/userModel.js' )
 
+
+
+var Item = require( './models/itemModel.js' )
+
 //MIDDLEWARE
 //===========================
 app.use( cors() )
