@@ -57,6 +57,34 @@ angular.module('starter.controllers', [])
   }
   $scope.subtractShot = subtractShot;
 
+  function choseSize(evt){
+    if($(evt.currentTarget).hasClass('sizeSmall')){
+      console.log('small');
+      $(evt.currentTarget).css({
+        backgroundColor: 'gray'
+      })
+    }
+    else if($(evt.currentTarget).hasClass('sizeMedium')){
+      console.log('med');
+      $(evt.currentTarget).css({
+        backgroundColor: 'gray'
+      })
+    }
+    else if($(evt.currentTarget).hasClass('sizeLarge')){
+      console.log('large');
+      $(evt.currentTarget).css({
+        backgroundColor: 'gray'
+      })
+    }
+  }
+  $scope.choseSize = choseSize;
+
+  function submitDrinkOptions() {
+
+  }
+
+
+
 
 //////end client side controller
 })
