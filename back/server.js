@@ -12,6 +12,25 @@ var Dev = require( './.Dev.js' )
 var PORT = Dev.PORT
 var DB   = Dev.DB
 
+//DB
+//===========================
+mongoose.connect( DB )
+
+//MODELS
+//===========================
+var User = require( './models/userModel.js' )
+
+//MIDDLEWARE
+//===========================
+app.use( cors() )
+app.use( bodyParser.json() )
+app.use( morgan( 'dev' ) )
+
+//ROUTES
+//===========================
+var apiRoutes = require( './routes/routes.js' )
+
+app.use( '', apiRoutes )
 
 //SERVER
 //===========================
