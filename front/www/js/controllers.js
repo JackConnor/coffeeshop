@@ -18,11 +18,47 @@ angular.module('starter.controllers', [])
 })
 
 .controller('clientCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-  console.log('yooooo');
-
+  // $scope.chat = Chats.get($stateParams.chatId);
+  $scope.optionsModal = false;
+  $scope.moreOptions  = false;
+  $scope.totalShots   = 0;
 
   $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
+
+  function openOptionsModal(){
+    $scope.optionsModal = true;
+  }
+  $scope.openOptionsModal = openOptionsModal;
+
+  function openMoreOptions(){
+    if(!$scope.moreOptions){
+      $scope.moreOptions = true;
+    }
+    else {
+      $scope.moreOptions = false;
+    }
+  }
+  $scope.openMoreOptions = openMoreOptions;
+
+  function closeModal(){
+    $scope.optionsModal = false;
+    $scope.moreOptions  = false;
+    $scope.totalShots   = 0;
+  }
+  $scope.closeModal = closeModal;
+
+  function addShot(){
+    $scope.totalShots++;
+  }
+  $scope.addShot = addShot;
+
+  function subtractShot(){
+    $scope.totalShots--;
+  }
+  $scope.subtractShot = subtractShot;
+
+
+//////end client side controller
 })
 
 .controller('AccountCtrl', function($scope) {

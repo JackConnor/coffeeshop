@@ -1,4 +1,6 @@
-/* Empty. Add your own CSS if you like */
+
+/****** Drink List View ******/
+
 .drinkCell{
   height: 70px;
   padding: 10px 0;
@@ -45,4 +47,85 @@
 	font-size: 30px;
 	line-height: 50px;
 	color: #1abc9c;
+}
+
+
+/****** Modal *******/
+
+.closeOptions {
+  text-align: right;
+  font-size: 22px;
+  margin-top: 5px
+}
+
+.drinkRepeatContainer {
+  height: auto;
+  padding: 0px;
+}
+
+.espressoMath {
+  text-align: right;
+  font-size: 20px;
+}
+
+.flavourDropdown {
+  width: 60%;
+  margin-left: 20%;
+}
+
+.moreOptionsContainer {
+  height: 200px;
+  border: 2px solid orange;
+}
+
+.openMore {
+  height: 50px;
+  outline: 2px solid gray;
+  text-align: center;
+  font-size: 23px;
+  color: gray;
+  padding-top: 10px;
+}
+
+.optionCell {
+  height: 65px;
+  border-bottom: 3px dotted gray;
+}
+
+.optionEspressoShot {
+  padding-top: 15px;
+}
+
+.optionsModal {
+  height: auto;
+  width: 100%;
+  margin-top: 50px;
+  border: 2px solid black;
+  background-color: white;
+  position: fixed;
+  z-index: 2;
+}
+
+.sizeCell {
+  border: 2px solid blue;
+  height: 100%;
+  text-align: center;
+  font-size: 19px;
+  padding: 0px;
+  padding-top: 15px;
+
+}
+
+.sizeContainer {
+  height: 75px;
+}
+
+.submitButton {
+  height: 80%;
+  margin-top 10%;
+  background-color: green;
+}
+
+.submitButtonContainer {
+  height: 50px;
 }
