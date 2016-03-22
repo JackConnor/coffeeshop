@@ -6,6 +6,7 @@ var User           = mongoose.model( 'User' )
 var secret         = 'coffee'
 
 function signJwt( user ) {
+	console.log( 'JWT' )
 	return jwt.sign( {
 		name : user.name,
 		email: user.email,
@@ -75,6 +76,7 @@ function isAuthentic( req, res, next ) {
 }
 
 module.exports = {
+	signJwt      : signJwt,
 	authenticate : authenticate,
 	isAuthentic  : isAuthentic
 }

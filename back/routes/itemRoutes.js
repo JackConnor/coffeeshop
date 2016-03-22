@@ -1,10 +1,10 @@
 //DECLARING VARIABLES
 //===========================
 var noAuth   = require( 'express' ).Router()
-var Auth   = require( 'express' ).Router()
-var userCtrl = require( '../controllers/userController.js' )
+var Auth     = require( 'express' ).Router()
+var userCtrl = require( '../controllers/itemController.js' )
 
-noAuth.route( '' )
+Auth.route( '' )
 		.get( userCtrl.index )
 		.post( userCtrl.create )
 
@@ -13,7 +13,10 @@ Auth.route( '/one' )
 	.put( userCtrl.update )
 	.delete( userCtrl.destroy )
 
-module.exports = {
-	noAuth : noAuth,
-	auth   : Auth
-}
+
+
+module.exports = Auth
+// {
+// 	noAuth : noAuth,
+// 	auth   : Auth
+// }
