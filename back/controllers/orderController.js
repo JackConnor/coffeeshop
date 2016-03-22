@@ -48,6 +48,7 @@ function create( req, res ) {
 		// io.emit( 'new order', data )
 		// console.log( mainSocket )
 		// mainSocket.emit( 'new order', data )
+    mongoose.model( 'User' ).findByIdAndUpdate( req.decoded.id, {currentOrder: data._id }).exec()
 		res.json( {
           error: null,
           status: 200,
