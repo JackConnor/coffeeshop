@@ -1,6 +1,9 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope) {
+    
+    
+})
 
 .controller('vendorCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -177,9 +180,18 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+    $scope.whole = 40
+  $scope.percent = $scope.whole / 10
+    $(function(){
+        var $ppc = $('.progress-pie-chart'),
+            percent = parseInt($scope.whole),
+            deg = 360*percent/100;
+        if (percent > 50) {
+            $ppc.addClass('gt-50');
+        }
+        $('.ppc-progress-fill').css('transform','rotate('+ deg +'deg)');
+        $('.ppc-percents span').html(percent+'%');
+    });
 })
 
 
@@ -201,6 +213,10 @@ angular.module('starter.controllers', [])
                 }
             }).then(function(response){
                 console.log(response)
+                if (response.data.vendor === true ){
+                    window.localStorage.admin = true
+                    // $location.path('/tab/vendor')
+                }
                 window.localStorage.token = response.data.data
                 $location.path('/tab/dash')
             })
