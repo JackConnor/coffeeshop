@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
   $scope.moreOptions  = false;
   $scope.totalShots   = 0;
 
-  $scope.data = [{id: 1, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}, {id: 2, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}, {id: 3, name: 'mocha latte', price: 5, photourl: "https://ardyssrecipes.files.wordpress.com/2012/12/mocha.jpg"}];
+  $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
 
   function openOptionsModal(){
     $scope.optionsModal = true;
