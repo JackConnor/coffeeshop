@@ -1,8 +1,24 @@
 <ion-view view-title="Dashboard">
-  <ion-content class="padding">
-    <h2>menu</h2>
-    <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
+  <ion-content>
+    <div class='col-xs-8'>
+      <h2>menu</h2>
+    </div>
+    <div class='col-xs-4 cartIcon'>
+      <i class='fa fa-shopping-cart' ng-click='openCart()'></i>
+    </div>
+    <!-- /////////shopping cart modal -->
+    <div class="shoppingCartModal" ng-if='cartModal'>
+      <div class="exitCart col-xs-3" ng-click='closeCart()'>
+        Back
+      </div>
+      <div class="shoppingCartList">
+        <div class="shoppingCartCell" ng-repeat='item in currentOrder'>
+          {{item}}
+        </div>
+      </div>
+    </div>
     <div class="drinkRepeatContainer col-xs-12">
+      <!-- //////begin  options modal -->
       <div class="optionsModal" ng-if='optionsModal'>
         <div class="optionsHeader">
           <div class="col-xs-8">

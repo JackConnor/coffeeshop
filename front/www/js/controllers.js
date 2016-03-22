@@ -21,6 +21,7 @@ angular.module('starter.controllers', [])
   // $scope.chat = Chats.get($stateParams.chatId);
   $scope.optionsModal = false;
   $scope.moreOptions  = false;
+  $scope.cartModal    = false;
   $scope.totalShots   = 0;
   $scope.currentOrder = [];
 
@@ -142,7 +143,28 @@ angular.module('starter.controllers', [])
   }
   $scope.submitDrinkOptions = submitDrinkOptions;
 
+  //////function to open shopping cart
+  function openCart(){
+    console.log('ipeing');
+    $scope.cartModal = true;
+    setTimeout(function(){
+      $('.shoppingCartModal').animate({
+        marginLeft: '0px'
+      }, 300);
+    }, 5);
+  }
+  $scope.openCart = openCart;
 
+  function closeCart(){
+    console.log('clising');
+    $('.shoppingCartModal').animate({
+      marginLeft: '110%'
+    }, 300);
+    setTimeout(function(){
+      $scope.cartModal = false;
+    }, 300);
+  }
+  $scope.closeCart = closeCart;
 
 
 //////end client side controller
