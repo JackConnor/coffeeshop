@@ -152,4 +152,30 @@ angular.module('starter.controllers', [])
   $scope.settings = {
     enableFriends: true
   };
-});
+})
+
+
+.controller( 'LoginCtrl' , function( $scope, $http, $location, $ionicPopup, $location ) {
+
+    $scope.data = {}
+    
+    $scope.login = function() {
+        console.log("here")
+        if(($scope.data.username !== undefined) && ($scope.data.password !== undefined)){
+            $http({
+                method: "POST",
+                url: "http://192.168.0.21:3000/authenticate",
+                data: {
+                    user: {
+                        email: $scope.data.username,
+                        password: $scope.data.password
+                    }
+                }
+            }).then(function(response){
+                console.log(response)
+                window.localStorage.token = response.data.data
+                $location.path('/tab/dash')
+            })
+        }
+    }
+} )
