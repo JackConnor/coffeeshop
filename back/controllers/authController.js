@@ -24,20 +24,22 @@ function authenticate( req, res ) {
 		.then( function( user ) {
 			if ( user.validPassword( password ) ) {
 				var token = signJwt( user )
-				res.json( {
-					error: null,
-					status: 200,
-					message: 'Here is your token',
-					data: token
-				} )
+        var msg = {
+          error: null,
+          status: 200,
+          message: 'Here is your token',
+          vendor: user.vendor,
+          data: token
+        }
 			} else {
-				res.json( {
+				var msg = {
 					error: 'Wrong Login Info',
 					status: 401,
 					message: 'Incorrect login info',
 					data: null
-				} )
+				}
 			}
+      res.json(msg)
 		} )
 		.catch( function( err ) {
 			res.json( {
