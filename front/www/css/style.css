@@ -122,6 +122,10 @@
   border: 2px solid orange;
 }
 
+.nameItem {
+  /*border-right: 2px dotted gray;*/
+}
+
 .noPadding {
   padding: 0px;
 }
@@ -160,10 +164,12 @@
   border-bottom: 2px dashed gray;
 }
 
-.orderSection
+.orderSection {
+  height: 100%;
+  padding: 0px;
+}
 
 .orderShots {
-  border-right: 2px dashed gray;
   height: 100%;
 }
 
@@ -214,6 +220,12 @@
 
 .submitButtonContainer {
   height: 50px;
+}
+
+.upLine {
+  height: 80%;
+  margin-top: 10%;
+  border-right: 2px solid gray;
 }
 
 .vendorHeader {
