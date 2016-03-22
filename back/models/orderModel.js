@@ -6,10 +6,11 @@ var Order
 //SCHEMA
 //===========================
 Order = new mongoose.Schema({
-  uId         : String, //require true later required: true, ref: 'User'
-  items       : [],
+  uId         : { type: String, ref: 'User', required: true }, //require true later required: true, ref: 'User'
+  items       : [ { type: String, ref: 'Item' } ],
   total       : Number,
-  cleared     : Date
+  completed   : { type: Boolean, default: false },
+  completedAt : Date
 }, {timestamps: true}) //testing timestamps
 
 //METHODS
