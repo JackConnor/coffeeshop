@@ -13,13 +13,13 @@
           </div>
         </div>
         <div class="sizeContainer col-xs-12">
-          <div class="sizeCell sizeSmall col-xs-4">
+          <div class="sizeCell sizeSmall col-xs-4" ng-click='choseSize($event)'>
             Small
           </div>
-          <div class="sizeCell sizeMedium col-xs-4">
+          <div class="sizeCell sizeMedium col-xs-4" ng-click='choseSize($event)'>
             Medium
           </div>
-          <div class="sizeCell sizeLarge col-xs-4">
+          <div class="sizeCell sizeLarge col-xs-4" ng-click='choseSize($event)'>
             Large
           </div>
         </div>
@@ -56,7 +56,7 @@
                 Add a Topping
               </div>
               <div class="col-xs-6">
-                <select class="toppingDropdown" name="">
+                <select class="toppingDropdown">
                   <option value="almond">Almond</option>
                   <option value="chocolate">Chocolate</option>
                   <option value="caramel">Caramel</option>
@@ -67,7 +67,7 @@
           </div>
         </div>
         <div class="submitButtonContainer col-xs-12">
-          <div class="submitButton col-xs-4 col-xs-offset-8">
+          <div class="submitButton col-xs-4 col-xs-offset-8" ng-click='submitDrinkOptions()'>
             Submit
           </div>
         </div>
