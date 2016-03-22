@@ -6,18 +6,29 @@ angular.module('starter.controllers', [])
 })
 
 .controller('vendorCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+  console.log('yooooooo');
+  $scope.allOrders =
+    [
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"small", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"large", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'}
+  ];
+  function getSize(order){
+    console.log(order);
+    if(order.size == 'medium'){
+      return 'M'
+    }
+    else if(order.size == 'small'){
+      return 'S'
+    }
+    else if(order.size == 'large'){
+      return 'L'
+    }
+  }
+  $scope.getSize = getSize;
 })
 
 .controller('clientCtrl', function($scope, $stateParams, Chats) {
@@ -175,6 +186,9 @@ angular.module('starter.controllers', [])
   }
   $scope.closeCart = closeCart;
 
+  $scope.checkout = function(){
+    console.log($scope.currentOrder);
+  }
 
 //////end client side controller
 })
@@ -198,7 +212,7 @@ angular.module('starter.controllers', [])
 .controller( 'LoginCtrl' , function( $scope, $http, $location, $ionicPopup ) {
 
     $scope.data = {}
-    
+
     $scope.login = function() {
         console.log("here")
         if(($scope.data.username !== undefined) && ($scope.data.password !== undefined)){
