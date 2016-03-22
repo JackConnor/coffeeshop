@@ -23,6 +23,15 @@
   text-align: center;
 }
 
+.checkoutButton {
+  height: 45px;
+  background-color: blue;
+  color: white;
+  text-align: center;
+  padding-top: 15px;
+  font-size: 22px;
+}
+
 .drinkCell{
   height: 70px;
   padding: 10px 0;
