@@ -45,9 +45,9 @@ function create( req, res ) {
   var promise = Order.create( order )
       promise.then( function( data ) {
         // SOCKET!!!
-		io.emit( 'new order', data )
-		console.log( mainSocket )
-		mainSocket.emit( 'new order', data )
+		// io.emit( 'new order', data )
+		// console.log( mainSocket )
+		// mainSocket.emit( 'new order', data )
 		res.json( {
           error: null,
           status: 200,

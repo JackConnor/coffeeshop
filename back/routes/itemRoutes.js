@@ -4,19 +4,18 @@ var noAuth   = require( 'express' ).Router()
 var Auth     = require( 'express' ).Router()
 var itemCtrl = require( '../controllers/itemController.js' )
 
-Auth.route( '' )
+noAuth.route( '' )
 		.get( itemCtrl.index )
-		.post( itemCtrl.create )
+		.post( itemCtrl.show )
 
 Auth.route( '/one' )
-	.post( itemCtrl.show )
+	.post( itemCtrl.create )
 	.put( itemCtrl.update )
 	.delete( itemCtrl.destroy )
 
 
-
-module.exports = Auth
-// {
-// 	noAuth : noAuth,
-// 	auth   : Auth
-// }
+module.exports =
+{
+	noAuth : noAuth,
+	auth   : Auth
+}
