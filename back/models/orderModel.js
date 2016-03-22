@@ -9,14 +9,17 @@ Order = new mongoose.Schema({
   uId         : {type: String, ref: 'User'},
   items       : [],
   total       : Number,
-  created     : Date,
+  created     : {type: Date, default: Date.now },
+  updated     : {type: Date},
   cleared     : Date
-})
+}, {timestamps: true}) //testing timestamps
 
 //METHODS
 //===========================
 
-// created timestamp?
+// Middleware for checking updated timestamp?
+
+// Order.genTimeStamp = function(next) {}?
 
 
 //EXPORTS
