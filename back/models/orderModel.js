@@ -19,7 +19,7 @@ Order.pre( 'save', function( next ) {
   var order = this
   if ( order.isModified( 'items' ) ) {
     order.items = order.items.map(function(item){
-      return item._id
+      return item._id ? item._id : item
     })
     next()
   } else {
