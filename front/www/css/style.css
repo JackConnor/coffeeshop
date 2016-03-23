@@ -1,7 +1,10 @@
 
-@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 /****** Drink List View ******/
 
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Montserrat', sans-serif;
+}
 .coffeeSize {
   color: white;
   font-size: 35px;
@@ -14,7 +17,7 @@
 .drinkCell{
   height: 70px;
   padding: 10px 5px;
-  border: 1px solid #eeeeee;
+  border: 1px solid black;
   border-width: 0 0 1px;
   display: flex;
 }
@@ -47,9 +50,17 @@
   padding-top: 5px;
 }
 
+.checkoutDrinkInfo-name{
+  font-size: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 10px;
+}
+
 .drinkInfo-price{
   font-size: 1em;
-  color: #888888;
+  color: black;
 }
 
 .drinkAction{
@@ -60,7 +71,7 @@
 .drinkAction i{
 	font-size: 30px;
 	line-height: 50px;
-	color: #1abc9c;
+	color: dodgerblue;
 }
 
 .editIcon {
@@ -116,6 +127,7 @@
   width: 100px;
   border: 1px solid #cccccc;
   border-radius: 3px;
+  color: black;
   font-size: 16px;
   padding: 2px 6px;
 }
@@ -136,14 +148,14 @@
   height: 50px;
   text-align: center;
   font-size: 18px;
-  color: #888888;
+  color: grey;
   padding-top: 10px;
   outline: none;
 }
 
 .optionCell{
   height: 50px;
-  border: 1px solid #eeeeee;
+  border: 1px solid black;
   border-width: 0 0 1px;
   padding: 10px 5px;
 }
@@ -196,7 +208,7 @@
 }
 
 .sizeCell{
-  border: 2px solid #aaaaaa;
+  border: 2px solid black;
   width: 60px;
   height: 60px;
   display: inline-block;
@@ -365,6 +377,17 @@
   margin-top: 40px;
 }
 
+.payButton {
+  background-color: #1abc9c;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 10px;
+  font-size: 22px;
+  border-radius: 3px;
+  margin-top: 40px;
+  width: 100%;
+}
+
 .shoppingCartModal {
   width: 100%;
   margin-left: 110%;
@@ -452,11 +475,8 @@
 }
 
 body {
-    font-family: 'Roboto Slab', serif;
-    background: #fe8c00; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #fe8c00 , #f83600); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #fe8c00 , #f83600); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            
+    font-family: 'Montserrat', sans-serif;
+    color: black;
 }
 
 .progress-pie-chart {
@@ -484,15 +504,15 @@ body {
     margin-left: 20px;
 }
 
-.padding {
-    background: #F09819; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #F09819 , #EDDE5D); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #F09819 , #EDDE5D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+.beginBack {
+    background: #43cea2; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #43cea2 , #185a9d); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #43cea2 , #185a9d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
                     
 }
 
 .newBar {
-    background-color: #D8572A;
+    background-color: darkslategrey;
 }
 
 .item {
@@ -503,7 +523,7 @@ body {
 }
 
 .tab-nav {
-    background-color: #DB7C26;
+    background-color: lightslategray;
 }
 
 .modal-backdrop {
@@ -526,4 +546,16 @@ body {
 #order-name {
   font-weight: 900
 
+}
+
+.padding h1 {
+    color: white;
+}
+
+.coffeeImg {
+    width: 200px;
+}
+
+.introPush {
+    padding-top: 5%;
 }

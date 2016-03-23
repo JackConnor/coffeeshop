@@ -143,20 +143,20 @@ angular.module('starter.controllers', [])
   function choseSize(evt){
     $('.sizeSmall').removeClass('selected');
     $('.sizeSmall').css({
-      backgroundColor: 'white'
+      backgroundColor: 'transparent'
     })
     $('.sizeMedium').removeClass('selected');
     $('.sizeMedium').css({
-      backgroundColor: 'white'
+      backgroundColor: 'transparent'
     })
     $('.sizeLarge').removeClass('selected');
     $('.sizeLarge').css({
-      backgroundColor: 'white'
+      backgroundColor: 'transparent'
     })
     if($(evt.currentTarget).hasClass('sizeSmall')){
       if($(evt.currentTarget).hasClass('selected')){
         $(evt.currentTarget).css({
-          backgroundColor: 'white'
+          backgroundColor: 'transparent'
         })
         $(evt.currentTarget).removeClass('selected')
       }
@@ -219,7 +219,10 @@ angular.module('starter.controllers', [])
     }
     else if(sizeEl.hasClass('sizeLarge')){
       drinkDetails.size = 'large';
-    }
+    } else {
+        console.log("no size selected")
+    } 
+   
     drinkDetails.flavours = $('.flavourDropdown').val();
     drinkDetails.toppings = $('.toppingDropdown').val();
     drinkDetails.shots = $scope.totalShots;
@@ -253,9 +256,7 @@ angular.module('starter.controllers', [])
     $('.shoppingCartModal').animate({
       marginLeft: '110%'
     }, 300);
-    setTimeout(function(){
-      $scope.cartModal = false;
-    }, 300);
+    $scope.cartModal = false
   }
   $scope.closeCart = closeCart;
 
@@ -407,5 +408,13 @@ angular.module('starter.controllers', [])
 
     $scope.getToken();
 
+})
+
+.controller('HistoryCtrl', function($scope, $rootScope, $http){
+    
+})
+
+.controller('ProfileCtrl', function($scope, $rootScope, $http){
+    
 })
 

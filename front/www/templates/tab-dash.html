@@ -1,14 +1,14 @@
-<ion-view view-title="ORDER">
+<ion-view>
   <ion-nav-buttons side="secondary">
-       <i style="font-size: 30px; padding-right: 10px;" class='fa fa-shopping-cart' ng-click='openCart()'></i>
+       <i style="font-size: 30px; padding-right: 10px;" class='fa fa-shopping-cart fa-inverse' ng-click='openCart()'></i>
     </ion-nav-buttons>
       <ion-nav-buttons  side="left">
           <div ng-if='cartModal'>
-        <i style="font-size: 30px; padding-right: 10px; margin-top: 0px;" class="fa ion-ios-arrow-left exitCart" ng-click='closeCart()'></i> 
+        <i style="font-size: 30px; padding-right: 10px; margin-top: 0px;" class="fa fa-inverse ion-ios-arrow-left exitCart" ng-click='closeCart()'></i> 
         
         </div>
     </ion-nav-buttons>
-  <ion-content class="padding">
+  <ion-content >
     <div class="optionsModal padding container" ng-if='optionsModal'>
       <div class="optionsHeader">
         <div class="col-xs-8">
@@ -108,7 +108,7 @@
             <img src="{{item.photo}}" alt="" />
           </div>
           <div class="cartContent">
-            <div class="drinkInfo-name">
+            <div class="checkoutDrinkInfo-name">
               {{item.title}}
             </div>
           </div>
@@ -135,7 +135,7 @@
     </div>
     <div class="drinkRepeatContainer col-xs-12">
       <div class='col-xs-12 text-center'>
-        <h2>MENU</h2>
+        <h2>Your logo here</h2>
       </div>
       <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
       <div class="drinkListContainer">
