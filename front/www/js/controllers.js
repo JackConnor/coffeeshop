@@ -50,7 +50,7 @@ angular.module('starter.controllers', [])
     $scope.$on('modal.removed', function() {
         // Execute action
     });
-}
+})
     
 .controller('vendorCtrl', function($http, $scope, Chats) {
   console.log('yooooooo');
