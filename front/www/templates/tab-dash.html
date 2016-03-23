@@ -90,32 +90,44 @@
     </div>
     <!-- /////////shopping cart modal -->
     <div class="shoppingCartModal" ng-if='cartModal'>
-      <div class="exitCart col-xs-3" ng-click='closeCart()'>
-        Back
+      <div class="exitCart" ng-click='closeCart()'>
+        <i class="fa ion-ios-arrow-left"></i> Back
       </div>
-      <h2>Your Cart</h2>
+      <h2>YOUR CART</h2>
       <div class="shoppingCartList">
         <div class="shoppingCartCell" ng-repeat='item in currentOrder'>
-          <div class="cartPhotoHolder col-xs-2">
+          <div class="cartPhotoHolder">
             <img src="{{item.photo}}" alt="" />
           </div>
-          <div class='cartContent col-xs-4'>
-            {{item.title}}
+          <div class="cartContent">
+            <div class="drinkInfo-name">
+              {{item.title}}
+            </div>
           </div>
-          <div class="cartPrice col-xs-6">
-            <span class='fa fa-pencil-square-o editIcon' ng-click='openOptionsModal("blah")'></span>
-            <span class='fa fa-times removeItemIcon'></span>
+          <div class="cartActions">
+            <div class="cartAction-container" ng-click='openOptionsModal("blah")'>
+              <i class="fa fa-pencil"></i>
+            </div>
+            <div class="cartAction-container removeItemIcon" ng-click='openOptionsModal("blah")'>
+              <i class="fa fa-times"></i>
+            </div>
+          </div>
+          <div class="cartPrice">
             <span>{{item.price | currency}}</span>
           </div>
         </div>
+        <div class="emptyCart" ng-show="!currentOrder.length">
+          <i class="fa fa-frown-o"></i>
+          <div>Bummer, nothing in your cart.</div>
+        </div>
       </div>
-      <div class="checkoutButton col-xs-6 col-xs-offset-3" ng-click='checkout()'>
+      <div class="checkoutButton col-xs-6 col-xs-offset-3" ng-show="currentOrder.length" ng-click='checkout()'>
         Checkout
       </div>
     </div>
     <div class="drinkRepeatContainer col-xs-12">
       <div class='col-xs-8'>
-        <h2>menu</h2>
+        <h2>MENU</h2>
       </div>
       <div class='col-xs-4 cartIcon'>
         <i class='fa fa-shopping-cart' ng-click='openCart()'></i>

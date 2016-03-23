@@ -1,37 +1,6 @@
 
 /****** Drink List View ******/
 
-.cartIcon {
-  font-size: 35px;
-  text-align: right;
-}
-
-.cartPhotoHolder {
-  padding: 0px;
-  height: 55px;
-}
-
-.cartPhotoHolder img{
-  width: 49px;
-  margin-top: 3px;
-  margin-left: 3px;
-  position: absolute;
-  border-radius: 3px;
-}
-
-.cartPrice {
-  text-align: center;
-}
-
-.checkoutButton {
-  height: 45px;
-  background-color: blue;
-  color: white;
-  text-align: center;
-  padding-top: 15px;
-  font-size: 22px;
-}
-
 .coffeeSize {
   color: white;
   font-size: 35px;
@@ -208,27 +177,6 @@
   height: 100%;
 }
 
-.removeItemIcon {
-  font-size: 25px;
-  margin-left: 10px;
-}
-
-.shoppingCartCell {
-  height: 55px;
-  width: 100%;
-  border-bottom: 2px dotted gray;
-}
-
-.shoppingCartModal {
-  width: 100%;
-  margin-left: 110%;
-  height: 700px;
-  border: 3px solid green;
-  background-color: white;
-  z-index: 5;
-  position: absolute;
-}
-
 .sizeContainer{
   height: 75px;
   margin: 20px 0 10px;
@@ -303,6 +251,118 @@
 
 .modalActionSubmit button{
   background-color: #1abc9c;
+}
+
+
+/****** Shopping Cart ******/
+
+.cartIcon {
+  font-size: 30px;
+  text-align: right;
+  margin-top: 6px;
+}
+
+.exitCart{
+  padding: 0 15px;
+  margin-top: 10px;
+}
+
+.emptyCart{
+  text-align: center;
+  padding: 40px 0;
+  font-size: 16px;
+  color: #888888;
+}
+
+.emptyCart i{
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.shoppingCartModal h2{
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 5px 15px 10px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.shoppingCartCell {
+  width: 100%;
+  height: 60px;
+  border: 1px solid #eeeeee;
+  border-width: 0 0 1px;
+  padding: 5px 5px;
+  display: flex;
+}
+
+.shoppingCartCell:first-child{
+  border-width: 1px 0 1px;
+}
+
+.cartPhotoHolder {
+  width: 50px;
+  height: 50px;
+}
+
+.cartPhotoHolder img{
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+}
+
+.cartContent{
+  flex-grow: 1;
+  padding-left: 10px;
+}
+
+.cartActions{
+  padding-top: 6px;
+  padding-right: 10px;
+}
+
+.cartPrice {
+  width: 50px;
+}
+
+.cartAction-container{
+  width: 36px;
+  height: 36px;
+  border: 1px solid #888888;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 6px;
+  padding-left: 2px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.cartAction-container i{
+  font-size: 20px;
+  color: #888888;
+}
+
+.removeItemIcon{
+  padding-left: 1px;
+}
+
+.checkoutButton {
+  background-color: #1abc9c;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 10px;
+  font-size: 22px;
+  border-radius: 3px;
+  margin-top: 40px;
+}
+
+.shoppingCartModal {
+  width: 100%;
+  margin-left: 110%;
+  height: 700px;
+  background-color: white;
+  z-index: 5;
+  position: absolute;
 }
 
 .upLine {
