@@ -80,11 +80,11 @@
         </span>
       </div>
       <div class="modalActionContainer col-xs-12">
-        <div class="modalActionCancel col-xs-4" ng-click='closeModal()'>
-          <button>BACK</button>
+        <div class="modalActionCancel col-xs-4">
+          <button ng-click='closeModal()'>BACK</button>
         </div>
         <div class="modalActionSubmit col-xs-8">
-          <button>ADD TO ORDER</button>
+          <button ng-click='submitDrinkOptions()'>ADD TO ORDER</button>
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@
       </div>
       <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
       <div class="drinkListContainer">
-        <div class="col-xs-12 drinkCell" ng-repeat='menuitem in data' ng-click='openOptionsModal()'>
+        <div class="col-xs-12 drinkCell" ng-repeat='menuitem in data' ng-click='openOptionsModal(menuitem)'>
           <div class="drinkPhotoHolder">
             <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" />
           </div>
