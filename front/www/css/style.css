@@ -509,3 +509,21 @@ body {
 .modal-backdrop {
     background-color: transparent;
 }
+.cup {
+  width: 50px;
+}
+
+.orderShots {
+
+  border-left: 4px solid grey;
+  padding: 10px;
+}
+
+#order-title {
+  font-weight: 900
+}
+
+#order-name {
+  font-weight: 900
+
+}
