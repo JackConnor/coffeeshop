@@ -477,3 +477,22 @@ body {
     margin-top: 2px;
     margin-left: 20px;
 }
+
+
+.cup {
+  width: 50px;
+}
+
+.orderShots {
+
+  border-left: 4px solid grey;
+  padding: 10px;
+}
+
+#order-title {
+  font-weight: 900
+}
+
+#order-name {
+  font-weight: 900
+}

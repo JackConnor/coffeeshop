@@ -54,6 +54,11 @@ angular.module('starter.controllers', [])
     
 .controller('vendorCtrl', function($http, $scope, Chats) {
   console.log('yooooooo');
+  var vm = this
+  vm.socket = io.connect('http://192.168.0.21:3000/api')
+  vm.socket.on('new order', function(data){
+    console.log('it works', data)
+  })
   $scope.allOrders =
     [
       {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"small", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
@@ -92,6 +97,7 @@ angular.module('starter.controllers', [])
   $scope.totalShots   = 0;
   $scope.currentDrink = {}
   $scope.currentOrder = [];
+  var vm = this
 
   $http({
     method: 'GET'
@@ -251,6 +257,7 @@ angular.module('starter.controllers', [])
   $scope.closeCart = closeCart;
 
   $scope.checkout = function(){
+
     var token = window.localStorage.token;
     var itemIds = [];
     var totalPrice = 0;
@@ -266,8 +273,17 @@ angular.module('starter.controllers', [])
     })
     .then(function(orderResponse){
       console.log(orderResponse);
+      vm.socket.on( orderResponse._id , function(data){
+        console.log('here is the data', data)
+      })
     })
   }
+  vm.socket = io.connect('http://192.168.0.21:3000/api')
+  vm.socket.on('test', function(data){
+    console.log('it works', data)
+  })
+
+
 
 //////end client side controller
 })
@@ -291,6 +307,7 @@ angular.module('starter.controllers', [])
 .controller( 'LoginCtrl' , function( $scope, $http, $location, $ionicPopup ) {
 
     $scope.data = {}
+
 
     $scope.login = function() {
         console.log("here")
