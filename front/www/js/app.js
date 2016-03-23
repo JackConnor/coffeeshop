@@ -59,8 +59,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-<<<<<<< HEAD
-    
+
     .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
@@ -72,8 +71,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         templateUrl: 'templates/payments.html',
         controller: 'paymentCtrl as paymentCtrl'
     })
-=======
->>>>>>> 25d1203b145cd57779166b77e0b7086fb9620a34
+
 
     .state('tab.chat-detail', {
       url: '/chats/:chatId',
@@ -95,21 +93,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-<<<<<<< HEAD
-  
-=======
   .state('vendorView', {
     url: '/vendor'
     ,templateUrl: "templates/vendor.html"
     ,controller: "vendorCtrl"
   })
 
-  .state('login', {
-      url: '/login',
-      templateUrl: 'templates/login.html',
-      controller: 'LoginCtrl'
-  });
->>>>>>> 25d1203b145cd57779166b77e0b7086fb9620a34
+  
+
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
