@@ -11,6 +11,7 @@ noAuth.route( '' )
 Auth.route( '/one' )
 	.get( userCtrl.show )
 	.put( userCtrl.update )
+  .patch( userCtrl.reward )
 	.delete( userCtrl.destroy )
 
 module.exports = {
