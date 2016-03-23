@@ -51,10 +51,13 @@ function create( req, res ) {
       mongoose.model( 'User' ).findOne( { _id: req.decoded.id }).exec(function(err, user){
         user.currentOrder = data._id
         user.orderHistory.push( user.currentOrder )
+        console.log(user)
         if(user.orderHistory.length % 10 != 0) {
           user.rewards++
         }
-        user.save()
+        user.save(function(err, status) {
+          console.log('PPPPPPPPPPPPPPPPPPP', err, status)
+        })
         res.json( {
               error: null,
               status: 200,
