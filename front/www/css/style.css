@@ -37,7 +37,8 @@
   font-size: 35px;
   margin-left: -61px;
   position: absolute;
-  padding-top: 18px
+  padding-top: 20px;
+  padding-left: 2px;
 }
 
 .drinkCell{
@@ -305,10 +306,9 @@ body {
 .progress-pie-chart {
   margin: 50px auto 0;
 }
->>>>>>> ccc6d5e44530ac3240bc355addcfb05a23fbfe8f
+
 .vendorHeader {
   height: 55px;
-  background-color: blue;
   text-align: center;
 }
 
@@ -320,4 +320,10 @@ body {
 
 .vendorOrderList {
   height: auto;
+}
+
+.vendorsizeIcon {
+    font-size: 75px;
+    margin-top: 2px;
+    margin-left: 20px;
 }

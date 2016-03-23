@@ -5,19 +5,62 @@ angular.module('starter.controllers', [])
     
 })
 
-.controller('vendorCtrl', function($scope, Chats) {
-  console.log('yooooooo');
+.controller('vendorCtrl', function($scope, $ionicModal) {
+    var vm = this
+    // console.log(io)
+    vm.socket = io( "http://192.168.0.21:3000" )
+      var connected;
+      console.log(vm.socket)
+    vm.socket.on( 'test', function( socket ) {
+        connected = true
+		console.log( "Connected" )
+        vm.socket.emit( 'user joined' );
+
+        vm.socket.on( 'disconnect', function ( ) {
+            console.log( 'socket disconnected' );
+        } );
+
+
+		vm.socket.on( vm.conversation, function( data ) {
+			console.log( "DATA", data )
+		} )
+	} )
+    
+    $ionicModal.fromTemplateUrl('templates/my-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
+    //Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function() {
+        // Execute action
+    });
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function() {
+        // Execute action
+    });
   $scope.allOrders =
     [
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"small", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"large", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'}
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"small", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"large", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
+      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5}
   ];
   function getSize(order){
-    console.log(order);
+    // console.log(order);
     if(order.size == 'medium'){
       return 'M'
     }
@@ -29,6 +72,11 @@ angular.module('starter.controllers', [])
     }
   }
   $scope.getSize = getSize;
+  
+  $scope.addItem = function() {
+      $scope.openModal()
+  }
+
 })
 
 .controller('clientCtrl', function($scope, $stateParams, Chats) {
@@ -229,7 +277,7 @@ angular.module('starter.controllers', [])
                 console.log(response)
                 if (response.data.vendor === true ){
                     window.localStorage.admin = true
-                    // $location.path('/tab/vendor')
+                    $location.path('/vendor')
                 }
                 window.localStorage.token = response.data.data
                 $location.path('/tab/dash')

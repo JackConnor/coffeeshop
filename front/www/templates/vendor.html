@@ -1,30 +1,47 @@
-
 <ion-view>
+    <ion-nav-buttons side="secondary">
+       <i style="font-size: 30px; padding-right: 10px;" class="ion-ios-plus-outline" ng-click="addItem()"></i>
+    </ion-nav-buttons>
+
+    
   <ion-content>
+    <div class="vendorHeader row text-center">
+        <div class="col">
+            <h1>Incoming Orders</h1>
+        </div>
+    </div>
     <div class="vendorDashboardContainer">
-      <div class="vendorHeader">
-        <h2>Incoming Orders</h2>
-      </div>
       <div class="vendorOrderList">
-        <div class='orderCell' ng-repeat='order in allOrders'>
-          <div class="col-sm-6 col-xs-12 orderSection">
-            <div class="col-xs-4 orderSection">
-              <i class="fa fa-coffee sizeIcon"></i><span class='coffeeSize'>{{getSize(order)}}</span>
+          <ion-list>
+        <ion-item class="card" ng-repeat='order in allOrders'>
+            <div class="row">
+            <ion-option-button class="button-calm" ng-click="share(item)">  In Progress
+          </ion-option-button>
+            <ion-option-button class="button-assertive" ng-click="done(order)">  Completed
+          </ion-option-button>
+          <div class="col">
+              <i class="fa fa-coffee vendorsizeIcon"></i><span class='coffeeSize'>{{getSize(order)}}</span>
             </div>
-            <div class="nameItem col-xs-5 orderSection">
-              <div class="orderItemName">
-                <h4>{{order.title}}</h4>
+            <div class="col">
+              <div>
+                <h2>{{order.title}}</h2>
               </div>
-              <div class="orderItemPerson">
+              <div>
                 {{order.name}}
               </div>
-              <div class="upLine"></div>
             </div>
-          </div>
-          <div class="col-sm-6 col-xs-12 orderSection">
+          <div class="col">
             <span class='orderShots'>Espresso Shots: {{order.shots}}</span>
           </div>
-        </div>
+          <div class="col text-right">
+                <span class="fa-stack fa-2x">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-inverse fa-stack-1x">{{order.time}}</i>
+                </span>
+            </div>
+            </div>
+        </ion-item>
+        </ion-list>
       </div>
     </div>
   </ion-content>
