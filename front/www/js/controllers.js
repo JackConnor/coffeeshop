@@ -1,11 +1,11 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {
-    
-    
+
+
 })
 
-.controller('vendorCtrl', function($scope, Chats) {
+.controller('vendorCtrl', function($http, $scope, Chats) {
   console.log('yooooooo');
   $scope.allOrders =
     [
@@ -16,8 +16,16 @@ angular.module('starter.controllers', [])
       {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
       {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'}
   ];
+
+  $http({
+    method: 'GET'
+    ,url: "http://192.168.0.21:3000/items"
+  })
+  .then(function(items){
+    console.log(items);
+  })
+
   function getSize(order){
-    console.log(order);
     if(order.size == 'medium'){
       return 'M'
     }
