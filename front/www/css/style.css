@@ -23,9 +23,26 @@
   text-align: center;
 }
 
+.checkoutButton {
+  height: 45px;
+  background-color: blue;
+  color: white;
+  text-align: center;
+  padding-top: 15px;
+  font-size: 22px;
+}
+
+.coffeeSize {
+  color: white;
+  font-size: 35px;
+  margin-left: -61px;
+  position: absolute;
+  padding-top: 18px
+}
+
 .drinkCell{
   height: 70px;
-  padding: 10px 0;
+  padding: 10px 5px;
   border: 1px solid #eeeeee;
   border-width: 0 0 1px;
   display: flex;
@@ -41,8 +58,8 @@
 }
 
 .drinkPhoto {
-	width: 100%;
-  height: auto;
+	width: 50px;
+  height: 50px;
   border-radius: 3px;
 }
 
@@ -53,6 +70,9 @@
 
 .drinkInfo-name{
   font-size: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .drinkInfo-price{
@@ -82,7 +102,12 @@
 .closeOptions {
   text-align: right;
   font-size: 22px;
-  margin-top: 5px
+  margin-top: 10px;
+}
+
+.optionsHeaderTitle{
+  font-size: 20px;
+  padding-top: 12px;
 }
 
 .drinkRepeatContainer {
@@ -92,45 +117,95 @@
 
 .espressoMath {
   text-align: right;
-  font-size: 20px;
+  font-size: 18px;
+  margin-top: 4px;
 }
 
-.flavourDropdown {
-  width: 60%;
-  margin-left: 20%;
+.espressoMath-less{
+  margin-right:15px;
 }
 
-.moreOptionsContainer {
-  height: 200px;
-  border: 2px solid orange;
+.espressoMath-number{
+  margin-right:15px;
+}
+
+.optionText{
+  font-size: 16px;
+  margin-top: 3px;
+  padding: 0;
+}
+
+.optionInput{
+  text-align: right;
+  padding: 0;
+}
+
+.optionInput select{
+  width: 100px;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  font-size: 16px;
+  padding: 2px 6px;
+}
+
+.moreOptionsContainer{
+  margin-bottom: 10px;
+}
+
+.nameItem {
+  /*border-right: 2px dotted gray;*/
+}
+
+.noPadding {
+  padding: 0px;
 }
 
 .openMore {
   height: 50px;
-  outline: 2px solid gray;
   text-align: center;
-  font-size: 23px;
-  color: gray;
+  font-size: 18px;
+  color: #888888;
   padding-top: 10px;
+  outline: none;
 }
 
-.optionCell {
-  height: 65px;
-  border-bottom: 3px dotted gray;
+.optionCell{
+  height: 50px;
+  border: 1px solid #eeeeee;
+  border-width: 0 0 1px;
+  padding: 10px 5px;
 }
 
-.optionEspressoShot {
-  padding-top: 15px;
+.optionCell:first-child{
+  border-width: 1px 0 1px;
 }
 
 .optionsModal {
   height: auto;
-  width: 100%;
-  margin-top: 50px;
-  border: 2px solid black;
+  width: 90%;
+  left: 50%;
+  top: 30px;
+  margin-left: -45%;
+  box-shadow: 0 0 0 400px rgba(0,0,0,.4);
+  border-radius: 5px;
   background-color: white;
   position: fixed;
-  z-index: 2;
+  z-index: 6;
+}
+
+.orderCell {
+  height: 80px;
+  width: 100%;
+  border-bottom: 2px dashed gray;
+}
+
+.orderSection {
+  height: 100%;
+  padding: 0px;
+}
+
+.orderShots {
+  height: 100%;
 }
 
 .removeItemIcon {
@@ -154,26 +229,178 @@
   position: absolute;
 }
 
-.sizeCell {
-  border: 2px solid blue;
-  height: 100%;
+.sizeContainer{
+  height: 75px;
+  margin: 20px 0 10px;
+}
+
+.sizeCellContainer{
+  text-align: center;
+  padding: 0;
+}
+
+.sizeCell{
+  border: 2px solid #aaaaaa;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
   text-align: center;
   font-size: 19px;
-  padding: 0px;
-  padding-top: 15px;
-
+  border-radius: 50%;
 }
 
-.sizeContainer {
-  height: 75px;
+.sizeSmall{
+  padding-top: 11px;
 }
 
-.submitButton {
+.sizeSmall i{
+  font-size: 30px;
+}
+
+.sizeMedium{
+  padding-top: 8px;
+}
+
+.sizeMedium i{
+  font-size: 35px;
+}
+
+.sizeLarge{
+  padding-top: 6px;
+}
+
+.sizeLarge i{
+  font-size: 40px;
+}
+
+.modalActionContainer{
+  display: flex;
+  border-top: 1px solid #eeeeee;
+  padding: 10px 0;
+}
+
+.modalActionContainer button{
+  width: 100%;
+  height: auto;
+  padding: 8px 0;
+  box-shadow: none;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.modalActionCancel{
+  display: inline-block;
+}
+
+.modalActionCancel button{
+  background-color: #cccccc;
+}
+
+.modalActionSubmit{
+  display: inline-block;
+}
+
+.modalActionSubmit button{
+  background-color: #1abc9c;
+}
+
+.upLine {
   height: 80%;
-  margin-top 10%;
-  background-color: green;
+  margin-top: 10%;
+  border-right: 2px solid gray;
 }
 
-.submitButtonContainer {
-  height: 50px;
+.accountImg {
+    width: 150px;
+}
+
+.progress-pie-chart {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #E5E5E5;
+  position: relative;
+}
+.progress-pie-chart.gt-50 {
+  background-color: #81CE97;
+}
+
+.ppc-progress {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 200px, 200px, 100px);
+}
+.ppc-progress .ppc-progress-fill {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 100px, 200px, 0);
+  background: #81CE97;
+  transform: rotate(60deg);
+}
+.gt-50 .ppc-progress {
+  clip: rect(0, 100px, 200px, 0);
+}
+.gt-50 .ppc-progress .ppc-progress-fill {
+  clip: rect(0, 200px, 200px, 100px);
+  background: #E5E5E5;
+}
+
+.ppc-percents {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 173.91304px/2);
+  top: calc(50% - 173.91304px/2);
+  width: 173.91304px;
+  height: 173.91304px;
+  background: #fff;
+  text-align: center;
+  display: table;
+}
+.ppc-percents span {
+  display: block;
+  font-size: 2.6em;
+  font-weight: bold;
+  color: #81CE97;
+}
+
+.pcc-percents-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+body {
+  font-family: Arial;
+  background: #f7f7f7;
+}
+
+.progress-pie-chart {
+  margin: 50px auto 0;
+}
+
+.vendorHeader {
+  height: 55px;
+  background-color: blue;
+  text-align: center;
+}
+
+.vendorHeader h2 {
+  color: white;
+  font-size: 28px;
+  padding-top: 10px;
+}
+
+.vendorOrderList {
+  height: auto;
 }

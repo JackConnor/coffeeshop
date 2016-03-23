@@ -16,28 +16,34 @@ function signJwt( user ) {
 	} )
 }
 
+// TODO write checks for unfound user
 function authenticate( req, res ) {
 	var email    = req.body.user.email
 	var password = req.body.user.password
 	var promise  = User.findOne( { email: email } ).exec()
 		promise
 		.then( function( user ) {
+			if ( !user ) {
+				throw 'No user found'
+			}
 			if ( user.validPassword( password ) ) {
 				var token = signJwt( user )
-				res.json( {
-					error: null,
-					status: 200,
-					message: 'Here is your token',
-					data: token
-				} )
+        var msg = {
+          error: null,
+          status: 200,
+          message: 'Here is your token',
+          vendor: user.vendor,
+          data: token
+        }
 			} else {
-				res.json( {
+				var msg = {
 					error: 'Wrong Login Info',
 					status: 401,
 					message: 'Incorrect login info',
 					data: null
-				} )
+				}
 			}
+      res.json(msg)
 		} )
 		.catch( function( err ) {
 			res.json( {

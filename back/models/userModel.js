@@ -7,11 +7,14 @@ var User
 //SCHEMA
 //===========================
 User = new mongoose.Schema( {
-	email        : { type: String, required: true, unique: true },
-	name         : { type: String },
-	password     : { type: String, required: true, unique: false },
-	orderHistory : [], //Reference to orderModel
-	rewards      : Number
+	email         : { type: String, required: true, unique: true },
+	name          : { type: String },
+	password      : { type: String, required: true, unique: false },
+  vendor        : { type: Boolean, default: false },
+  currentOrders : [],
+  orderHistory  : [], //Reference to orderModel
+  currentOrder  : { type: String, ref: 'Order'},
+	rewards       : Number
 } )
 
 //METHODS

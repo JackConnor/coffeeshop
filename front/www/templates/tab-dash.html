@@ -1,10 +1,92 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="ORDER">
   <ion-content>
-    <div class='col-xs-8'>
-      <h2>menu</h2>
-    </div>
-    <div class='col-xs-4 cartIcon'>
-      <i class='fa fa-shopping-cart' ng-click='openCart()'></i>
+    <div class="optionsModal" ng-if='optionsModal'>
+      <div class="optionsHeader">
+        <div class="col-xs-8">
+          <div class="optionsHeaderTitle">
+            Mocha Latte
+          </div>
+        </div>
+        <div class="col-xs-4 closeOptions">
+          <p class='fa fa-times' ng-click='closeModal()'></p>
+        </div>
+      </div>
+      <div class="sizeContainer col-xs-12">
+        <div class="sizeCellContainer col-xs-4">
+          <div class="sizeCell sizeSmall" ng-click='choseSize($event)'>
+            <i class="icon ion-coffee"></i>
+          </div>
+        </div>
+        <div class="sizeCellContainer col-xs-4">
+          <div class="sizeCell sizeMedium" ng-click='choseSize($event)'>
+            <i class="icon ion-coffee"></i>
+          </div>
+        </div>
+        <div class="sizeCellContainer col-xs-4">
+          <div class="sizeCell sizeLarge" ng-click='choseSize($event)'>
+            <i class="icon ion-coffee"></i>
+          </div>
+        </div>
+      </div>
+      <div class="moreOptionsContainer col-xs-12" ng-if='moreOptions'>
+        <div class="optionCell">
+          <div class="optionEspressoShot">
+            <div class="col-xs-6 optionText">
+              Espresso Shot
+            </div>
+            <div class="col-xs-6 espressoMath optionInput">
+              <span class='fa fa-minus espressoMath-less' ng-click='subtractShot()'></span><span class="espressoMath-number">{{totalShots}}</span><span class='fa fa-plus espressoMath-more' ng-click='addShot()'></span>
+            </div>
+          </div>
+        </div>
+        <div class="optionCell">
+          <div class="optionFlavor">
+            <div class="col-xs-6 optionText">
+              Add a Flavour
+            </div>
+            <div class="col-xs-6 optionInput">
+              <select class="flavourDropdown" name="">
+                <option value="almond">Almond</option>
+                <option value="chocolate">Chocolate</option>
+                <option value="caramel">Caramel</option>
+                <option value="pumpkin_spice">Pumpkin Spice</option>
+                <option value="white_chocolate">White Chocolate</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="optionCell">
+          <div class="optionTopping">
+            <div class="optionText col-xs-6">
+              Add a Topping
+            </div>
+            <div class="col-xs-6 optionInput">
+              <select class="toppingDropdown" name="">
+                <option value="almond">Almond</option>
+                <option value="chocolate">Chocolate</option>
+                <option value="caramel">Caramel</option>
+                <option value="white_chocolate">White Chocolate</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="openMore col-xs-12" ng-click='openMoreOptions()'>
+        <span ng-if='!moreOptions'>
+          More Drink Options <i class="icon ion-ios-arrow-down"></i>
+        </span>
+        <span ng-if='moreOptions'>
+          Close Drink Options <i class="icon ion-ios-arrow-up"></i>
+        </span>
+      </div>
+      <div class="modalActionContainer col-xs-12">
+        <div class="modalActionCancel col-xs-4" ng-click='closeModal()'>
+          <button>BACK</button>
+        </div>
+        <div class="modalActionSubmit col-xs-8">
+          <button>ADD TO ORDER</button>
+        </div>
+      </div>
     </div>
     <!-- /////////shopping cart modal -->
     <div class="shoppingCartModal" ng-if='cartModal'>
@@ -21,96 +103,35 @@
             {{item.title}}
           </div>
           <div class="cartPrice col-xs-6">
-            <span class='fa fa-pencil-square-o editIcon'></span>
+            <span class='fa fa-pencil-square-o editIcon' ng-click='openOptionsModal("blah")'></span>
             <span class='fa fa-times removeItemIcon'></span>
             <span>{{item.price | currency}}</span>
           </div>
         </div>
       </div>
+      <div class="checkoutButton col-xs-6 col-xs-offset-3" ng-click='checkout()'>
+        Checkout
+      </div>
     </div>
     <div class="drinkRepeatContainer col-xs-12">
-      <!-- //////begin  options modal -->
-      <div class="optionsModal" ng-if='optionsModal'>
-        <div class="optionsHeader">
-          <div class="col-xs-8">
-            Choose Your Size
-          </div>
-          <div class="col-xs-4 closeOptions">
-            <p class='fa fa-times' ng-click='closeModal()'></p>
-          </div>
-        </div>
-        <div class="sizeContainer col-xs-12">
-          <div class="sizeCell sizeSmall col-xs-4" ng-click='choseSize($event)'>
-            Small
-          </div>
-          <div class="sizeCell sizeMedium col-xs-4" ng-click='choseSize($event)'>
-            Medium
-          </div>
-          <div class="sizeCell sizeLarge col-xs-4" ng-click='choseSize($event)'>
-            Large
-          </div>
-        </div>
-        <div class="moreOptionsContainer col-xs-12" ng-if='moreOptions'>
-          <div class="optionCell">
-            <div class="optionEspressoShot ">
-              <div class="col-xs-6">
-                Espresso Shot
-              </div>
-              <div class="col-xs-6 espressoMath">
-                <span class='fa fa-minus' ng-click='subtractShot()'></span><span>{{totalShots}}</span><span class='fa fa-plus' ng-click='addShot()'></span>
-              </div>
-            </div>
-          </div>
-          <div class="optionCell">
-            <div class="optionFlavor">
-              <div class="col-xs-6">
-                Add a Flavour
-              </div>
-              <div class="col-xs-6">
-                <select class="flavourDropdown" name="">
-                  <option value="almond">Almond</option>
-                  <option value="chocolate">Chocolate</option>
-                  <option value="caramel">Caramel</option>
-                  <option value="pumpkin_spice">Pumpkin Spice</option>
-                  <option value="white_chocolate">White Chocolate</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="optionCell">
-            <div class="optionTopping ">
-              <div class="col-xs-6">
-                Add a Topping
-              </div>
-              <div class="col-xs-6">
-                <select class="toppingDropdown">
-                  <option value="almond">Almond</option>
-                  <option value="chocolate">Chocolate</option>
-                  <option value="caramel">Caramel</option>
-                  <option value="white_chocolate">White Chocolate</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="submitButtonContainer col-xs-12">
-          <div class="submitButton col-xs-4 col-xs-offset-8" ng-click='submitDrinkOptions()'>
-            Submit
-          </div>
-        </div>
-        <div class="col-xs-12 openMore" ng-click='openMoreOptions()'>
-          More Drink Options
-        </div>
+      <div class='col-xs-8'>
+        <h2>menu</h2>
       </div>
-      <div class="col-xs-12 drinkCell" ng-repeat='menuitem in data'>
-        <div class="drinkPhotoHolder">
-          <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" ng-click='openOptionsModal(menuitem)'/>
+      <div class='col-xs-4 cartIcon'>
+        <i class='fa fa-shopping-cart' ng-click='openCart()'></i>
+      </div>
+      <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
+      <div class="drinkListContainer">
+        <div class="col-xs-12 drinkCell" ng-repeat='menuitem in data' ng-click='openOptionsModal()'>
+          <div class="drinkPhotoHolder">
+            <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" />
+          </div>
+          <div class="drinkInfo">
+            <div class="drinkInfo-name">{{menuitem.name}}</div>
+            <div class="drinkInfo-price">${{menuitem.price}}</div>
+          </div>
+          <div class="drinkAction"><i class="fa fa-plus-circle"></i></div>
         </div>
-        <div class="drinkInfo">
-          <div class="drinkInfo-name">{{menuitem.name}}</div>
-          <div class="drinkInfo-price">${{menuitem.price}}</div>
-        </div>
-        <div class="drinkAction"><i class="fa fa-plus-circle"></i></div>
       </div>
     </div>
   </ion-content>

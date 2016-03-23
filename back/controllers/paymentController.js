@@ -3,6 +3,7 @@
 var braintree = require('braintree')
  var Dev = require( '../.Dev.js' )
 
+
 var gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
   merchantId: Dev.merchantId,
@@ -10,12 +11,6 @@ var gateway = braintree.connect({
   privateKey: Dev.privateKey
 })
 
-// var gateway = braintree.connect({
-//   environment: braintree.Environment.Sandbox,
-//   merchantId: Dev.merchantId,
-//   publicKey: Dev.publicKey,
-//   privateKey: Dev.privateKey
-// })
 //FUNCTIONS
 //===========================
 
@@ -41,7 +36,7 @@ function processSale(req, res){
     if (err) {
       throw err
     } else {
-      
+
       res.json(result)
     }
   })

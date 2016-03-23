@@ -1,9 +1,42 @@
-<ion-view view-title="Account">
+<ion-view view-title="PROFILE">
   <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends (just bot John)
-    </ion-toggle>
-    </ion-list>
+      <div class="list card">
+          <div class="text-center">
+              <img class="accountImg" src="http://ecx.images-amazon.com/images/I/41aflc6W56L._SY355_.jpg" alt="">
+            <h2 class="userHeader"  >{{UserCtrl.user.firstName}} {{UserCtrl.user.lastName}}</h2>
+          </div>
+
+	      <div class="item list">
+             <a class="item" href="#/app/profile">
+                <span>Edit Profile</span>
+            </a>
+            
+            <a class="item" href="#/app/history">
+                <span>Order History</span>
+            </a>
+                
+            <a class="item" href="#/app/creditcard">
+                <span>Change Credit Card</span> 
+            </a>
+            <a class="item">
+                <div class="progress-pie-chart">
+                    <div class="ppc-progress">
+                        <div class="ppc-progress-fill"></div>
+                    </div>
+                    <div class="ppc-percents">
+                        <div class="pcc-percents-wrapper">
+                        <span>{{percent}}/10</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <br>
+                <h2>Rewards</h2>
+                </div>
+            </a>
+            
+	      </div>
+	    </div>
+        
   </ion-content>
 </ion-view>
