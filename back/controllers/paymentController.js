@@ -10,6 +10,7 @@ var gateway = braintree.connect({
   publicKey: Dev.publicKey,
   privateKey: Dev.privateKey
 })
+
 //FUNCTIONS
 //===========================
 
@@ -35,7 +36,7 @@ function processSale(req, res){
     if (err) {
       throw err
     } else {
-      console.log(util.inspect(result))
+
       res.json(result)
     }
   })

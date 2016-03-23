@@ -263,3 +263,76 @@ angular.module('starter.controllers', [])
         }
     }
 } )
+
+
+.controller('paymentCtrl', function($scope, $http){
+
+  var vm = this
+    $scope.message = 'Please use the form below to pay:';
+
+
+    
+    $scope.isError = false;
+    $scope.isPaid = false;
+
+    $scope.getToken = function () {
+      $http({
+        method: 'POST',
+        url: 'http://localhost:3000/payments/token'
+      }).success(function (data) {
+
+        console.log(data.client_token);
+
+
+        braintree.setup(data.client_token, 'dropin', {
+          container: 'checkout' ,
+          // Form is not submitted by default when paymentMethodNonceReceived is implemented
+          paymentMethodNonceReceived: function (event, nonce) {
+
+            $scope.message = 'Processing your payment...';
+            
+
+            $http({
+              method: 'POST',
+              url: 'http://localhost:3000/payments/process',
+              data: {
+                amount: vm.amount,
+                payment_method_nonce: nonce
+              }
+            }).success(function (data) {
+              console.log(vm.amount)
+              console.log(data.success);
+
+              if (data.success) {
+                $scope.message = 'Payment authorized, thanks.';
+                $scope.isError = false;
+                $scope.isPaid = true;
+
+              } else {
+                // implement your solution to handle payment failures
+                console.log(vm.amount)
+                $scope.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
+                $scope.isError = true;
+              }
+
+            }).error(function (error) {
+              $scope.message = 'Error: cannot connect to server. Please make sure your server is running.';
+        
+              $scope.isError = true;
+            });
+
+          }
+        });
+
+      }).error(function (error) {
+        $scope.message = 'Error: cannot connect to server. Please make sure your server is running.';
+        
+        $scope.isError = true;
+      });
+
+    };
+
+    $scope.getToken();
+
+})
+
