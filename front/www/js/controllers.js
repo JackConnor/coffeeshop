@@ -1,8 +1,8 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {
-    
-    
+
+
 })
 
 .controller('vendorCtrl', function($scope, $ionicModal) {
@@ -50,6 +50,10 @@ angular.module('starter.controllers', [])
     $scope.$on('modal.removed', function() {
         // Execute action
     });
+}
+    
+.controller('vendorCtrl', function($http, $scope, Chats) {
+  console.log('yooooooo');
   $scope.allOrders =
     [
       {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"small", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
@@ -59,8 +63,9 @@ angular.module('starter.controllers', [])
       {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
       {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5}
   ];
+
   function getSize(order){
-    // console.log(order);
+      
     if(order.size == 'medium'){
       return 'M'
     }
@@ -79,7 +84,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('clientCtrl', function($scope, $stateParams, Chats) {
+.controller('clientCtrl', function($scope, $stateParams, Chats, $http) {
   // $scope.chat = Chats.get($stateParams.chatId);
   $scope.optionsModal = false;
   $scope.moreOptions  = false;
@@ -88,7 +93,17 @@ angular.module('starter.controllers', [])
   $scope.currentDrink = {}
   $scope.currentOrder = [];
 
-  $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
+  $http({
+    method: 'GET'
+    ,url: "http://192.168.0.21:3000/items"
+  })
+  .then(function(items){
+    console.log('y');
+    console.log(items);
+    $scope.data = items.data.data;
+  })
+
+  // $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
 
   function openOptionsModal(currentDrink){
     $scope.currentDrink = currentDrink;
@@ -146,7 +161,7 @@ angular.module('starter.controllers', [])
       else {
         console.log('med');
         $(evt.currentTarget).css({
-          backgroundColor: 'gray'
+          backgroundColor: '#dddddd'
         })
         $(evt.currentTarget).addClass('selected')
       }
@@ -161,7 +176,7 @@ angular.module('starter.controllers', [])
       else {
         console.log('med');
         $(evt.currentTarget).css({
-          backgroundColor: 'gray'
+          backgroundColor: '#dddddd'
         })
         $(evt.currentTarget).addClass('selected')
       }
@@ -176,7 +191,7 @@ angular.module('starter.controllers', [])
       else {
         console.log('med');
         $(evt.currentTarget).css({
-          backgroundColor: 'gray'
+          backgroundColor: '#dddddd'
         })
         $(evt.currentTarget).addClass('selected')
       }
@@ -202,6 +217,7 @@ angular.module('starter.controllers', [])
     drinkDetails.photo = $scope.currentDrink.photourl;
     drinkDetails.price = $scope.currentDrink.price;
     drinkDetails.title = $scope.currentDrink.name;
+    drinkDetails.itemId = $scope.currentDrink._id
     console.log(drinkDetails);
     ///////put all settings back to zero
     $scope.optionsModal = false;
@@ -235,7 +251,22 @@ angular.module('starter.controllers', [])
   $scope.closeCart = closeCart;
 
   $scope.checkout = function(){
-    console.log($scope.currentOrder);
+    var token = window.localStorage.token;
+    var itemIds = [];
+    var totalPrice = 0;
+    for (var i = 0; i < $scope.currentOrder.length; i++) {
+      itemIds.push($scope.currentOrder[i].itemId);
+      totalPrice += $scope.currentOrder[i].price;
+    }
+    console.log(itemIds);
+    $http({
+      method: "POST"
+      ,url: "http://192.168.0.21:3000/orders"
+      ,data: {token: token, order: {items: itemIds, price: totalPrice}}
+    })
+    .then(function(orderResponse){
+      console.log(orderResponse);
+    })
   }
 
 //////end client side controller
@@ -285,3 +316,76 @@ angular.module('starter.controllers', [])
         }
     }
 } )
+
+
+.controller('paymentCtrl', function($scope, $http){
+
+  var vm = this
+    $scope.message = 'Please use the form below to pay:';
+
+
+    
+    $scope.isError = false;
+    $scope.isPaid = false;
+
+    $scope.getToken = function () {
+      $http({
+        method: 'POST',
+        url: 'http://localhost:3000/payments/token'
+      }).success(function (data) {
+
+        console.log(data.client_token);
+
+
+        braintree.setup(data.client_token, 'dropin', {
+          container: 'checkout' ,
+          // Form is not submitted by default when paymentMethodNonceReceived is implemented
+          paymentMethodNonceReceived: function (event, nonce) {
+
+            $scope.message = 'Processing your payment...';
+            
+
+            $http({
+              method: 'POST',
+              url: 'http://localhost:3000/payments/process',
+              data: {
+                amount: vm.amount,
+                payment_method_nonce: nonce
+              }
+            }).success(function (data) {
+              console.log(vm.amount)
+              console.log(data.success);
+
+              if (data.success) {
+                $scope.message = 'Payment authorized, thanks.';
+                $scope.isError = false;
+                $scope.isPaid = true;
+
+              } else {
+                // implement your solution to handle payment failures
+                console.log(vm.amount)
+                $scope.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
+                $scope.isError = true;
+              }
+
+            }).error(function (error) {
+              $scope.message = 'Error: cannot connect to server. Please make sure your server is running.';
+        
+              $scope.isError = true;
+            });
+
+          }
+        });
+
+      }).error(function (error) {
+        $scope.message = 'Error: cannot connect to server. Please make sure your server is running.';
+        
+        $scope.isError = true;
+      });
+
+    };
+
+    $scope.getToken();
+
+})
+

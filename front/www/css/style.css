@@ -1,37 +1,6 @@
 
 /****** Drink List View ******/
 
-.cartIcon {
-  font-size: 35px;
-  text-align: right;
-}
-
-.cartPhotoHolder {
-  padding: 0px;
-  height: 55px;
-}
-
-.cartPhotoHolder img{
-  width: 49px;
-  margin-top: 3px;
-  margin-left: 3px;
-  position: absolute;
-  border-radius: 3px;
-}
-
-.cartPrice {
-  text-align: center;
-}
-
-.checkoutButton {
-  height: 45px;
-  background-color: blue;
-  color: white;
-  text-align: center;
-  padding-top: 15px;
-  font-size: 22px;
-}
-
 .coffeeSize {
   color: white;
   font-size: 35px;
@@ -43,7 +12,7 @@
 
 .drinkCell{
   height: 70px;
-  padding: 10px 0;
+  padding: 10px 5px;
   border: 1px solid #eeeeee;
   border-width: 0 0 1px;
   display: flex;
@@ -59,8 +28,8 @@
 }
 
 .drinkPhoto {
-	width: 100%;
-  height: auto;
+	width: 50px;
+  height: 50px;
   border-radius: 3px;
 }
 
@@ -71,6 +40,9 @@
 
 .drinkInfo-name{
   font-size: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .drinkInfo-price{
@@ -100,7 +72,12 @@
 .closeOptions {
   text-align: right;
   font-size: 22px;
-  margin-top: 5px
+  margin-top: 10px;
+}
+
+.optionsHeaderTitle{
+  font-size: 20px;
+  padding-top: 12px;
 }
 
 .drinkRepeatContainer {
@@ -110,17 +87,39 @@
 
 .espressoMath {
   text-align: right;
-  font-size: 20px;
+  font-size: 18px;
+  margin-top: 4px;
 }
 
-.flavourDropdown {
-  width: 60%;
-  margin-left: 20%;
+.espressoMath-less{
+  margin-right:15px;
 }
 
-.moreOptionsContainer {
-  height: 200px;
-  border: 2px solid orange;
+.espressoMath-number{
+  margin-right:15px;
+}
+
+.optionText{
+  font-size: 16px;
+  margin-top: 3px;
+  padding: 0;
+}
+
+.optionInput{
+  text-align: right;
+  padding: 0;
+}
+
+.optionInput select{
+  width: 100px;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  font-size: 16px;
+  padding: 2px 6px;
+}
+
+.moreOptionsContainer{
+  margin-bottom: 10px;
 }
 
 .nameItem {
@@ -133,27 +132,37 @@
 
 .openMore {
   height: 50px;
-  outline: 2px solid gray;
   text-align: center;
-  font-size: 23px;
-  color: gray;
+  font-size: 18px;
+  color: #888888;
   padding-top: 10px;
+  outline: none;
 }
 
-.optionCell {
-  height: 65px;
-  border-bottom: 3px dotted gray;
+.optionCell{
+  height: 50px;
+  border: 1px solid #eeeeee;
+  border-width: 0 0 1px;
+  padding: 10px 5px;
 }
 
-.optionEspressoShot {
-  padding-top: 15px;
+.optionCell:first-child{
+  border-width: 1px 0 1px;
+}
+
+.orderFlavours {
+  padding: 0px;
+  height: 100%;
 }
 
 .optionsModal {
   height: auto;
-  width: 100%;
-  margin-top: 50px;
-  border: 2px solid black;
+  width: 90%;
+  left: 50%;
+  top: 30px;
+  margin-left: -45%;
+  box-shadow: 0 0 0 400px rgba(0,0,0,.4);
+  border-radius: 5px;
   background-color: white;
   position: fixed;
   z-index: 6;
@@ -174,58 +183,199 @@
   height: 100%;
 }
 
-.removeItemIcon {
-  font-size: 25px;
-  margin-left: 10px;
+.sizeContainer{
+  height: 75px;
+  margin: 20px 0 10px;
+}
+
+.sizeCellContainer{
+  text-align: center;
+  padding: 0;
+}
+
+.sizeCell{
+  border: 2px solid #aaaaaa;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  text-align: center;
+  font-size: 19px;
+  border-radius: 50%;
+}
+
+.sizeSmall{
+  padding-top: 11px;
+}
+
+.sizeSmall i{
+  font-size: 30px;
+}
+
+.sizeMedium{
+  padding-top: 8px;
+}
+
+.sizeMedium i{
+  font-size: 35px;
+}
+
+.sizeLarge{
+  padding-top: 6px;
+}
+
+.sizeLarge i{
+  font-size: 40px;
+}
+
+.modalActionContainer{
+  display: flex;
+  border-top: 1px solid #eeeeee;
+  padding: 10px 0;
+}
+
+.modalActionContainer button{
+  width: 100%;
+  height: auto;
+  padding: 8px 0;
+  box-shadow: none;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.modalActionCancel{
+  display: inline-block;
+}
+
+.modalActionCancel button{
+  background-color: #cccccc;
+}
+
+.modalActionSubmit{
+  display: inline-block;
+}
+
+.modalActionSubmit button{
+  background-color: #1abc9c;
+}
+
+
+/****** Shopping Cart ******/
+
+.cartIcon {
+  font-size: 30px;
+  text-align: right;
+  margin-top: 6px;
+}
+
+.exitCart{
+  padding: 0 15px;
+  margin-top: 10px;
+}
+
+.emptyCart{
+  text-align: center;
+  padding: 40px 0;
+  font-size: 16px;
+  color: #888888;
+}
+
+.emptyCart i{
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.shoppingCartModal h2{
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 5px 15px 10px;
+  border-bottom: 1px solid #cccccc;
 }
 
 .shoppingCartCell {
-  height: 55px;
   width: 100%;
-  border-bottom: 2px dotted gray;
+  height: 60px;
+  border: 1px solid #eeeeee;
+  border-width: 0 0 1px;
+  padding: 5px 5px;
+  display: flex;
+}
+
+.shoppingCartCell:first-child{
+  border-width: 1px 0 1px;
+}
+
+.cartPhotoHolder {
+  width: 50px;
+  height: 50px;
+}
+
+.cartPhotoHolder img{
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+}
+
+.cartContent{
+  flex-grow: 1;
+  padding-left: 10px;
+}
+
+.cartActions{
+  padding-top: 6px;
+  padding-right: 10px;
+}
+
+.cartPrice {
+  width: 50px;
+}
+
+.cartAction-container{
+  width: 36px;
+  height: 36px;
+  border: 1px solid #888888;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 6px;
+  padding-left: 2px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.cartAction-container i{
+  font-size: 20px;
+  color: #888888;
+}
+
+.removeItemIcon{
+  padding-left: 1px;
+}
+
+.checkoutButton {
+  background-color: #1abc9c;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 10px;
+  font-size: 22px;
+  border-radius: 3px;
+  margin-top: 40px;
 }
 
 .shoppingCartModal {
   width: 100%;
   margin-left: 110%;
   height: 700px;
-  border: 3px solid green;
   background-color: white;
   z-index: 5;
   position: absolute;
 }
 
-.sizeCell {
-  border: 2px solid blue;
-  height: 100%;
-  text-align: center;
-  font-size: 19px;
-  padding: 0px;
-  padding-top: 15px;
-
-}
-
-.sizeContainer {
-  height: 75px;
-}
-
-.sizeIcon {
-  font-size: 75px;
-}
-
-.submitButton {
-  height: 80%;
-  margin-top 10%;
-  background-color: green;
-}
-
-.submitButtonContainer {
-  height: 50px;
-}
-
 .upLine {
   height: 80%;
-  margin-top: 10%;
+  margin-top: 5px;
+  float: right;
+  margin-right: 15px;
   border-right: 2px solid gray;
 }
 
