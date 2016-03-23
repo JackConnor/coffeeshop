@@ -84,20 +84,37 @@ function update( req, res ) {
 	} )
 }
 
+function reward( req, res ) {
+  var id = req.decoded.id
+  var promise = User.findOne( { _id: id } ).exec()
+  promise.then( function( user ) {
+    user.rewards--
+    res.json( {
+          error: null,
+          status: 200,
+          message: 'User has used a reward!',
+          data: data
+        } )
+  } )
+  .catch( function( err ) {
+    sendErr( err, res )
+  } )
+}
+
 function destroy( req, res ) {
-	var id = req.decoded.id
-	var promise = User.findByIdAndRemove( id ).exec()
-	promise.then( function( data ) {
-		res.json( {
-					error: null,
-					status: 200,
-					message: 'Successfully Deleted User!',
-					data: data
-				} )
-	} )
-	.catch( function( err ) {
-		sendErr( err, res )
-	} )
+  var id = req.decoded.id
+  var promise = User.findByIdAndRemove( id ).exec()
+  promise.then( function( data ) {
+    res.json( {
+          error: null,
+          status: 200,
+          message: 'Successfully Deleted User!',
+          data: data
+        } )
+  } )
+  .catch( function( err ) {
+    sendErr( err, res )
+  } )
 }
 
 //EXPORTS
@@ -107,5 +124,6 @@ module.exports = {
 	index  : index,
 	show   : show,
 	update : update,
+  reward : reward,
 	destroy: destroy
 }

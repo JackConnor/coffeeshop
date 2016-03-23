@@ -7,7 +7,8 @@
       </div>
       <div class="vendorOrderList">
         <div class='orderCell' ng-repeat='order in allOrders'>
-          <div class="col-sm-6 col-xs-12 orderSection">
+          <div class="col-xs-6 orderSection">
+            <div class="upLine"></div>
             <div class="col-xs-4 orderSection">
               <i class="fa fa-coffee sizeIcon"></i><span class='coffeeSize'>{{getSize(order)}}</span>
             </div>
@@ -18,11 +19,11 @@
               <div class="orderItemPerson">
                 {{order.name}}
               </div>
-              <div class="upLine"></div>
             </div>
           </div>
-          <div class="col-sm-6 col-xs-12 orderSection">
-            <span class='orderShots'>Espresso Shots: {{order.shots}}</span>
+          <div class="col-xs-4 orderSection">
+            <div class='orderShots col-xs-6'>{{order.shots}} shots<span class='upLine'></span></div>
+            <div class='orderFlavours col-xs-3'>{{order.flavours}}<span class='upLine'></div>
           </div>
         </div>
       </div>

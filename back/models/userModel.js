@@ -12,9 +12,9 @@ User = new mongoose.Schema( {
 	password      : { type: String, required: true, unique: false },
   vendor        : { type: Boolean, default: false },
   currentOrders : [],
-  orderHistory  : [], //Reference to orderModel
+  orderHistory  : [{type: String, ref: 'Order'}], //Reference to orderModel
   currentOrder  : { type: String, ref: 'Order'},
-	rewards       : Number
+	rewards       : {type: Number, default: 0}
 } )
 
 //METHODS
@@ -23,6 +23,7 @@ User.pre( 'save', function( next ) {
 	var user = this
 	if ( user.isModified( 'password' ) ) {
 		user.genHash( user.password, next )
+    next()
 	} else {
 		next()
 	}
