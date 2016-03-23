@@ -106,7 +106,7 @@ angular.module('starter.controllers', [])
       else {
         console.log('med');
         $(evt.currentTarget).css({
-          backgroundColor: 'gray'
+          backgroundColor: '#dddddd'
         })
         $(evt.currentTarget).addClass('selected')
       }
@@ -121,7 +121,7 @@ angular.module('starter.controllers', [])
       else {
         console.log('med');
         $(evt.currentTarget).css({
-          backgroundColor: 'gray'
+          backgroundColor: '#dddddd'
         })
         $(evt.currentTarget).addClass('selected')
       }
@@ -136,7 +136,7 @@ angular.module('starter.controllers', [])
       else {
         console.log('med');
         $(evt.currentTarget).css({
-          backgroundColor: 'gray'
+          backgroundColor: '#dddddd'
         })
         $(evt.currentTarget).addClass('selected')
       }

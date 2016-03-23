@@ -42,7 +42,7 @@
 
 .drinkCell{
   height: 70px;
-  padding: 10px 0;
+  padding: 10px 5px;
   border: 1px solid #eeeeee;
   border-width: 0 0 1px;
   display: flex;
@@ -58,8 +58,8 @@
 }
 
 .drinkPhoto {
-	width: 100%;
-  height: auto;
+	width: 50px;
+  height: 50px;
   border-radius: 3px;
 }
 
@@ -70,6 +70,9 @@
 
 .drinkInfo-name{
   font-size: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .drinkInfo-price{
@@ -99,7 +102,12 @@
 .closeOptions {
   text-align: right;
   font-size: 22px;
-  margin-top: 5px
+  margin-top: 10px;
+}
+
+.optionsHeaderTitle{
+  font-size: 20px;
+  padding-top: 12px;
 }
 
 .drinkRepeatContainer {
@@ -109,17 +117,39 @@
 
 .espressoMath {
   text-align: right;
-  font-size: 20px;
+  font-size: 18px;
+  margin-top: 4px;
 }
 
-.flavourDropdown {
-  width: 60%;
-  margin-left: 20%;
+.espressoMath-less{
+  margin-right:15px;
 }
 
-.moreOptionsContainer {
-  height: 200px;
-  border: 2px solid orange;
+.espressoMath-number{
+  margin-right:15px;
+}
+
+.optionText{
+  font-size: 16px;
+  margin-top: 3px;
+  padding: 0;
+}
+
+.optionInput{
+  text-align: right;
+  padding: 0;
+}
+
+.optionInput select{
+  width: 100px;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  font-size: 16px;
+  padding: 2px 6px;
+}
+
+.moreOptionsContainer{
+  margin-bottom: 10px;
 }
 
 .nameItem {
@@ -132,20 +162,22 @@
 
 .openMore {
   height: 50px;
-  outline: 2px solid gray;
   text-align: center;
-  font-size: 23px;
-  color: gray;
+  font-size: 18px;
+  color: #888888;
   padding-top: 10px;
+  outline: none;
 }
 
-.optionCell {
-  height: 65px;
-  border-bottom: 3px dotted gray;
+.optionCell{
+  height: 50px;
+  border: 1px solid #eeeeee;
+  border-width: 0 0 1px;
+  padding: 10px 5px;
 }
 
-.optionEspressoShot {
-  padding-top: 15px;
+.optionCell:first-child{
+  border-width: 1px 0 1px;
 }
 
 .orderFlavours {
@@ -155,9 +187,12 @@
 
 .optionsModal {
   height: auto;
-  width: 100%;
-  margin-top: 50px;
-  border: 2px solid black;
+  width: 90%;
+  left: 50%;
+  top: 30px;
+  margin-left: -45%;
+  box-shadow: 0 0 0 400px rgba(0,0,0,.4);
+  border-radius: 5px;
   background-color: white;
   position: fixed;
   z-index: 6;
@@ -199,32 +234,80 @@
   position: absolute;
 }
 
-.sizeCell {
-  border: 2px solid blue;
-  height: 100%;
+.sizeContainer{
+  height: 75px;
+  margin: 20px 0 10px;
+}
+
+.sizeCellContainer{
+  text-align: center;
+  padding: 0;
+}
+
+.sizeCell{
+  border: 2px solid #aaaaaa;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
   text-align: center;
   font-size: 19px;
-  padding: 0px;
-  padding-top: 15px;
-
+  border-radius: 50%;
 }
 
-.sizeContainer {
-  height: 75px;
+.sizeSmall{
+  padding-top: 11px;
 }
 
-.sizeIcon {
-  font-size: 75px;
+.sizeSmall i{
+  font-size: 30px;
 }
 
-.submitButton {
-  height: 80%;
-  margin-top 10%;
-  background-color: green;
+.sizeMedium{
+  padding-top: 8px;
 }
 
-.submitButtonContainer {
-  height: 50px;
+.sizeMedium i{
+  font-size: 35px;
+}
+
+.sizeLarge{
+  padding-top: 6px;
+}
+
+.sizeLarge i{
+  font-size: 40px;
+}
+
+.modalActionContainer{
+  display: flex;
+  border-top: 1px solid #eeeeee;
+  padding: 10px 0;
+}
+
+.modalActionContainer button{
+  width: 100%;
+  height: auto;
+  padding: 8px 0;
+  box-shadow: none;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.modalActionCancel{
+  display: inline-block;
+}
+
+.modalActionCancel button{
+  background-color: #cccccc;
+}
+
+.modalActionSubmit{
+  display: inline-block;
+}
+
+.modalActionSubmit button{
+  background-color: #1abc9c;
 }
 
 .upLine {
@@ -312,7 +395,7 @@ body {
 .progress-pie-chart {
   margin: 50px auto 0;
 }
->>>>>>> ccc6d5e44530ac3240bc355addcfb05a23fbfe8f
+
 .vendorHeader {
   height: 55px;
   background-color: blue;
