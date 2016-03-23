@@ -1,4 +1,5 @@
 
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700);
 /****** Drink List View ******/
 
 .coffeeSize {
@@ -43,6 +44,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-top: 5px;
 }
 
 .drinkInfo-price{
@@ -329,6 +331,7 @@
 
 .cartPrice {
   width: 50px;
+  padding-top: 12px;
 }
 
 .cartAction-container{
@@ -449,8 +452,11 @@
 }
 
 body {
-  font-family: Arial;
-  background: #f7f7f7;
+    font-family: 'Roboto Slab', serif;
+    background: #fe8c00; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #fe8c00 , #f83600); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #fe8c00 , #f83600); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            
 }
 
 .progress-pie-chart {
@@ -476,4 +482,30 @@ body {
     font-size: 75px;
     margin-top: 2px;
     margin-left: 20px;
+}
+
+.padding {
+    background: #F09819; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #F09819 , #EDDE5D); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #F09819 , #EDDE5D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                    
+}
+
+.newBar {
+    background-color: #D8572A;
+}
+
+.item {
+    background-color: transparent;
+}
+.card {
+    opacity: 0.8;
+}
+
+.tab-nav {
+    background-color: #DB7C26;
+}
+
+.modal-backdrop {
+    background-color: transparent;
 }

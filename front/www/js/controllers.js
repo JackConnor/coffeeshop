@@ -4,8 +4,8 @@ angular.module('starter.controllers', [])
 
 
 })
-
-.controller('vendorCtrl', function($scope, $ionicModal) {
+    
+.controller('vendorCtrl', function($http, $scope, Chats, $ionicModal) {
     var vm = this
     // console.log(io)
     vm.socket = io( "http://192.168.0.21:3000" )
@@ -50,9 +50,7 @@ angular.module('starter.controllers', [])
     $scope.$on('modal.removed', function() {
         // Execute action
     });
-}
     
-.controller('vendorCtrl', function($http, $scope, Chats) {
   console.log('yooooooo');
   $scope.allOrders =
     [
@@ -84,7 +82,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('clientCtrl', function($scope, $stateParams, Chats, $http) {
+.controller('clientCtrl', function($scope, $stateParams, $location, $http, $rootScope) {
   // $scope.chat = Chats.get($stateParams.chatId);
   $scope.optionsModal = false;
   $scope.moreOptions  = false;
@@ -102,9 +100,7 @@ angular.module('starter.controllers', [])
     console.log(items);
     $scope.data = items.data.data;
   })
-
-  // $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
-
+  
   function openOptionsModal(currentDrink){
     $scope.currentDrink = currentDrink;
     $scope.optionsModal = true;
@@ -198,6 +194,13 @@ angular.module('starter.controllers', [])
     }
   }
   $scope.choseSize = choseSize;
+  
+  $scope.removeItem = function(something, index) {
+      console.log(something)
+      console.log("this is the index", index)
+      $scope.currentOrder.splice(index, 1)
+      console.log($scope.currentOrder)
+  }
 
   function submitDrinkOptions() {
     var drinkDetails = {size: '', flavours: '', toppings: '', shots: 0}
@@ -250,23 +253,10 @@ angular.module('starter.controllers', [])
   }
   $scope.closeCart = closeCart;
 
-  $scope.checkout = function(){
-    var token = window.localStorage.token;
-    var itemIds = [];
-    var totalPrice = 0;
-    for (var i = 0; i < $scope.currentOrder.length; i++) {
-      itemIds.push($scope.currentOrder[i].itemId);
-      totalPrice += $scope.currentOrder[i].price;
-    }
-    console.log(itemIds);
-    $http({
-      method: "POST"
-      ,url: "http://192.168.0.21:3000/orders"
-      ,data: {token: token, order: {items: itemIds, price: totalPrice}}
-    })
-    .then(function(orderResponse){
-      console.log(orderResponse);
-    })
+  $scope.checkout = function(order){
+      $rootScope.currentOrder = $scope.currentOrder
+      $location.path('tab/payment')
+    
   }
 
 //////end client side controller
@@ -318,12 +308,29 @@ angular.module('starter.controllers', [])
 } )
 
 
-.controller('paymentCtrl', function($scope, $http){
+.controller('paymentCtrl', function($scope, $rootScope, $http){
 
   var vm = this
     $scope.message = 'Please use the form below to pay:';
-
-
+    console.log("sjdlfjlasdjfalsdf-=========================")
+    var token = window.localStorage.token;
+    var itemIds = [];
+    var totalPrice = 0;
+        console.log($rootScope.currentOrder);
+    $scope.makeOrder = function() {
+    for (var i = 0; i < $scope.currentOrder.length; i++) {
+      itemIds.push($scope.currentOrder[i].itemId);
+      totalPrice += $scope.currentOrder[i].price;
+    }
+    $http({
+      method: "POST"
+      ,url: "http://192.168.0.21:3000/orders"
+      ,data: {token: token, order: {items: itemIds, price: totalPrice}}
+    })
+    .then(function(orderResponse){
+      console.log(orderResponse);
+    })
+    }
     
     $scope.isError = false;
     $scope.isPaid = false;

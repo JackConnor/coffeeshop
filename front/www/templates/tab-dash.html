@@ -1,6 +1,15 @@
 <ion-view view-title="ORDER">
-  <ion-content>
-    <div class="optionsModal" ng-if='optionsModal'>
+  <ion-nav-buttons side="secondary">
+       <i style="font-size: 30px; padding-right: 10px;" class='fa fa-shopping-cart' ng-click='openCart()'></i>
+    </ion-nav-buttons>
+      <ion-nav-buttons  side="left">
+          <div ng-if='cartModal'>
+        <i style="font-size: 30px; padding-right: 10px; margin-top: 0px;" class="fa ion-ios-arrow-left exitCart" ng-click='closeCart()'></i> 
+        
+        </div>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+    <div class="optionsModal padding" ng-if='optionsModal'>
       <div class="optionsHeader">
         <div class="col-xs-8">
           <div class="optionsHeaderTitle">
@@ -89,11 +98,10 @@
       </div>
     </div>
     <!-- /////////shopping cart modal -->
-    <div class="shoppingCartModal" ng-if='cartModal'>
-      <div class="exitCart" ng-click='closeCart()'>
-        <i class="fa ion-ios-arrow-left"></i> Back
-      </div>
+    <div class="shoppingCartModal padding" ng-if='cartModal'>
+      <div class="text-center">
       <h2>YOUR CART</h2>
+      </div>
       <div class="shoppingCartList">
         <div class="shoppingCartCell" ng-repeat='item in currentOrder'>
           <div class="cartPhotoHolder">
@@ -108,7 +116,7 @@
             <div class="cartAction-container" ng-click='openOptionsModal("blah")'>
               <i class="fa fa-pencil"></i>
             </div>
-            <div class="cartAction-container removeItemIcon" ng-click='openOptionsModal("blah")'>
+            <div class="cartAction-container removeItemIcon" ng-click='removeItem(item, $index)'>
               <i class="fa fa-times"></i>
             </div>
           </div>
@@ -126,11 +134,8 @@
       </div>
     </div>
     <div class="drinkRepeatContainer col-xs-12">
-      <div class='col-xs-8'>
+      <div class='col-xs-12 text-center'>
         <h2>MENU</h2>
-      </div>
-      <div class='col-xs-4 cartIcon'>
-        <i class='fa fa-shopping-cart' ng-click='openCart()'></i>
       </div>
       <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
       <div class="drinkListContainer">
