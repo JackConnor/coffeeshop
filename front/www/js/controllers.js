@@ -17,14 +17,6 @@ angular.module('starter.controllers', [])
       {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'}
   ];
 
-  $http({
-    method: 'GET'
-    ,url: "http://192.168.0.21:3000/items"
-  })
-  .then(function(items){
-    console.log(items);
-  })
-
   function getSize(order){
     if(order.size == 'medium'){
       return 'M'
@@ -39,7 +31,7 @@ angular.module('starter.controllers', [])
   $scope.getSize = getSize;
 })
 
-.controller('clientCtrl', function($scope, $stateParams, Chats) {
+.controller('clientCtrl', function($scope, $stateParams, Chats, $http) {
   // $scope.chat = Chats.get($stateParams.chatId);
   $scope.optionsModal = false;
   $scope.moreOptions  = false;
@@ -48,7 +40,17 @@ angular.module('starter.controllers', [])
   $scope.currentDrink = {}
   $scope.currentOrder = [];
 
-  $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
+  $http({
+    method: 'GET'
+    ,url: "http://192.168.0.21:3000/items"
+  })
+  .then(function(items){
+    console.log('y');
+    console.log(items);
+    $scope.data = items.data.data;
+  })
+
+  // $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
 
   function openOptionsModal(currentDrink){
     $scope.currentDrink = currentDrink;
@@ -162,6 +164,7 @@ angular.module('starter.controllers', [])
     drinkDetails.photo = $scope.currentDrink.photourl;
     drinkDetails.price = $scope.currentDrink.price;
     drinkDetails.title = $scope.currentDrink.name;
+    drinkDetails.itemId = $scope.currentDrink._id
     console.log(drinkDetails);
     ///////put all settings back to zero
     $scope.optionsModal = false;
@@ -195,7 +198,22 @@ angular.module('starter.controllers', [])
   $scope.closeCart = closeCart;
 
   $scope.checkout = function(){
-    console.log($scope.currentOrder);
+    var token = window.localStorage.token;
+    var itemIds = [];
+    var totalPrice = 0;
+    for (var i = 0; i < $scope.currentOrder.length; i++) {
+      itemIds.push($scope.currentOrder[i].itemId);
+      totalPrice += $scope.currentOrder[i].price;
+    }
+    console.log(itemIds);
+    $http({
+      method: "POST"
+      ,url: "http://192.168.0.21:3000/orders"
+      ,data: {token: token, order: {items: itemIds, price: totalPrice}}
+    })
+    .then(function(orderResponse){
+      console.log(orderResponse);
+    })
   }
 
 //////end client side controller
