@@ -9,22 +9,13 @@ angular.module('starter.controllers', [])
     var vm = this
     // console.log(io)
     vm.socket = io( "http://192.168.0.21:3000" )
-      var connected;
-      console.log(vm.socket)
-    vm.socket.on( 'test', function( socket ) {
-        connected = true
-		console.log( "Connected" )
-        vm.socket.emit( 'user joined' );
-
-        vm.socket.on( 'disconnect', function ( ) {
-            console.log( 'socket disconnected' );
-        } );
-
-
-		vm.socket.on( vm.conversation, function( data ) {
-			console.log( "DATA", data )
-		} )
-	} )
+      vm.socket.on('test', function(t){
+        console.log('working', t)
+      })
+      
+    vm.socket.on('new order', function(data){
+      console.log('new order', data)
+    })
     
     $ionicModal.fromTemplateUrl('templates/my-modal.html', {
         scope: $scope,
@@ -52,20 +43,9 @@ angular.module('starter.controllers', [])
     });
     
   console.log('yooooooo');
-  var vm = this
-  vm.socket = io.connect('http://192.168.0.21:3000/api')
-  vm.socket.on('new order', function(data){
-    console.log('it works', data)
-  })
-  $scope.allOrders =
-    [
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"small", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"large", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie', time: 5}
-  ];
+  
+  
+  
 
   function getSize(order){
       
@@ -84,6 +64,61 @@ angular.module('starter.controllers', [])
   $scope.addItem = function() {
       $scope.openModal()
   }
+
+
+
+$scope.addNewItem =function(){
+  var vm = this
+  console.log(vm.data.product)
+  $http({
+    method: "POST",
+    url: "http://192.168.0.21:3000/items/one",
+    data: {
+                   
+        name: vm.data.product,
+        price: vm.data.price,
+        token: window.localStorage.token
+        
+  //                       name : { type: String, unique: false },
+  // type : { type: String },
+  // quantity: { type: Number, default: 0 },
+  // price: { type: Number },
+  // description: { type: String }
+
+                 
+                }
+            }).then(function(response){
+                console.log(response.data)
+              })
+}
+
+function getOrders(){
+  console.log( 'TOKEN', window.localStorage.token )
+  $http({
+    method: "get",
+    url: "http://192.168.0.21:3000/orders",
+    headers: {'x-access-token': window.localStorage.token}
+               
+                
+            }).then(function(response){
+                  console.log('all the orders', response.data)
+                 $scope.orders = response.data.data
+                for (more in response.data.data)
+                  // { console.log('hello', response.data.data[more].items[0])
+                {
+                    $scope.orders = response.data.data[more].items[0]
+                    // var hello = response.data.data[more].items[0]
+                    console.log($scope.orders)
+                      
+                  }
+                    // console.log($scope.orders.name)
+                // console.log($scope.orders)
+
+              })
+
+
+}
+getOrders()
 
 })
 
@@ -314,7 +349,7 @@ angular.module('starter.controllers', [])
                     window.localStorage.admin = true
                     $location.path('/vendor')
                 }
-                window.localStorage.token = response.data.data
+                window.localStorage.token = response.data.token
                 $location.path('/tab/dash')
             })
         }

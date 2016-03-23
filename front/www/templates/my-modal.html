@@ -8,7 +8,14 @@
 
   <ion-content>
       <div class="card">
+        <form name="loginForm" ng-submit="addNewItem()">
+            <label class="item item-input">
+                <input type="text" placeholder="PRODUCT" ng-model="data.product">
+        </label>
         <label class="item item-input">
+            <input type="text" placeholder="price" ng-model="data.price">
+        </label>
+       <!--  <label class="item item-input">
             <input type="text" placeholder="Username" ng-model="data.username">
         </label>
         <label class="item item-input">
@@ -22,13 +29,12 @@
         </label>
         <label class="item item-input">
             <input type="text" placeholder="Username" ng-model="data.username">
-        </label>
-        <label class="item item-input">
-            <input type="text" placeholder="Username" ng-model="data.username">
-        </label>
-        <label class="item item-input">
-            <input type="text" placeholder="Username" ng-model="data.username">
-        </label>
+        </label> -->
+        <button class="button button-block button-positive" type="submit">Add new item</button>
+
+
+
+        </form>
     </div>
   </ion-content>
 </ion-modal-view>
