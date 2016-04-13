@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
 .controller('vendorCtrl', function($http, $scope, Chats, $ionicModal) {
     var vm = this
     // console.log(io)
-    vm.socket = io( "http://192.168.0.21:3000" )
+    vm.socket = io( "http://192.168.0.3:3000" )
       vm.socket.on('test', function(t){
         console.log('working', t)
       })
@@ -72,7 +72,7 @@ $scope.addNewItem =function(){
   console.log(vm.data.product)
   $http({
     method: "POST",
-    url: "http://192.168.0.21:3000/items/one",
+    url: "http://192.168.0.3:3000/items/one",
     data: {
 
         name: vm.data.product,
@@ -96,7 +96,7 @@ function getOrders(){
   console.log( 'TOKEN', window.localStorage.token )
   $http({
     method: "get",
-    url: "http://192.168.0.21:3000/orders",
+    url: "http://192.168.0.3:3000/orders",
     headers: {'x-access-token': window.localStorage.token}
 
 
@@ -134,12 +134,12 @@ getOrders()
 
   $http({
     method: 'GET'
-    ,url: "http://192.168.0.21:3000/items"
+    ,url: "http://192.168.0.3:3000/items"
   })
   .then(function(items){
     console.log('y');
     console.log(items);
-    // $scope.data = items.data.data;
+    $scope.data = items.data.data;
   })
 
   // $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
@@ -302,7 +302,7 @@ getOrders()
       $location.path('tab/payment')
 
   }
-  vm.socket = io.connect('http://192.168.0.21:3000/api')
+  vm.socket = io.connect('http://192.168.0.3:3000/api')
   vm.socket.on('test', function(data){
     console.log('it works', data)
   })
@@ -338,7 +338,7 @@ getOrders()
         if(($scope.data.username !== undefined) && ($scope.data.password !== undefined)){
             $http({
                 method: "POST",
-                url: "http://192.168.0.21:3000/authenticate",
+                url: "http://192.168.0.3:3000/authenticate",
                 data: {
                     user: {
                         email: $scope.data.username,
@@ -376,7 +376,7 @@ getOrders()
     }
     $http({
       method: "POST"
-      ,url: "http://192.168.0.21:3000/orders"
+      ,url: "http://192.168.0.3:3000/orders"
       ,data: {token: token, order: {items: itemIds, price: totalPrice}}
     })
     .then(function(orderResponse){
@@ -390,7 +390,7 @@ getOrders()
     $scope.getToken = function () {
       $http({
         method: 'POST',
-        url: 'http://localhost:3000/payments/token'
+        url: 'http://192.168.0.3:3000/payments/token'
       }).success(function (data) {
 
         console.log(data.client_token);
@@ -406,7 +406,7 @@ getOrders()
 
             $http({
               method: 'POST',
-              url: 'http://localhost:3000/payments/process',
+              url: 'http://192.168.0.3:3000/payments/process',
               data: {
                 amount: vm.amount,
                 payment_method_nonce: nonce
