@@ -1,49 +1,23 @@
 
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 /****** Drink List View ******/
 
-.cartIcon {
-  font-size: 35px;
-  text-align: right;
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Montserrat', sans-serif;
 }
-
-.cartPhotoHolder {
-  padding: 0px;
-  height: 55px;
-}
-
-.cartPhotoHolder img{
-  width: 49px;
-  margin-top: 3px;
-  margin-left: 3px;
-  position: absolute;
-  border-radius: 3px;
-}
-
-.cartPrice {
-  text-align: center;
-}
-
-.checkoutButton {
-  height: 45px;
-  background-color: blue;
-  color: white;
-  text-align: center;
-  padding-top: 15px;
-  font-size: 22px;
-}
-
 .coffeeSize {
   color: white;
   font-size: 35px;
   margin-left: -61px;
   position: absolute;
-  padding-top: 18px
+  padding-top: 20px;
+  padding-left: 2px;
 }
 
 .drinkCell{
   height: 70px;
   padding: 10px 5px;
-  border: 1px solid #eeeeee;
+  border: 1px solid black;
   border-width: 0 0 1px;
   display: flex;
 }
@@ -73,11 +47,20 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-top: 5px;
+}
+
+.checkoutDrinkInfo-name{
+  font-size: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 10px;
 }
 
 .drinkInfo-price{
   font-size: 1em;
-  color: #888888;
+  color: black;
 }
 
 .drinkAction{
@@ -88,7 +71,7 @@
 .drinkAction i{
 	font-size: 30px;
 	line-height: 50px;
-	color: #1abc9c;
+	color: dodgerblue;
 }
 
 .editIcon {
@@ -144,6 +127,7 @@
   width: 100px;
   border: 1px solid #cccccc;
   border-radius: 3px;
+  color: black;
   font-size: 16px;
   padding: 2px 6px;
 }
@@ -164,14 +148,14 @@
   height: 50px;
   text-align: center;
   font-size: 18px;
-  color: #888888;
+  color: grey;
   padding-top: 10px;
   outline: none;
 }
 
 .optionCell{
   height: 50px;
-  border: 1px solid #eeeeee;
+  border: 1px solid black;
   border-width: 0 0 1px;
   padding: 10px 5px;
 }
@@ -213,27 +197,6 @@
   height: 100%;
 }
 
-.removeItemIcon {
-  font-size: 25px;
-  margin-left: 10px;
-}
-
-.shoppingCartCell {
-  height: 55px;
-  width: 100%;
-  border-bottom: 2px dotted gray;
-}
-
-.shoppingCartModal {
-  width: 100%;
-  margin-left: 110%;
-  height: 700px;
-  border: 3px solid green;
-  background-color: white;
-  z-index: 5;
-  position: absolute;
-}
-
 .sizeContainer{
   height: 75px;
   margin: 20px 0 10px;
@@ -245,7 +208,7 @@
 }
 
 .sizeCell{
-  border: 2px solid #aaaaaa;
+  border: 2px solid black;
   width: 60px;
   height: 60px;
   display: inline-block;
@@ -308,6 +271,130 @@
 
 .modalActionSubmit button{
   background-color: #1abc9c;
+}
+
+
+/****** Shopping Cart ******/
+
+.cartIcon {
+  font-size: 30px;
+  text-align: right;
+  margin-top: 6px;
+}
+
+.exitCart{
+  padding: 0 15px;
+  margin-top: 10px;
+}
+
+.emptyCart{
+  text-align: center;
+  padding: 40px 0;
+  font-size: 16px;
+  color: #888888;
+}
+
+.emptyCart i{
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.shoppingCartModal h2{
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 5px 15px 10px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.shoppingCartCell {
+  width: 100%;
+  height: 60px;
+  border: 1px solid #eeeeee;
+  border-width: 0 0 1px;
+  padding: 5px 5px;
+  display: flex;
+}
+
+.shoppingCartCell:first-child{
+  border-width: 1px 0 1px;
+}
+
+.cartPhotoHolder {
+  width: 50px;
+  height: 50px;
+}
+
+.cartPhotoHolder img{
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+}
+
+.cartContent{
+  flex-grow: 1;
+  padding-left: 10px;
+}
+
+.cartActions{
+  padding-top: 6px;
+  padding-right: 10px;
+}
+
+.cartPrice {
+  width: 50px;
+  padding-top: 12px;
+}
+
+.cartAction-container{
+  width: 36px;
+  height: 36px;
+  border: 1px solid #888888;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 6px;
+  padding-left: 2px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.cartAction-container i{
+  font-size: 20px;
+  color: #888888;
+}
+
+.removeItemIcon{
+  padding-left: 1px;
+}
+
+.checkoutButton {
+  background-color: #1abc9c;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 10px;
+  font-size: 22px;
+  border-radius: 3px;
+  margin-top: 40px;
+}
+
+.payButton {
+  background-color: #1abc9c;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 10px;
+  font-size: 22px;
+  border-radius: 3px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.shoppingCartModal {
+  width: 100%;
+  margin-left: 110%;
+  height: 700px;
+  background-color: white;
+  z-index: 5;
+  position: absolute;
 }
 
 .upLine {
@@ -388,8 +475,8 @@
 }
 
 body {
-  font-family: Arial;
-  background: #f7f7f7;
+    font-family: 'Montserrat', sans-serif;
+    color: black;
 }
 
 .progress-pie-chart {
@@ -398,7 +485,6 @@ body {
 
 .vendorHeader {
   height: 55px;
-  background-color: blue;
   text-align: center;
 }
 
@@ -410,4 +496,66 @@ body {
 
 .vendorOrderList {
   height: auto;
+}
+
+.vendorsizeIcon {
+    font-size: 75px;
+    margin-top: 2px;
+    margin-left: 20px;
+}
+
+.beginBack {
+    background: #43cea2; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #43cea2 , #185a9d); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #43cea2 , #185a9d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                    
+}
+
+.newBar {
+    background-color: darkslategrey;
+}
+
+.item {
+    background-color: transparent;
+}
+.card {
+    opacity: 0.8;
+}
+
+.tab-nav {
+    background-color: lightslategray;
+}
+
+.modal-backdrop {
+    background-color: transparent;
+}
+.cup {
+  width: 50px;
+}
+
+.orderShots {
+
+  border-left: 4px solid grey;
+  padding: 10px;
+}
+
+#order-title {
+  font-weight: 900
+}
+
+#order-name {
+  font-weight: 900
+
+}
+
+.padding h1 {
+    color: white;
+}
+
+.coffeeImg {
+    width: 200px;
+}
+
+.introPush {
+    padding-top: 5%;
 }

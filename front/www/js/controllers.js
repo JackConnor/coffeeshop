@@ -5,19 +5,50 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('vendorCtrl', function($http, $scope, Chats) {
+.controller('vendorCtrl', function($http, $scope, Chats, $ionicModal) {
+    var vm = this
+    // console.log(io)
+    vm.socket = io( "http://192.168.0.21:3000" )
+      vm.socket.on('test', function(t){
+        console.log('working', t)
+      })
+
+    vm.socket.on('new order', function(data){
+      console.log('new order', data)
+    })
+
+    $ionicModal.fromTemplateUrl('templates/my-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
+    //Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function() {
+        // Execute action
+    });
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function() {
+        // Execute action
+    });
+
   console.log('yooooooo');
-  $scope.allOrders =
-    [
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"small", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"large", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'},
-      {flavours: 'almond', photo:"http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg", price:5, shots:0, size:"medium", title:"Mocha Latte",toppings:'chocolate', name: 'susie'}
-  ];
+
+
+
 
   function getSize(order){
+
     if(order.size == 'medium'){
       return 'M'
     }
@@ -29,9 +60,69 @@ angular.module('starter.controllers', [])
     }
   }
   $scope.getSize = getSize;
+
+  $scope.addItem = function() {
+      $scope.openModal()
+  }
+
+
+
+$scope.addNewItem =function(){
+  var vm = this
+  console.log(vm.data.product)
+  $http({
+    method: "POST",
+    url: "http://192.168.0.21:3000/items/one",
+    data: {
+
+        name: vm.data.product,
+        price: vm.data.price,
+        token: window.localStorage.token
+
+  //                       name : { type: String, unique: false },
+  // type : { type: String },
+  // quantity: { type: Number, default: 0 },
+  // price: { type: Number },
+  // description: { type: String }
+
+
+                }
+            }).then(function(response){
+                console.log(response.data)
+              })
+}
+
+function getOrders(){
+  console.log( 'TOKEN', window.localStorage.token )
+  $http({
+    method: "get",
+    url: "http://192.168.0.21:3000/orders",
+    headers: {'x-access-token': window.localStorage.token}
+
+
+            }).then(function(response){
+                  console.log('all the orders', response.data)
+                 $scope.orders = response.data.data
+                for (more in response.data.data)
+                  // { console.log('hello', response.data.data[more].items[0])
+                {
+                    $scope.orders = response.data.data[more].items[0]
+                    // var hello = response.data.data[more].items[0]
+                    console.log($scope.orders)
+
+                  }
+                    // console.log($scope.orders.name)
+                // console.log($scope.orders)
+
+              })
+
+
+}
+getOrders()
+
 })
 
-.controller('clientCtrl', function($scope, $stateParams, Chats, $http) {
+.controller('clientCtrl', function($scope, $stateParams, $location, $http, $rootScope) {
   // $scope.chat = Chats.get($stateParams.chatId);
   $scope.optionsModal = false;
   $scope.moreOptions  = false;
@@ -39,6 +130,7 @@ angular.module('starter.controllers', [])
   $scope.totalShots   = 0;
   $scope.currentDrink = {}
   $scope.currentOrder = [];
+  var vm = this
 
   $http({
     method: 'GET'
@@ -50,7 +142,7 @@ angular.module('starter.controllers', [])
     // $scope.data = items.data.data;
   })
 
-  $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
+  // $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
 
   function openOptionsModal(currentDrink){
     $scope.currentDrink = currentDrink;
@@ -88,20 +180,20 @@ angular.module('starter.controllers', [])
   function choseSize(evt){
     $('.sizeSmall').removeClass('selected');
     $('.sizeSmall').css({
-      backgroundColor: 'white'
+      backgroundColor: 'transparent'
     })
     $('.sizeMedium').removeClass('selected');
     $('.sizeMedium').css({
-      backgroundColor: 'white'
+      backgroundColor: 'transparent'
     })
     $('.sizeLarge').removeClass('selected');
     $('.sizeLarge').css({
-      backgroundColor: 'white'
+      backgroundColor: 'transparent'
     })
     if($(evt.currentTarget).hasClass('sizeSmall')){
       if($(evt.currentTarget).hasClass('selected')){
         $(evt.currentTarget).css({
-          backgroundColor: 'white'
+          backgroundColor: 'transparent'
         })
         $(evt.currentTarget).removeClass('selected')
       }
@@ -146,6 +238,13 @@ angular.module('starter.controllers', [])
   }
   $scope.choseSize = choseSize;
 
+  $scope.removeItem = function(something, index) {
+      console.log(something)
+      console.log("this is the index", index)
+      $scope.currentOrder.splice(index, 1)
+      console.log($scope.currentOrder)
+  }
+
   function submitDrinkOptions() {
     var drinkDetails = {size: '', flavours: '', toppings: '', shots: 0}
     var sizeEl = $('.selected');
@@ -157,7 +256,10 @@ angular.module('starter.controllers', [])
     }
     else if(sizeEl.hasClass('sizeLarge')){
       drinkDetails.size = 'large';
+    } else {
+        console.log("no size selected")
     }
+
     drinkDetails.flavours = $('.flavourDropdown').val();
     drinkDetails.toppings = $('.toppingDropdown').val();
     drinkDetails.shots = $scope.totalShots;
@@ -191,30 +293,21 @@ angular.module('starter.controllers', [])
     $('.shoppingCartModal').animate({
       marginLeft: '110%'
     }, 300);
-    setTimeout(function(){
-      $scope.cartModal = false;
-    }, 300);
+    $scope.cartModal = false
   }
   $scope.closeCart = closeCart;
 
-  $scope.checkout = function(){
-    var token = window.localStorage.token;
-    var itemIds = [];
-    var totalPrice = 0;
-    for (var i = 0; i < $scope.currentOrder.length; i++) {
-      itemIds.push($scope.currentOrder[i].itemId);
-      totalPrice += $scope.currentOrder[i].price;
-    }
-    console.log(itemIds);
-    $http({
-      method: "POST"
-      ,url: "http://192.168.0.21:3000/orders"
-      ,data: {token: token, order: {items: itemIds, price: totalPrice}}
-    })
-    .then(function(orderResponse){
-      console.log(orderResponse);
-    })
+  $scope.checkout = function(order){
+      $rootScope.currentOrder = $scope.currentOrder
+      $location.path('tab/payment')
+
   }
+  vm.socket = io.connect('http://192.168.0.21:3000/api')
+  vm.socket.on('test', function(data){
+    console.log('it works', data)
+  })
+
+
 
 //////end client side controller
 })
@@ -239,6 +332,7 @@ angular.module('starter.controllers', [])
 
     $scope.data = {}
 
+
     $scope.login = function() {
         console.log("here")
         if(($scope.data.username !== undefined) && ($scope.data.password !== undefined)){
@@ -255,9 +349,9 @@ angular.module('starter.controllers', [])
                 console.log(response)
                 if (response.data.vendor === true ){
                     window.localStorage.admin = true
-                    // $location.path('/tab/vendor')
+                    $location.path('/vendor')
                 }
-                window.localStorage.token = response.data.data
+                window.localStorage.token = response.data.token
                 $location.path('/tab/dash')
             })
         }
@@ -265,12 +359,30 @@ angular.module('starter.controllers', [])
 } )
 
 
-.controller('paymentCtrl', function($scope, $http){
+.controller('paymentCtrl', function($scope, $rootScope, $http){
 
   var vm = this
     $scope.message = 'Please use the form below to pay:';
 
-
+    console.log("sjdlfjlasdjfalsdf-=========================")
+    var token = window.localStorage.token;
+    var itemIds = [];
+    var totalPrice = 0;
+        console.log($rootScope.currentOrder);
+    $scope.makeOrder = function() {
+    for (var i = 0; i < $scope.currentOrder.length; i++) {
+      itemIds.push($scope.currentOrder[i].itemId);
+      totalPrice += $scope.currentOrder[i].price;
+    }
+    $http({
+      method: "POST"
+      ,url: "http://192.168.0.21:3000/orders"
+      ,data: {token: token, order: {items: itemIds, price: totalPrice}}
+    })
+    .then(function(orderResponse){
+      console.log(orderResponse);
+    })
+    }
 
     $scope.isError = false;
     $scope.isPaid = false;
@@ -333,5 +445,13 @@ angular.module('starter.controllers', [])
     };
 
     $scope.getToken();
+
+})
+
+.controller('HistoryCtrl', function($scope, $rootScope, $http){
+
+})
+
+.controller('ProfileCtrl', function($scope, $rootScope, $http){
 
 })
