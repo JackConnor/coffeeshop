@@ -47,10 +47,10 @@ angular.module('starter.controllers', [])
   .then(function(items){
     console.log('y');
     console.log(items);
-    $scope.data = items.data.data;
+    // $scope.data = items.data.data;
   })
 
-  // $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
+  $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
 
   function openOptionsModal(currentDrink){
     $scope.currentDrink = currentDrink;
@@ -271,7 +271,7 @@ angular.module('starter.controllers', [])
     $scope.message = 'Please use the form below to pay:';
 
 
-    
+
     $scope.isError = false;
     $scope.isPaid = false;
 
@@ -290,7 +290,7 @@ angular.module('starter.controllers', [])
           paymentMethodNonceReceived: function (event, nonce) {
 
             $scope.message = 'Processing your payment...';
-            
+
 
             $http({
               method: 'POST',
@@ -317,7 +317,7 @@ angular.module('starter.controllers', [])
 
             }).error(function (error) {
               $scope.message = 'Error: cannot connect to server. Please make sure your server is running.';
-        
+
               $scope.isError = true;
             });
 
@@ -326,7 +326,7 @@ angular.module('starter.controllers', [])
 
       }).error(function (error) {
         $scope.message = 'Error: cannot connect to server. Please make sure your server is running.';
-        
+
         $scope.isError = true;
       });
 
@@ -335,4 +335,3 @@ angular.module('starter.controllers', [])
     $scope.getToken();
 
 })
-
