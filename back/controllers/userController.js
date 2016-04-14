@@ -20,6 +20,7 @@ function sendErr( err, res ) {
 function create( req, res ) {
 	console.log('WE got it!', req.body )
 	var user = req.body.user
+	console.log(user);
 	var promise = User.create( user )
 			promise.then( function( data ) {
 				var token = auth( user )

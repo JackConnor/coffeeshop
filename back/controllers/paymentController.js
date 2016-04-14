@@ -9,13 +9,13 @@ var gateway = braintree.connect({
   merchantId: Dev.merchantId,
   publicKey: Dev.publicKey,
   privateKey: Dev.privateKey
-})
+});
 
 //FUNCTIONS
 //===========================
 
 function getToken(req, res){
-  
+
     gateway.clientToken.generate({}, function (err, token){
       if (err) {
         throw err
@@ -23,11 +23,11 @@ function getToken(req, res){
         res.json({ "client_token": token.clientToken})
       }
     })
- 
+
 }
 
 function processSale(req, res){
-  
+
   var transaction = req.body
   gateway.transaction.sale({
     amount: transaction.amount,

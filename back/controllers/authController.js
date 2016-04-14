@@ -21,9 +21,9 @@ function authenticate( req, res ) {
 	var email    = req.body.user.email
 	var password = req.body.user.password
 	var promise  = User.findOne( { email: email } ).exec()
-		promise
-		.then( function( user ) {
-			if ( !user ) {
+		  promise
+		  	  .then( function( user ) {
+							if ( !user ) {
 				throw 'No user found'
 			}
 			if ( user.validPassword( password ) ) {

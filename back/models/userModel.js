@@ -32,6 +32,7 @@ User.pre( 'save', function( next ) {
 User.methods.genHash = function( password, next ) {
 	var user = this
 	user.password = bcrypt.hash( password, null, null, function( err, hash ) {
+		console.log('hashing that password');
 		if ( err ) {
 			console.log( "Error", err )
 			throw err
