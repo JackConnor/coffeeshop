@@ -1,13 +1,4 @@
 <ion-view>
-  <ion-nav-buttons side="secondary">
-       <i style="font-size: 30px; padding-right: 10px;" class='fa fa-shopping-cart fa-inverse' ng-click='openCart()'></i>
-    </ion-nav-buttons>
-      <ion-nav-buttons  side="left">
-          <div ng-if='cartModal'>
-        <i style="font-size: 30px; padding-right: 10px; margin-top: 0px;" class="fa fa-inverse ion-ios-arrow-left exitCart" ng-click='closeCart()'></i> 
-        
-        </div>
-    </ion-nav-buttons>
   <ion-content >
     <div class="optionsModal padding container" ng-if='optionsModal'>
       <div class="optionsHeader">
@@ -97,7 +88,8 @@
         </div>
       </div>
     </div>
-    <!-- /////////shopping cart modal -->
+    <!-- End Options Modal -->
+    <!-- /////////Start shopping cart modal -->
     <div class="shoppingCartModal padding" ng-if='cartModal'>
       <div class="text-center">
       <h2>YOUR CART</h2>
@@ -132,6 +124,17 @@
       <div class="checkoutButton col-xs-6 col-xs-offset-3" ng-show="currentOrder.length" ng-click='checkout()'>
         Checkout
       </div>
+    </div>
+    <!-- /////////End Modals//// -->
+    <div class="navContainer">
+      <div class="cartHolder">
+        <div class="cartModalHolder">
+         <i class='fa fa-shopping-cart' ng-click='openCart()'></i>
+        </div>
+      </div>
+      <!-- <div ng-if='cartModal'>
+        <i class="fa fa-inverse ion-ios-arrow-left exitCart" ng-click='closeCart()'></i>
+    </div> -->
     </div>
     <div class="drinkRepeatContainer col-xs-12">
       <div class='col-xs-12 text-center'>

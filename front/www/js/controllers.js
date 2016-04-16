@@ -280,12 +280,43 @@ getOrders()
   //////function to open shopping cart
   function openCart(){
     console.log('ipeing');
-    $scope.cartModal = true;
+    $('.drinkRepeatContainer').animate({
+      opacity: 0.0
+    }, 350);
+    // $('.cartModalHolder i').animate({
+    //   fontSize: 60+'px'
+    //   ,paddingRight: 15+'px'
+    // }, 650);
+    $('.cartHolder i').animate({
+      fontSize: 60+"px"
+      ,paddingTop: 25+'px'
+      ,paddingRight: 10+'px'
+      ,color: 'black'
+    }, 1150);
+    $('.cartModalHolder').animate({
+      width: 80+"%"
+      ,marginLeft: 0+'%'
+      ,marginTop: 80+'px'
+      ,height: 350+"px"
+      ,marginRight: 10+"%"
+    }, 850);
     setTimeout(function(){
-      $('.shoppingCartModal').animate({
-        marginLeft: '0px'
-      }, 300);
-    }, 5);
+      $('.cartModalHolder').append(
+        "<div class='cartTitle'>Shopping Cart</div>"
+      );
+      $(".cartTitle").animate({
+        opacity: 1
+      }, 350);
+      $('.cartModalHolder').animate({
+        borderWidth: 5
+      }, 350)
+    }, 1200);
+    // $scope.cartModal = true;
+    // setTimeout(function(){
+    //   $('.shoppingCartModal').animate({
+    //     marginLeft: '0px'
+    //   }, 300);
+    // }, 5);
   }
   $scope.openCart = openCart;
 
