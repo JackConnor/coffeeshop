@@ -14,7 +14,7 @@ angular.module('starter.controllers', [])
       })
 
     vm.socket.on('new order', function(data){
-      console.log('new order', data)
+      console.log('new order', data);
     })
 
     $ionicModal.fromTemplateUrl('templates/my-modal.html', {
@@ -101,8 +101,9 @@ function getOrders(){
 
 
             }).then(function(response){
-                  console.log('all the orders', response.data)
-                 $scope.orders = response.data.data
+                console.log('all the orders', response.data)
+                $scope.orders = response.data.data
+                console.log(response);
                 for (more in response.data.data)
                   // { console.log('hello', response.data.data[more].items[0])
                 {
@@ -297,14 +298,14 @@ getOrders()
   }
   $scope.closeCart = closeCart;
 
-  $scope.checkout = function(order){
+  function checkout(order){
       $rootScope.currentOrder = $scope.currentOrder
-      $location.path('tab/payment')
-
+      $location.path('tab/payment');
   }
+  $scope.checkout = checkout;
   vm.socket = io.connect('http://192.168.0.3:3000/api')
   vm.socket.on('test', function(data){
-    console.log('it works', data)
+    console.log('it works', data);
   })
 
 
@@ -362,13 +363,13 @@ getOrders()
 .controller('paymentCtrl', function($scope, $rootScope, $http){
 
   var vm = this
-    $scope.message = 'Please use the form below to pay:';
+    vm.message = 'Please use the form below to pay:';
 
     console.log("sjdlfjlasdjfalsdf-=========================")
     var token = window.localStorage.token;
     var itemIds = [];
     var totalPrice = 0;
-        console.log($rootScope.currentOrder);
+    console.log($rootScope.currentOrder);
     $scope.makeOrder = function() {
     for (var i = 0; i < $scope.currentOrder.length; i++) {
       itemIds.push($scope.currentOrder[i].itemId);
@@ -389,8 +390,9 @@ getOrders()
 
     $scope.getToken = function () {
       $http({
-        method: 'POST',
-        url: 'http://192.168.0.3:3000/payments/token'
+        method: 'POST'
+        ,url: 'http://192.168.0.3:3000/payments/token'
+        ,data: {}
       }).success(function (data) {
 
         console.log(data.client_token);
@@ -428,7 +430,7 @@ getOrders()
               }
 
             }).error(function (error) {
-              $scope.message = 'Error: cannot connect to server. Please make sure your server is running.';
+              $scope.message = 'Error: cannot connect to server. Please make sure your server is running431.';
 
               $scope.isError = true;
             });
@@ -437,7 +439,7 @@ getOrders()
         });
 
       }).error(function (error) {
-        $scope.message = 'Error: cannot connect to server. Please make sure your server is running.';
+        $scope.message = 'Error: cannot connect to server. Please make sure your server is running440.';
 
         $scope.isError = true;
       });
