@@ -90,46 +90,48 @@
     </div>
     <!-- End Options Modal -->
     <!-- /////////Start shopping cart modal -->
-    <div class="shoppingCartModal padding" ng-if='cartModal'>
+    <!-- <div class="shoppingCartModal padding">
       <div class="text-center">
       <h2>YOUR CART</h2>
       </div>
-      <div class="shoppingCartList">
-        <div class="shoppingCartCell" ng-repeat='item in currentOrder'>
-          <div class="cartPhotoHolder">
-            <img src="{{item.photo}}" alt="" />
-          </div>
-          <div class="cartContent">
-            <div class="checkoutDrinkInfo-name">
-              {{item.title}}
-            </div>
-          </div>
-          <div class="cartActions">
-            <div class="cartAction-container" ng-click='openOptionsModal("blah")'>
-              <i class="fa fa-pencil"></i>
-            </div>
-            <div class="cartAction-container removeItemIcon" ng-click='removeItem(item, $index)'>
-              <i class="fa fa-times"></i>
-            </div>
-          </div>
-          <div class="cartPrice">
-            <span>{{item.price | currency}}</span>
-          </div>
-        </div>
-        <div class="emptyCart" ng-show="!currentOrder.length">
-          <i class="fa fa-frown-o"></i>
-          <div>Bummer, nothing in your cart.</div>
-        </div>
-      </div>
-      <div class="checkoutButton col-xs-6 col-xs-offset-3" ng-show="currentOrder.length" ng-click='checkout()'>
-        Checkout
-      </div>
-    </div>
+    </div> -->
+
     <!-- /////////End Modals//// -->
     <div class="navContainer">
       <div class="cartHolder">
         <div class="cartModalHolder">
+          <div class="xCart fa fa-times" ng-click='closeCart()' ng-if='cartModal'></div>
          <i class='fa fa-shopping-cart' ng-click='openCart()'></i>
+         <div class="shoppingCartList" ng-if='cartModal'>
+           <div class="shoppingCartCell" ng-repeat='item in currentOrder'>
+             <!-- <div class="cartPhotoHolder">
+               <img src="{{item.photo}}" alt="" />
+             </div> -->
+             <div class="cartContent">
+               <div class="checkoutDrinkInfo-name">
+                 {{item.title}}
+               </div>
+             </div>
+             <div class="cartActions">
+               <div class="cartAction-container" ng-click='openOptionsModal("blah")'>
+                 <i class="fa fa-pencil"></i>
+               </div>
+               <div class="cartAction-container removeItemIcon" ng-click='removeItem(item, $index)'>
+                 <i class="fa fa-times"></i>
+               </div>
+             </div>
+             <div class="cartPrice">
+               <span>{{item.price | currency}}</span>
+             </div>
+           </div>
+           <div class="emptyCart" ng-show="!currentOrder.length">
+             <i class="fa fa-frown-o"></i>
+             <div>Bummer, nothing in your cart.</div>
+           </div>
+           <div class="checkoutButton col-xs-6 col-xs-offset-3" ng-show="currentOrder.length" ng-click='checkout()'>
+             Checkout
+           </div>
+         </div>
         </div>
       </div>
       <!-- <div ng-if='cartModal'>

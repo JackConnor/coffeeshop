@@ -55,7 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })
-    
+
     .state('tab.payment', {
         url: '/payment',
         views: {
@@ -65,7 +65,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
         }
     })
-    
+
     .state('tab.history', {
         url: '/history',
         views: {
@@ -114,10 +114,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     ,controller: "vendorCtrl"
   })
 
-  
+
 
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/tab/dash');
 
 });

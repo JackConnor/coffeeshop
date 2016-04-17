@@ -123,7 +123,7 @@ getOrders()
 
 })
 
-.controller('clientCtrl', function($scope, $stateParams, $location, $http, $rootScope) {
+.controller('clientCtrl', function($scope, $stateParams, $location, $http, $rootScope, $timeout) {
   // $scope.chat = Chats.get($stateParams.chatId);
   $scope.optionsModal = false;
   $scope.moreOptions  = false;
@@ -144,6 +144,25 @@ getOrders()
   })
 
   // $scope.data = [{id: 1, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 2, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}, {id: 3, name: 'Mocha Latte', price: 5, photourl: "http://globalassets.starbucks.com/assets/219b313a91c4402cbacfb01754a50998.jpg"}]
+
+  //function to create a translucent layer to block all background clicks
+  function addLayer(zIndex, jqEl){
+    jqEl.prepend(
+      "<div class='clearLayer'></div>"
+    );
+    $('.clearLayer').css({
+      zIndex: zIndex
+    });
+  }
+  function addBlackLayer(zIndex, jqEl, opacity){
+    jqEl.prepend(
+      "<div class='blackLayer'></div>"
+    );
+    $('.blackLayer').css({
+      zIndex: zIndex
+      ,opacity: opacity
+    });
+  }
 
   function openOptionsModal(currentDrink){
     $scope.currentDrink = currentDrink;
@@ -283,48 +302,70 @@ getOrders()
     $('.drinkRepeatContainer').animate({
       opacity: 0.0
     }, 350);
-    // $('.cartModalHolder i').animate({
-    //   fontSize: 60+'px'
-    //   ,paddingRight: 15+'px'
-    // }, 650);
-    $('.cartHolder i').animate({
-      fontSize: 60+"px"
-      ,paddingTop: 25+'px'
-      ,paddingRight: 10+'px'
-      ,color: 'black'
-    }, 1150);
-    $('.cartModalHolder').animate({
-      width: 80+"%"
-      ,marginLeft: 0+'%'
-      ,marginTop: 80+'px'
-      ,height: 350+"px"
-      ,marginRight: 10+"%"
-    }, 850);
     setTimeout(function(){
-      $('.cartModalHolder').append(
-        "<div class='cartTitle'>Shopping Cart</div>"
+      $('.cartHolder i').animate({
+        fontSize: 60+"px"
+        ,paddingTop: 0+'px'
+        ,paddingRight: 5+'px'
+        ,color: 'black'
+      }, 850);
+      $('.cartModalHolder').animate({
+        width: 90+"%"
+        ,marginLeft: 0+'%'
+        ,marginTop: 30+'px'
+        ,paddingTop: 10+'px'
+        ,height: 450+"px"
+        ,marginRight: 5+"%"
+      }, 850);
+    }, 250);
+    setTimeout(function(){
+      $('.cartModalHolder').prepend(
+        "<div class='cartTitle'>Your Order</div>"
       );
       $(".cartTitle").animate({
         opacity: 1
       }, 350);
       $('.cartModalHolder').animate({
         borderWidth: 5
-      }, 350)
-    }, 1200);
-    // $scope.cartModal = true;
-    // setTimeout(function(){
-    //   $('.shoppingCartModal').animate({
-    //     marginLeft: '0px'
-    //   }, 300);
-    // }, 5);
+      }, 350);
+    }, 1250);
+    $timeout(function(){
+      $scope.cartModal = true;
+      console.log('wot?');
+      addLayer(28, $('.drinkRepeatContainer'));
+      // addBlackLayer(29, $('.navContainer'), .1);
+    }, 1500);
   }
   $scope.openCart = openCart;
 
   function closeCart(){
     console.log('clising');
-    $('.shoppingCartModal').animate({
-      marginLeft: '110%'
-    }, 300);
+    $('.cartModalHolder').animate({
+      borderWidth: 0
+    }, 200);
+    setTimeout(function(){
+      $('.cartHolder i').animate({
+        fontSize: 30+"px"
+        ,paddingTop: 0+'px'
+        ,paddingRight: 0+'px'
+      }, 450);
+      $('.cartModalHolder').animate({
+        width: "auto"
+        ,marginLeft: 0+'%'
+        ,marginTop: 0+'px'
+        ,paddingTop: 25+'px'
+        ,height: 100+"%"
+        ,marginRight: 0+"%"
+      }, 450);
+    }, 400);
+    $('.clearLayer').remove();
+    $('.blackLayer').remove();
+    $('.cartTitle').remove();
+    setTimeout(function(){
+      $('.drinkRepeatContainer').animate({
+        opacity: 1
+      }, 350);
+    }, 850);
     $scope.cartModal = false
   }
   $scope.closeCart = closeCart;

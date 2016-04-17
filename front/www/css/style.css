@@ -6,12 +6,21 @@ h1,h2,h3,h4,h5,h6 {
     font-family: 'Montserrat', sans-serif;
 }
 
+.blackLayer {
+  width: 100%;
+  height: 1000px;
+  margin-top: -100px;
+  position: absolute;
+  background-color: black;
+}
+
 .cartHolder {
   position: absolute;
   width: 100%;
   height: 45px;
   text-align: right;
   border: 0px solid black;
+  z-index: 30;
 }
 
 .cartHolder i {
@@ -23,19 +32,28 @@ h1,h2,h3,h4,h5,h6 {
   width: auto;
   height: 100%;
   padding-right: 15px;
-  padding-top: 10px;
+  padding-top: 25px;
   float: right;
   border: 0px solid black;
 }
 
 .cartTitle {
-  display: absolute;
-  width: 100%;
+  position: absolute;
+  width: 75%;
   text-align: left;
-  font-size: 27px;
+  text-align: center;
+  font-size: 25px;
   padding-left: 15px;
-  margin-top: -35px;
+  margin-top: 15px;
   opacity: 0;
+}
+
+.clearLayer {
+  width: 100%;
+  height: 1000px;
+  margin-top: -100px;
+  background-color: black;
+  opacity: 0.1;
 }
 
 .coffeeSize {
@@ -175,7 +193,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .navContainer {
   width: 100%;
-  height: 40px;
+  height: 55px;
   /*background-color: green;*/
   border-bottom: '2px dotted grey'
 }
@@ -332,6 +350,9 @@ h1,h2,h3,h4,h5,h6 {
   padding: 40px 0;
   font-size: 16px;
   color: #888888;
+  /*width: 80px;
+  margin-left: 10%;
+  margin-top: 150px; */
 }
 
 .emptyCart i{
@@ -358,6 +379,10 @@ h1,h2,h3,h4,h5,h6 {
 
 .shoppingCartCell:first-child{
   border-width: 1px 0 1px;
+}
+
+.shoppingCartList {
+  z-index: 200;
 }
 
 .cartPhotoHolder {
@@ -598,4 +623,12 @@ body {
 
 .introPush {
     padding-top: 5%;
+}
+
+.xCart {
+  position: absolute;
+  font-size: 40px;
+  margin-top: -5px;
+  left: 0;
+  padding-left: 25px;
 }
