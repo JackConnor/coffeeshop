@@ -1,10 +1,15 @@
-angular.module('clientController', [])
+angular.module('clientController', ['menuItemsFactory'])
 
   .controller('clientCtrl', clientCtrl);
 
-  clientCtrl.$inject = ['$http', '$timeout'];
+  clientCtrl.$inject = ['$http', '$timeout', 'menuItems'];
 
-  function clientCtrl($http, $timeout){
+  function clientCtrl($http, $timeout, menuItems){
+
+    //////////////////////////////////////////////
+    ////////All Global Variables//////////////////
+    //////////////////////////////////////////////
+
     var vm = this;
     console.log(vm);
     // vm.chat = Chats.get($stateParams.chatId);
@@ -14,17 +19,45 @@ angular.module('clientController', [])
     vm.totalShots   = 0;
     vm.currentDrink = {}
     vm.currentOrder = [];
+    vm.data;////////this is all menuItems
 
-    $http({
-      method: 'GET'
-      ,url: "http://192.168.0.7:3000/items"
-    })
+    //////////////////////////////////////////////
+    ////////End Global Variables//////////////////
+    //////////////////////////////////////////////
+
+
+    //////////////////////////////////////////////
+    ////////All Data Function (i/o)///////////////
+    //////////////////////////////////////////////
+
+    ///////function returns all menu items for restaurant
+    menuItems()
     .then(function(items){
-      console.log('y');
-      console.log(items);
-      vm.data = items.data.data;
-      console.log(vm.data);
+      vm.data = items.data.data;/////all menu items
     });
+
+    //////////////////////////////////////////////
+    ////////End Data Function (i/o)///////////////
+    //////////////////////////////////////////////
+
+
+    //////////////////////////////////////////////
+    ////////All Animation Functions///////////////
+    //////////////////////////////////////////////
+
+    /////opens the options modal when user selects an item
+    function openOptionsModal(currentDrink){
+      vm.currentDrink = currentDrink;
+      vm.optionsModal = true;
+    }
+    /////////function to close the options modal
+    function closeModal(){
+      vm.optionsModal = false;
+      vm.moreOptions  = false;
+      vm.totalShots   = 0;
+    }
+    vm.openOptionsModal = openOptionsModal;
+    vm.closeModal = closeModal;
 
     //function to create a translucent layer to block all background clicks
     function addLayer(zIndex, jqEl){
@@ -45,13 +78,6 @@ angular.module('clientController', [])
       });
     }
 
-    function openOptionsModal(currentDrink){
-      console.log('yoooo');
-      vm.currentDrink = currentDrink;
-      vm.optionsModal = true;
-      console.log(vm.optionsModal);
-    }
-    vm.openOptionsModal = openOptionsModal;
 
     function openMoreOptions(){
       if(!vm.moreOptions){
@@ -62,13 +88,6 @@ angular.module('clientController', [])
       }
     }
     vm.openMoreOptions = openMoreOptions;
-
-    function closeModal(){
-      vm.optionsModal = false;
-      vm.moreOptions  = false;
-      vm.totalShots   = 0;
-    }
-    vm.closeModal = closeModal;
 
     function addShot(){
       vm.totalShots++;
@@ -179,7 +198,7 @@ angular.module('clientController', [])
     }
     vm.submitDrinkOptions = submitDrinkOptions;
 
-    //////function to open shopping cart
+    //////functions to open/close shopping carts/////
     function openCart(){
       console.log('ipeing');
       $('.drinkRepeatContainer').animate({
@@ -221,6 +240,7 @@ angular.module('clientController', [])
     }
     vm.openCart = openCart;
 
+    ///////function to close the shopping cart
     function closeCart(){
       console.log('clising');
       $('.cartModalHolder').animate({
@@ -253,11 +273,11 @@ angular.module('clientController', [])
     }
     vm.closeCart = closeCart;
 
-    function checkout(order){
-        $rootScope.currentOrder = vm.currentOrder
-        $location.path('tab/payment');
-    }
-    vm.checkout = checkout;
+    // function checkout(order){
+    //     $rootScope.currentOrder = vm.currentOrder
+    //     $location.path('tab/payment');
+    // }
+    // vm.checkout = checkout;
     // vm.socket = io.connect('http://192.168.0.7:3000/api')
     // vm.socket.on('test', function(data){
     //   console.log('it works', data);
