@@ -1,6 +1,6 @@
 <ion-view>
   <ion-content >
-    <div class="optionsModal padding container" ng-if='optionsModal'>
+    <div class="optionsModal padding container" ng-if='client.optionsModal'>
       <div class="optionsHeader">
         <div class="col-xs-8">
           <div class="optionsHeaderTitle">
@@ -8,22 +8,22 @@
           </div>
         </div>
         <div class="col-xs-4 closeOptions">
-          <p class='fa fa-times' ng-click='closeModal()'></p>
+          <p class='fa fa-times' ng-click='client.closeModal()'></p>
         </div>
       </div>
       <div class="sizeContainer col-xs-12">
         <div class="sizeCellContainer col-xs-4">
-          <div class="sizeCell sizeSmall" ng-click='choseSize($event)'>
+          <div class="sizeCell sizeSmall" ng-click='client.choseSize($event)'>
             <i class="icon ion-coffee"></i>
           </div>
         </div>
         <div class="sizeCellContainer col-xs-4">
-          <div class="sizeCell sizeMedium" ng-click='choseSize($event)'>
+          <div class="sizeCell sizeMedium" ng-click='client.choseSize($event)'>
             <i class="icon ion-coffee"></i>
           </div>
         </div>
         <div class="sizeCellContainer col-xs-4">
-          <div class="sizeCell sizeLarge" ng-click='choseSize($event)'>
+          <div class="sizeCell sizeLarge" ng-click='client.choseSize($event)'>
             <i class="icon ion-coffee"></i>
           </div>
         </div>
@@ -35,7 +35,7 @@
               Espresso Shot
             </div>
             <div class="col-xs-6 espressoMath optionInput">
-              <span class='fa fa-minus espressoMath-less' ng-click='subtractShot()'></span><span class="espressoMath-number">{{totalShots}}</span><span class='fa fa-plus espressoMath-more' ng-click='addShot()'></span>
+              <span class='fa fa-minus espressoMath-less' ng-click='client.subtractShot()'></span><span class="espressoMath-number">{{vm.totalShots}}</span><span class='fa fa-plus espressoMath-more' ng-click='client.addShot()'></span>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@
           </div>
         </div>
       </div>
-      <div class="openMore col-xs-12" ng-click='openMoreOptions()'>
+      <div class="openMore col-xs-12" ng-click='client.openMoreOptions()'>
         <span ng-if='!moreOptions'>
           More Drink Options <i class="icon ion-ios-arrow-down"></i>
         </span>
@@ -81,10 +81,10 @@
       </div>
       <div class="modalActionContainer col-xs-12">
         <div class="modalActionCancel col-xs-4">
-          <button ng-click='closeModal()'>BACK</button>
+          <button ng-click='client.closeModal()'>BACK</button>
         </div>
         <div class="modalActionSubmit col-xs-8">
-          <button ng-click='submitDrinkOptions()'>ADD TO ORDER</button>
+          <button ng-click='client.submitDrinkOptions()'>ADD TO ORDER</button>
         </div>
       </div>
     </div>
@@ -99,11 +99,11 @@
     <!-- /////////End Modals//// -->
     <div class="navContainer">
       <div class="cartHolder">
-        <div class="cartModalHolder">
-          <div class="xCart fa fa-times" ng-click='closeCart()' ng-if='cartModal'></div>
-         <i class='fa fa-shopping-cart' ng-click='openCart()'></i>
-         <div class="shoppingCartList" ng-if='cartModal'>
-           <div class="shoppingCartCell" ng-repeat='item in currentOrder'>
+        <div class="cartModalHolder" ng-swipe-left='closeCart()'>
+          <div class="xCart fa fa-times" ng-click='client.closeCart()' ng-if='cartModal'></div>
+         <i class='fa fa-shopping-cart' ng-click='client.openCart()'></i>
+         <div class="shoppingCartList" ng-if='cartModal' ng-click='client.closeCart()'>
+           <div class="shoppingCartCell" ng-repeat='item in vm.currentOrder'>
              <!-- <div class="cartPhotoHolder">
                <img src="{{item.photo}}" alt="" />
              </div> -->
@@ -113,10 +113,10 @@
                </div>
              </div>
              <div class="cartActions">
-               <div class="cartAction-container" ng-click='openOptionsModal("blah")'>
+               <div class="cartAction-container" ng-click='client.openOptionsModal("blah")'>
                  <i class="fa fa-pencil"></i>
                </div>
-               <div class="cartAction-container removeItemIcon" ng-click='removeItem(item, $index)'>
+               <div class="cartAction-container removeItemIcon" ng-click='client.removeItem(item, $index)'>
                  <i class="fa fa-times"></i>
                </div>
              </div>
@@ -128,7 +128,7 @@
              <i class="fa fa-frown-o"></i>
              <div>Bummer, nothing in your cart.</div>
            </div>
-           <div class="checkoutButton col-xs-6 col-xs-offset-3" ng-show="currentOrder.length" ng-click='checkout()'>
+           <div class="checkoutButton col-xs-6 col-xs-offset-3" ng-show="currentOrder.length" ng-click='client.checkout()'>
              Checkout
            </div>
          </div>
@@ -144,7 +144,7 @@
       </div>
       <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
       <div class="drinkListContainer">
-        <div class="col-xs-12 drinkCell" ng-repeat='menuitem in data' ng-click='openOptionsModal(menuitem)'>
+        <div class="col-xs-12 drinkCell" ng-repeat='menuitem in client.data' ng-click='client.openOptionsModal(menuitem)'>
           <div class="drinkPhotoHolder">
             <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" />
           </div>

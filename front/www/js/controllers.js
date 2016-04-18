@@ -8,7 +8,7 @@ angular.module('starter.controllers', [])
 .controller('vendorCtrl', function($http, $scope, Chats, $ionicModal) {
     var vm = this
     // console.log(io)
-    vm.socket = io( "http://192.168.0.3:3000" )
+    vm.socket = io( "http://192.168.0.7:3000" )
       vm.socket.on('test', function(t){
         console.log('working', t)
       })
@@ -72,7 +72,7 @@ $scope.addNewItem =function(){
   console.log(vm.data.product)
   $http({
     method: "POST",
-    url: "http://192.168.0.3:3000/items/one",
+    url: "http://192.168.0.7:3000/items/one",
     data: {
 
         name: vm.data.product,
@@ -96,7 +96,7 @@ function getOrders(){
   console.log( 'TOKEN', window.localStorage.token )
   $http({
     method: "get",
-    url: "http://192.168.0.3:3000/orders",
+    url: "http://192.168.0.7:3000/orders",
     headers: {'x-access-token': window.localStorage.token}
 
 
@@ -122,7 +122,7 @@ function getOrders(){
 getOrders()
 
 })
-
+}
 .controller('clientCtrl', function($scope, $stateParams, $location, $http, $rootScope, $timeout) {
   // $scope.chat = Chats.get($stateParams.chatId);
   $scope.optionsModal = false;
@@ -135,7 +135,7 @@ getOrders()
 
   $http({
     method: 'GET'
-    ,url: "http://192.168.0.3:3000/items"
+    ,url: "http://192.168.0.7:3000/items"
   })
   .then(function(items){
     console.log('y');
@@ -375,7 +375,7 @@ getOrders()
       $location.path('tab/payment');
   }
   $scope.checkout = checkout;
-  vm.socket = io.connect('http://192.168.0.3:3000/api')
+  vm.socket = io.connect('http://192.168.0.7:3000/api')
   vm.socket.on('test', function(data){
     console.log('it works', data);
   })
@@ -411,7 +411,7 @@ getOrders()
         if(($scope.data.username !== undefined) && ($scope.data.password !== undefined)){
             $http({
                 method: "POST",
-                url: "http://192.168.0.3:3000/authenticate",
+                url: "http://192.168.0.7:3000/authenticate",
                 data: {
                     user: {
                         email: $scope.data.username,
@@ -449,7 +449,7 @@ getOrders()
     }
     $http({
       method: "POST"
-      ,url: "http://192.168.0.3:3000/orders"
+      ,url: "http://192.168.0.7:3000/orders"
       ,data: {token: token, order: {items: itemIds, price: totalPrice}}
     })
     .then(function(orderResponse){
@@ -463,7 +463,7 @@ getOrders()
     $scope.getToken = function () {
       $http({
         method: 'POST'
-        ,url: 'http://192.168.0.3:3000/payments/token'
+        ,url: 'http://192.168.0.7:3000/payments/token'
         ,data: {}
       }).success(function (data) {
 
@@ -480,7 +480,7 @@ getOrders()
 
             $http({
               method: 'POST',
-              url: 'http://192.168.0.3:3000/payments/process',
+              url: 'http://192.168.0.7:3000/payments/process',
               data: {
                 amount: vm.amount,
                 payment_method_nonce: nonce

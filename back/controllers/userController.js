@@ -23,7 +23,9 @@ function create( req, res ) {
 	console.log(user);
 	var promise = User.create( user )
 			promise.then( function( data ) {
+				console.log(auth);
 				var token = auth( user )
+				console.log(token);
 				res.json( {
 					error: null,
 					status: 200,

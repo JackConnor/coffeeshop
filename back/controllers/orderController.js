@@ -74,6 +74,7 @@ function create( req, res ) {
 function index( req, res ) {
   var promise = Order.find( { completed: false } ).exec()
   promise.then( function( data ) {
+		console.log(data);
     res.json( {
       error: null,
       status: 200,
