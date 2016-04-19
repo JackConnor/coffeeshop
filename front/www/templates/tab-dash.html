@@ -1,102 +1,5 @@
 <ion-view>
   <ion-content >
-    <div class="optionsModal padding container" ng-if='client.optionsModal'>
-      <!-- <div class="optionsHeader">
-        <div class="col-xs-8">
-          <div class="optionsHeaderTitle">
-            Mocha Latte
-          </div>
-        </div>
-        <div class="col-xs-4 closeOptions">
-          <p class='fa fa-times' ng-click='client.closeModal()'></p>
-        </div>
-      </div>
-      <div class="sizeContainer col-xs-12">
-        <div class="sizeCellContainer col-xs-4">
-          <div class="sizeCell sizeSmall" ng-click='client.choseSize($event)'>
-            <i class="icon ion-coffee"></i>
-          </div>
-        </div>
-        <div class="sizeCellContainer col-xs-4">
-          <div class="sizeCell sizeMedium" ng-click='client.choseSize($event)'>
-            <i class="icon ion-coffee"></i>
-          </div>
-        </div>
-        <div class="sizeCellContainer col-xs-4">
-          <div class="sizeCell sizeLarge" ng-click='client.choseSize($event)'>
-            <i class="icon ion-coffee"></i>
-          </div>
-        </div>
-      </div>
-      <div class="moreOptionsContainer col-xs-12" ng-if='client.moreOptions'>
-        <div class="optionCell">
-          <div class="optionEspressoShot">
-            <div class="col-xs-6 optionText">
-              Espresso Shot
-            </div>
-            <div class="col-xs-6 espressoMath optionInput">
-              <span class='fa fa-minus espressoMath-less' ng-click='client.subtractShot()'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more' ng-click='client.addShot()'></span>
-            </div>
-          </div>
-        </div>
-        <div class="optionCell">
-          <div class="optionFlavor">
-            <div class="col-xs-6 optionText">
-              Add a Flavour
-            </div>
-            <div class="col-xs-6 optionInput">
-              <select class="flavourDropdown" name="">
-                <option value="almond">Almond</option>
-                <option value="chocolate">Chocolate</option>
-                <option value="caramel">Caramel</option>
-                <option value="pumpkin_spice">Pumpkin Spice</option>
-                <option value="white_chocolate">White Chocolate</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="optionCell">
-          <div class="optionTopping">
-            <div class="optionText col-xs-6">
-              Add a Topping
-            </div>
-            <div class="col-xs-6 optionInput">
-              <select class="toppingDropdown" name="">
-                <option value="almond">Almond</option>
-                <option value="chocolate">Chocolate</option>
-                <option value="caramel">Caramel</option>
-                <option value="white_chocolate">White Chocolate</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="openMore col-xs-12" ng-click='client.openMoreOptions()'>
-        <span ng-if='!client.moreOptions'>
-          More Drink Options <i class="icon ion-ios-arrow-down"></i>
-        </span>
-        <span ng-if='client.moreOptions'>
-          Close Drink Options <i class="icon ion-ios-arrow-up"></i>
-        </span>
-      </div>
-      <div class="modalActionContainer col-xs-12">
-        <div class="modalActionCancel col-xs-4">
-          <button ng-click='client.closeModal()'>BACK</button>
-        </div>
-        <div class="modalActionSubmit col-xs-8">
-          <button ng-click='client.submitDrinkOptions()'>ADD TO ORDER</button>
-        </div>
-      </div> -->
-    </div>
-    <!-- End Options Modal -->
-    <!-- /////////Start shopping cart modal -->
-    <!-- <div class="shoppingCartModal padding">
-      <div class="text-center">
-      <h2>YOUR CART</h2>
-      </div>
-    </div> -->
-
-    <!-- /////////End Modals//// -->
     <div class="navContainer">
       <div class="cartHolder">
         <div class="cartModalHolder">
@@ -105,13 +8,12 @@
 
          <div class="listContainer">
            <div class="shoppingCartList" ng-if='client.cartModal'>
-             <div class="shoppingCartCell" ng-repeat='item in client.currentOrder'>
+             <div ng-repeat='item in client.currentOrder' class="shoppingCartCell" >
                <!-- <div class="cartPhotoHolder">
                  <img src="{{item.photo}}" alt="" />
                </div> -->
-               <div class="cartContent">
+               <div class="cartContent  shopping{{item.index}}">
                  <div class="checkoutDrinkInfo-name">
-                   {{item.title}}
                  </div>
                </div>
                <div class="cartActions">
@@ -135,9 +37,12 @@
              <div class="checkoutTotal col-xs-6">
                {{client.orderTotalPrice | currency}}
              </div>
-             <div class="checkoutButton col-xs-5"ng-click='client.checkout()'>
+             <div class="checkoutButton col-xs-5"ng-click='client.getToken()'>
                Checkout
              </div>
+             <form class="" >
+                <div id="checkout"></div>
+             </form>
            </div>
          </div>
         </div>
@@ -152,7 +57,7 @@
       </div> -->
       <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
       <div class="drinkListContainer">
-        <div class=" drinkCell optionClosed" ng-repeat='menuitem in client.data' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
+        <div class=" drinkCell optionClosed drinkCell_{{$index}}" ng-repeat='menuitem in client.data' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
           <div class="optionsPart">
             <div class="sizeContainer col-xs-12">
               <div class="sizeCellContainer col-xs-4">

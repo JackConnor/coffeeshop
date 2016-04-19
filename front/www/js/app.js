@@ -61,9 +61,10 @@ angular.module('starter', ['ionic', 'starter.services', 'clientController', 'log
         url: '/payment',
         views: {
         'tab-dash': {
-            templateUrl: 'templates/payments.html',
-        controller: 'paymentCtrl as paymentCtrl'
-        }
+            templateUrl: 'templates/payments.html'
+            // ,controller: 'paymentCtrl'
+            // ,controllerAs: 'payment'
+          }
         }
     })
 

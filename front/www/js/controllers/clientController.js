@@ -2,9 +2,9 @@ angular.module('clientController', ['menuItemsFactory'])
 
   .controller('clientCtrl', clientCtrl);
 
-  clientCtrl.$inject = ['$http', '$timeout', 'menuItems'];
+  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope'];
 
-  function clientCtrl($http, $timeout, menuItems){
+  function clientCtrl($http, $timeout, menuItems, $rootScope){
 
     //////////////////////////////////////////////
     ////////All Global Variables//////////////////
@@ -74,70 +74,86 @@ angular.module('clientController', ['menuItemsFactory'])
         var distance   = elOffset - drinkListTop;
         clonedEl.css({
           marginTop: distance
-          ,borderBottom: "2px solid black"
-          ,borderWidth: 1
+          ,borderBottom: "0px solid black"
+          ,borderWidth: 0
+          ,borderRadius: '5px'
         });
         $('.optionClosed').animate({
           opacity: 0
-        }, 300);
+        }, 150);
         clonedEl.find('.drinkIn-price').animate({
           opacity: 0
-        }, 300);
+        }, 150);
         setTimeout(function(){
           clonedEl.find('.drinkIn-price').css({
             float: 'left'
             ,marginLeft: '20px'
             ,marginTop: '10px'
           });
-        }, 900);
+        }, 500);
         setTimeout(function(){
           $('.drinkListContainer').prepend(clonedEl[0]);
-        }, 100);
+        }, 05);
         setTimeout(function(){
           clonedEl.animate({
             height: '325px'
             ,width: '90%'
             ,marginTop: '10px'
             ,marginLeft: '5%'
-            ,borderWidth: 5
-            ,borderBottomWidth: 5
-          }, 500);
+            // ,borderWidth: 5
+            // ,borderBottomWidth: 5
+          }, 300);
           clonedEl.find('.drinkPhotoHolder').animate({
             width: '75px'
             ,height: '75px'
             ,marginTop: '20px'
             ,marginLeft: '30px'
-          }, 500);
+          }, 300);
           clonedEl.find('.drinkIn').animate({
             fontSize: '28px'
             ,marginTop: '20px'
-          }, 500);
-        }, 500);
+          }, 300);
+        }, 250);
         setTimeout(function(){
           clonedEl.prepend(
             "<div class='col-xs-4 closeOptions'>"+
               "<p class='fa fa-times'></p>"+
             "</div>"
           );
+          clonedEl.animate({
+            // height: '325px'
+            // ,width: '90%'
+            // ,marginTop: '10px'
+            // ,marginLeft: '5%'
+            borderWidth: 2
+            ,borderBottomWidth: 2
+          }, 250);
           clonedEl.find('.closeOptions').on('click', closeModal);
           clonedEl.find('.optionsPart').animate({
             height: '200px'
             ,opacity: 1
             ,zIndex: 500
-          }, 500);
-        }, 700);
+          }, 250);
+        }, 550);
         setTimeout(function(){
           clonedEl.find('.drinkIn-price').animate({
             opacity: 1
           }, 500);
-        }, 1000);
+        }, 700);
       }
+      vm.currentDrink        = currentDrink;
+      vm.currentDrink.index  = index;
+      // vm.currentDrink.evt.currentTarget   = evt.currentTarget;
       openUp();
-      vm.currentDrink = currentDrink;
     }
     /////////function to close the options modal
     function closeModal(){
-      $('.optionOpen').remove();
+      $('.optionOpen').animate({
+        opacity: 0
+      }, 200);
+      setTimeout(function(){
+        $('.optionOpen').remove();
+      }, 200);
       $('.optionClosed').animate({
         opacity: 1
       }, 500);
@@ -376,45 +392,50 @@ angular.module('clientController', ['menuItemsFactory'])
 
     //////functions to open/close shopping carts/////
     function openCart(evt){
+      ////WE'LL USE this later for double modal loads
+      // closeModal();closeModal
+      // setTimeout(function(){
+      //
+      // })
       // closeModal();
       $('.drinkRepeatContainer').animate({
         opacity: 0.0
-      }, 350);
-      setTimeout(function(){
-        $('.cartHolder i').animate({
-          fontSize: 60+"px"
-          ,paddingTop: 0+'px'
-          ,paddingRight: 5+'px'
-          ,color: 'black'
-        }, 450);
-        $('.cartModalHolder').animate({
-          width: 90+"%"
-          ,marginLeft: 0+'%'
-          ,marginTop: 30+'px'
-          ,paddingTop: 10+'px'
-          ,height: 450+"px"
-          ,marginRight: 5+"%"
-        }, 450);
-      }, 100);
+      }, 150);
+      // setTimeout(function(){
+      $('.cartHolder i').animate({
+        fontSize: 60+"px"
+        ,paddingTop: 0+'px'
+        ,paddingRight: 5+'px'
+        ,color: 'black'
+      }, 250);
+      $('.cartModalHolder').animate({
+        width: 90+"%"
+        ,marginLeft: 0+'%'
+        ,marginTop: 30+'px'
+        ,paddingTop: 10+'px'
+        ,height: 450+"px"
+        ,marginRight: 5+"%"
+      }, 250);
+      // }, 150);
       setTimeout(function(){
         $('.cartModalHolder').prepend(
           "<div class='cartTitle'>Your Order</div>"
         );
         $('.cartModalHolder').animate({
           borderWidth: 5
-        }, 200);
-      }, 250);
+        }, 300);
+      }, 450);
       setTimeout(function(){
         $(".cartTitle").animate({
           opacity: 1
         }, 300);
-      }, 700);
+      }, 500);
       $timeout(function(){
         vm.cartModal = true;
         console.log('wot?');
         addLayer(28, $('.drinkRepeatContainer'));
         // addBlackLayer(29, $('.navContainer'), .1);
-      }, 700);
+      }, 500);
     }
     vm.openCart = function(){
       if(!vm.cartModal){
@@ -428,7 +449,7 @@ angular.module('clientController', ['menuItemsFactory'])
       $('.cartModalHolder').animate({
         borderWidth: 0
       }, 200);
-      setTimeout(function(){
+      // setTimeout(function(){
         $('.cartHolder i').animate({
           fontSize: 30+"px"
           ,paddingTop: 0+'px'
@@ -442,31 +463,90 @@ angular.module('clientController', ['menuItemsFactory'])
           ,height: "115%"
           ,marginRight: 0+"%"
         }, 250);
-      }, 201);
+      // }, 135);
       $('.clearLayer').remove();
       $('.blackLayer').remove();
       $('.cartTitle').remove();
       setTimeout(function(){
         $('.drinkRepeatContainer').animate({
           opacity: 1
-        }, 350);
-      }, 350);
+        },200);
+      }, 400);
       $timeout(function(){
         vm.cartModal = false
       }, 100);
     }
     vm.closeCart = closeCart;
 
-    // function checkout(order){
-    //     $rootScope.currentOrder = vm.currentOrder
-    //     $location.path('tab/payment');
-    // }
-    // vm.checkout = checkout;
-    // vm.socket = io.connect('http://192.168.0.3:3000/api')
+    function checkout(order){
+        // $rootScope.currentOrder = vm.currentOrder
+        // window.location.hash = '#/tab/payment';
+
+    }
+    vm.checkout = checkout;
+    // vm.socket = io.connect('http://192.168.0.10:3000/api')
     // vm.socket.on('test', function(data){
     //   console.log('it works', data);
     // });
 
+    ///////payment and braintree injection function
+    vm.getToken = function () {
+      $http({
+        method: 'POST'
+        ,url: 'http://192.168.0.10:3000/payments/token'
+        ,data: {}
+      }).success(function (data) {
+
+        console.log(data.client_token);
+
+
+        braintree.setup(data.client_token, 'dropin', {
+          container: 'checkout' ,
+          // Form is not submitted by default when paymentMethodNonceReceived is implemented
+          paymentMethodNonceReceived: function (event, nonce) {
+
+            vm.message = 'Processing your payment...';
+
+
+            $http({
+              method: 'POST',
+              url: 'http://192.168.0.10:3000/payments/process',
+              data: {
+                amount: vm.amount,
+                payment_method_nonce: nonce
+              }
+            }).success(function (data) {
+              console.log(vm.amount)
+              console.log(data.success);
+
+              if (data.success) {
+                vm.message = 'Payment authorized, thanks.';
+                vm.isError = false;
+                vm.isPaid = true;
+
+              } else {
+                // implement your solution to handle payment failures
+                console.log(vm.amount)
+                vm.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
+                vm.isError = true;
+              }
+
+            }).error(function (error) {
+              vm.message = 'Error: cannot connect to server. Please make sure your server is running431.';
+
+              vm.isError = true;
+            });
+
+          }
+        });
+
+      }).error(function (error) {
+        vm.message = 'Error: cannot connect to server. Please make sure your server is running440.';
+
+        vm.isError = true;
+      });
+
+    };
   /////////////////////////////
   ///////end Client Ctrl///////
   /////////////////////////////

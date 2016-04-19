@@ -7,7 +7,7 @@ angular.module('vendorController', [])
   function vendorCtrl(){
     var vm = this;
     console.log(vm);
-    // vm.socket = io( "http://192.168.0.3:3000" )
+    // vm.socket = io( "http://192.168.0.10:3000" )
     //   vm.socket.on('test', function(t){
     //     console.log('working', t)
     //   })
@@ -71,7 +71,7 @@ angular.module('vendorController', [])
     //   console.log(vm.data.product)
     //   $http({
     //     method: "POST",
-    //     url: "http://192.168.0.3:3000/items/one",
+    //     url: "http://192.168.0.10:3000/items/one",
     //     data: {
     //
     //         name: vm.data.product,
@@ -95,7 +95,7 @@ angular.module('vendorController', [])
     //   console.log( 'TOKEN', window.localStorage.token )
     //   $http({
     //     method: "get",
-    //     url: "http://192.168.0.3:3000/orders",
+    //     url: "http://192.168.0.10:3000/orders",
     //     headers: {'x-access-token': window.localStorage.token}
     //
     //
