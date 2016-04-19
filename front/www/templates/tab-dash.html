@@ -147,23 +147,13 @@
     </div> -->
     </div>
     <div class="drinkRepeatContainer col-xs-12">
-      <div class='col-xs-12 text-center'>
+      <!-- <div class='col-xs-12 text-center'>
         <h2>Your logo here</h2>
-      </div>
+      </div> -->
       <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
       <div class="drinkListContainer">
         <div class=" drinkCell optionClosed" ng-repeat='menuitem in client.data' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
           <div class="optionsPart">
-            <div class="optionsHeader">
-              <div class="col-xs-8">
-                <div class="optionsHeaderTitle">
-                  Mocha Latte
-                </div>
-              </div>
-              <!-- <div class="col-xs-4 closeOptions">
-                <p class='fa fa-times' ng-click='client.closeModal()'></p>
-              </div> -->
-            </div>
             <div class="sizeContainer col-xs-12">
               <div class="sizeCellContainer col-xs-4">
                 <div class="sizeCell sizeSmall">
@@ -230,9 +220,9 @@
               </span>
             </div>
             <div class="modalActionContainer col-xs-12">
-              <div class="modalActionCancel col-xs-4">
+              <!-- <div class="modalActionCancel col-xs-4">
                 <button ng-click='client.closeModal()'>BACK</button>
-              </div>
+              </div> -->
               <div class="modalActionSubmit col-xs-8">
                 <button ng-click='client.submitDrinkOptions()'>ADD TO ORDER</button>
               </div>
@@ -241,9 +231,9 @@
           <div class="drinkPhotoHolder">
             <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" />
           </div>
-          <div class="drinkInfo">
-            <div class="drinkInfo-name">{{menuitem.name}}</div>
-            <div class="drinkInfo-price">${{menuitem.price}}</div>
+          <div class="drinkIn">
+            <div class="drinkIn-name">{{menuitem.name}}</div>
+            <div class="drinkIn-price">${{menuitem.price}}</div>
           </div>
           <div class="drinkAction"><i class="fa fa-plus-circle"></i></div>
         </div>

@@ -56,7 +56,10 @@ angular.module('clientController', ['menuItemsFactory'])
       function openUp(){
         var clonedEl = $(evt.currentTarget).clone();
         clonedEl.find('.sizeCell').on('click', choseSize);
-        clonedEl.find('.openMore').on('click', openMoreOptions);
+        clonedEl.find('.openMore').on('click', function(){
+          openMoreOptions(clonedEl);
+        });
+        clonedEl.find('.closeOptions').on('click', closeModal);
         clonedEl.addClass('optionOpen');
         clonedEl.removeClass('optionClosed');
         var removeCircle = clonedEl.find('.fa-plus-circle');
@@ -77,51 +80,56 @@ angular.module('clientController', ['menuItemsFactory'])
         }, 100);
         setTimeout(function(){
           clonedEl.animate({
-            height: '450px'
+            height: '325px'
             ,width: '90%'
-            ,marginTop: '45px'
+            ,marginTop: '10px'
             ,marginLeft: '5%'
             ,borderWidth: 5
             ,borderBottomWidth: 5
           }, 500);
-          $('.drinkPhotoHolder').animate({
-            // marginLeft: '50px'
-            width: '120px'
-            ,height: '120px'
-            ,marginTop: '15px'
-            ,marginLeft: '15px'
+          clonedEl.find('.drinkPhotoHolder').animate({
+            width: '75px'
+            ,height: '75px'
+            ,marginTop: '20px'
+            ,marginLeft: '30px'
           }, 500);
-          $('.drinkInfo').animate({
+          clonedEl.find('.drinkIn').animate({
             fontSize: '28px'
-            ,paddingLeft: '0px'
+            ,paddingLeft: '20px'
             ,width: '50%'
-            ,marginTop: '15px'
+            ,marginTop: '20px'
           }, 500);
-          $('.drinkInfo-name').animate({
-            paddingLeft: '25px'
-          }, 500)
-          $('.drinkInfo-price').animate({
-            marginLeft: '25px'
-            ,marginTop: '10px'
-          }, 500);
-          $('.optionsPart').animate({
+        }, 500);
+        setTimeout(function(){
+          clonedEl.prepend(
+            "<div class='col-xs-4 closeOptions'>"+
+              "<p class='fa fa-times'></p>"+
+            "</div>"
+          );
+          clonedEl.find('.closeOptions').on('click', closeModal);
+          clonedEl.find('.optionsPart').animate({
             height: '200px'
             ,opacity: 1
             ,zIndex: 500
           }, 500);
-        }, 500);
+        }, 700);
       }
       openUp();
       vm.currentDrink = currentDrink;
     }
     /////////function to close the options modal
     function closeModal(){
-      vm.optionsModal = false;
-      vm.moreOptions  = false;
-      vm.totalShots   = 0;
+      $('.optionOpen').remove();
+      $('.optionClosed').animate({
+        opacity: 1
+      }, 500);
+      $('.optionsPart').animate({
+        opacity: 0
+        ,height: 0
+      }, 500);
     }
     vm.openOptionsModal = openOptionsModal;
-    vm.closeModal = closeModal;
+    // vm.closeModal = closeModal;
 
     //function to create a translucent layer to block all background clicks
     function addLayer(zIndex, jqEl){
@@ -142,32 +150,34 @@ angular.module('clientController', ['menuItemsFactory'])
       });
     }
 
-    function openMoreOptions(){
+    function openMoreOptions(parentEl){
+      console.log(parentEl);
       if(vm.moreOptions === false){
         console.log('yoooooooo');
-        $('.drinkCell').animate({
-          height: '600px'
+        parentEl.animate({
+          height: '475px'
         }, 300);
-        $('.moreOptionsContainer').animate({
+        parentEl.find('.moreOptionsContainer').animate({
           height: '150px'
         }, 300);
         setTimeout(function(){
-          $('.moreOptionsContainer').animate({
+          parentEl.find('.moreOptionsContainer').animate({
             opacity: 1
           }, 500);
-          $('.moreDrinkOps').text('Close Drink Options');
+          parentEl.find('.moreDrinkOps').text('Close Drink Options');
         }, 200);
         vm.moreOptions = true;
       }
+      //////the ext part actuall closes it
       else {
-        $('.drinkCell').animate({
-          height: '450px'
+        parentEl.animate({
+          height: '325px'
         }, 300);
-        $('.moreOptionsContainer').animate({
+        parentEl.find('.moreOptionsContainer').animate({
           height: '0px'
           ,opacity: 0
         }, 300);
-        $('.moreDrinkOps').text('Close Drink Options');
+        parentEl.find('.moreDrinkOps').text('Close Drink Options');
         vm.moreOptions = false;
       }
     }
@@ -345,7 +355,7 @@ angular.module('clientController', ['menuItemsFactory'])
 
     //////functions to open/close shopping carts/////
     function openCart(evt){
-      console.log('ipeing');
+      closeModal();
       $('.drinkRepeatContainer').animate({
         opacity: 0.0
       }, 350);
@@ -431,7 +441,7 @@ angular.module('clientController', ['menuItemsFactory'])
     //     $location.path('tab/payment');
     // }
     // vm.checkout = checkout;
-    // vm.socket = io.connect('http://192.168.0.7:3000/api')
+    // vm.socket = io.connect('http://192.168.0.3:3000/api')
     // vm.socket.on('test', function(data){
     //   console.log('it works', data);
     // });
