@@ -1,10 +1,11 @@
-angular.module('clientController', ['menuItemsFactory'])
+angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory'])
 
   .controller('clientCtrl', clientCtrl);
 
-  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope'];
+  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken'];
 
-  function clientCtrl($http, $timeout, menuItems, $rootScope){
+  function clientCtrl($http, $timeout, menuItems, $rootScope, braintreeToken){
+    console.log(braintreeToken);
 
     //////////////////////////////////////////////
     ////////All Global Variables//////////////////
@@ -445,7 +446,11 @@ angular.module('clientController', ['menuItemsFactory'])
 
     ///////function to close the shopping cart
     function closeCart(){
-      console.log('clising');
+      ////removes the cart and adds it back
+      $('#checkout').remove();
+      $('.checkoutForm').append(
+        "<div id='checkout'></div>"
+      )
       $('.cartModalHolder').animate({
         borderWidth: 0
       }, 200);
@@ -491,11 +496,8 @@ angular.module('clientController', ['menuItemsFactory'])
 
     ///////payment and braintree injection function
     vm.getToken = function () {
-      $http({
-        method: 'POST'
-        ,url: 'http://192.168.0.10:3000/payments/token'
-        ,data: {}
-      }).success(function (data) {
+      braintreeToken()
+      .success(function (data) {
 
         console.log(data.client_token);
 
