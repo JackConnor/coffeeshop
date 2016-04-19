@@ -1,11 +1,10 @@
-angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory'])
+angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory', 'braintreeProcessFactory'])
 
   .controller('clientCtrl', clientCtrl);
 
-  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken'];
+  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken', 'braintreeProcess'];
 
   function clientCtrl($http, $timeout, menuItems, $rootScope, braintreeToken){
-    console.log(braintreeToken);
 
     //////////////////////////////////////////////
     ////////All Global Variables//////////////////
@@ -17,10 +16,11 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory']
     vm.optionsModal    = false;
     vm.moreOptions     = false;
     vm.cartModal       = false;
+    vm.optionsArray    = false;
+    vm.checkoutOpen    = false;
     vm.totalShots      = 0;
     vm.currentDrink    = {}
     vm.currentOrder    = [];
-    vm.optionsArray    = false;
     vm.orderTotalPrice = 0;
     vm.openCart;
     vm.data;////////this is all menuItems
@@ -450,7 +450,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory']
       $('#checkout').remove();
       $('.checkoutForm').append(
         "<div id='checkout'></div>"
-      )
+      );
       $('.cartModalHolder').animate({
         borderWidth: 0
       }, 200);
@@ -483,71 +483,129 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory']
     }
     vm.closeCart = closeCart;
 
-    function checkout(order){
-        // $rootScope.currentOrder = vm.currentOrder
-        // window.location.hash = '#/tab/payment';
-
-    }
-    vm.checkout = checkout;
-    // vm.socket = io.connect('http://192.168.0.10:3000/api')
-    // vm.socket.on('test', function(data){
-    //   console.log('it works', data);
-    // });
-
     ///////payment and braintree injection function
     vm.getToken = function () {
-      braintreeToken()
-      .success(function (data) {
+      if(!vm.checkoutOpen){
 
-        console.log(data.client_token);
+        // animation stuff
+        var listOffset = $('.shoppingCartList').offset().top;
+        var checkoutOffset = $('.checkoutContainer').offset().top;
+        var margDist = checkoutOffset - listOffset;
+        $('.checkoutButton').text('Back');
+        $('.shoppingCartCell').animate({
+          opacity: 0
+        }, 200);
+        $('.checkoutContainer').animate({
+          marginTop: -margDist
+        }, 400);
 
+        vm.checkoutOpen = true;
+        braintreeToken()
+        .success(function (data) {
 
-        braintree.setup(data.client_token, 'dropin', {
-          container: 'checkout' ,
-          // Form is not submitted by default when paymentMethodNonceReceived is implemented
-          paymentMethodNonceReceived: function (event, nonce) {
+          console.log(data.client_token);
+          setTimeout(function(){
+            $('.checkoutSubmit').animate({
+              height: '35px'
+              ,opacity: 1
+            }, 250);
+          }, 500);
+          braintree.setup(data.client_token, 'dropin', {
+            container: 'checkout' ,
+            // Form is not submitted by default when paymentMethodNonceReceived is implemented
+            paymentMethodNonceReceived: function (event, nonce) {
 
-            vm.message = 'Processing your payment...';
+              vm.message = 'Processing your payment...';
+              console.log(nonce);
+              console.log(event);
+              console.log('got it yoooo');
 
+              $http({
+                method: 'POST',
+                url: 'http://192.168.0.10:3000/payments/process',
+                data: {
+                  amount: vm.orderTotalPrice,
+                  payment_method_nonce: nonce
+                }
+              })
+              .success(function (data) {
+                console.log('anything?');
+                console.log(vm.orderTotalPrice)
+                console.log(data.success);
 
-            $http({
-              method: 'POST',
-              url: 'http://192.168.0.10:3000/payments/process',
-              data: {
-                amount: vm.amount,
-                payment_method_nonce: nonce
-              }
-            }).success(function (data) {
-              console.log(vm.amount)
-              console.log(data.success);
+                if (data.success) {
+                  vm.message = 'Payment authorized, thanks.';
+                  vm.isError = false;
+                  vm.isPaid = true;
+                  var orderObj = {order: {
+                    items: []
+                  }}
+                  for (var i = 0; i < vm.currentOrder.length; i++) {
+                    orderObj.order.items.push(vm.currentOrder[i].itemId);
+                    console.log(orderObj);
+                  }
+                  console.log(orderObj);
+                  if(vm.signedInUser){
+                    orderObj.decoded.id = signedInUser.id
+                  }
+                  $http({
+                    method: "POST"
+                    ,url: 'http://192.168.0.10:3000/orders'
+                    ,data: orderObj
+                  })
+                  .then(function(data){
+                    console.log('order post callback');
+                    console.log(data);
+                    vm.socket = io.connect('http://localhost:3000/');
+                    console.log(vm.socket);
+                    // vm.socket.on('connection', function(data){
+                    console.log('it works', data);
+                    vm.socket.emit('test', {message: 'Testing Biatches', order: data.data});
+                    alert('Purchase Made!');
+                    window.location.reload();
+                  })
+                  //
 
-              if (data.success) {
-                vm.message = 'Payment authorized, thanks.';
-                vm.isError = false;
-                vm.isPaid = true;
+                } else {
+                  // implement your solution to handle payment failures
+                  console.log(vm.orderTotalPrice)
+                  vm.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
+                  vm.isError = true;
+                }
 
-              } else {
-                // implement your solution to handle payment failures
-                console.log(vm.amount)
-                vm.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
+              }).error(function (error) {
+                vm.message = 'Error: cannot connect to server. Please make sure your server is running431.';
+
                 vm.isError = true;
-              }
+              });
 
-            }).error(function (error) {
-              vm.message = 'Error: cannot connect to server. Please make sure your server is running431.';
+            }
+          });
 
-              vm.isError = true;
-            });
+        }).error(function (error) {
+          vm.message = 'Error: cannot connect to server. Please make sure your server is running440.';
 
-          }
+          vm.isError = true;
         });
-
-      }).error(function (error) {
-        vm.message = 'Error: cannot connect to server. Please make sure your server is running440.';
-
-        vm.isError = true;
-      });
-
+      }
+      else {
+        vm.checkoutOpen = false;
+        ////removes the cart and adds it back
+        $('#checkout').remove();
+        $('.shoppingCartCell').animate({
+          opacity: 1
+        }, 250);
+        $('.checkoutContainer').animate({
+          marginTop: 0
+        });
+        $('.checkoutSubmit').animate({
+          height: '0px'
+          ,opacity: 0
+        }, 250);
+        $('.checkoutForm').append(
+          "<div id='checkout'></div>"
+        );
+      }
     };
   /////////////////////////////
   ///////end Client Ctrl///////
