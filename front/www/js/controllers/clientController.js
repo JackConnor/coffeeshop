@@ -142,20 +142,34 @@ angular.module('clientController', ['menuItemsFactory'])
       });
     }
 
-
     function openMoreOptions(){
-      console.log('yoooooooo');
-      $('.drinkCell').animate({
-        height: '600px'
-      }, 300);
-      $('.moreOptionsContainer').animate({
-        height: '150px'
-      }, 300);
-      setTimeout(function(){
+      if(vm.moreOptions === false){
+        console.log('yoooooooo');
+        $('.drinkCell').animate({
+          height: '600px'
+        }, 300);
         $('.moreOptionsContainer').animate({
-          opacity: 1
-        }, 500);
-      }, 200);
+          height: '150px'
+        }, 300);
+        setTimeout(function(){
+          $('.moreOptionsContainer').animate({
+            opacity: 1
+          }, 500);
+          $('.moreDrinkOps').text('Close Drink Options');
+        }, 200);
+        vm.moreOptions = true;
+      }
+      else {
+        $('.drinkCell').animate({
+          height: '450px'
+        }, 300);
+        $('.moreOptionsContainer').animate({
+          height: '0px'
+          ,opacity: 0
+        }, 300);
+        $('.moreDrinkOps').text('Close Drink Options');
+        vm.moreOptions = false;
+      }
     }
     // vm.openMoreOptions = openMoreOptions;
 
