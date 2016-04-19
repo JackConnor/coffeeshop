@@ -30,11 +30,12 @@ h1,h2,h3,h4,h5,h6 {
 
 .cartModalHolder {
   width: auto;
-  height: 100%;
+  height: auto;
   padding-right: 15px;
   padding-top: 25px;
   float: right;
   border: 0px solid black;
+  overflow: hidden;
 }
 
 .cartTitle {
@@ -67,14 +68,15 @@ h1,h2,h3,h4,h5,h6 {
 
 .drinkCell{
   height: 70px;
+  width: 100%;
   padding: 10px 5px;
-  border: 1px solid black;
-  border-width: 0 0 1px;
+  border: 0px solid black;
+  border-bottom: 1px solid black;
   display: flex;
 }
 
 .drinkCell:first-child{
-  border-width: 1px 0 1px;
+  /*border-width: 1px 0 1px;*/
 }
 
 .drinkPhotoHolder {
@@ -83,35 +85,36 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .drinkPhoto {
-	width: 50px;
-  height: 50px;
+	width: 100%;
+  height: 100%;
   border-radius: 3px;
 }
 
 .drinkInfo{
 	flex-grow: 1;
-	padding-left: 10px;
+  height: auto;
 }
 
 .drinkInfo-name{
-  font-size: 1.2em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-top: 5px;
+  line-height: 0.85;
+	padding-left: 10px;
 }
 
 .checkoutDrinkInfo-name{
-  font-size: 1.2em;
+  /*font-size: 1.2em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding-top: 10px;
+  padding-top: 10px;*/
 }
 
 .drinkInfo-price{
-  font-size: 1em;
-  color: black;
+  /*font-size: 1em;
+  color: black;*/
+  margin-left: 10px;
+  margin-top: 3px;
+  display: inline-block;
+  width: auto;
 }
 
 .drinkAction{
@@ -139,9 +142,24 @@ h1,h2,h3,h4,h5,h6 {
   margin-top: 10px;
 }
 
+.optionOpen {
+  position: absolute;
+  z-index: 250
+}
+
 .optionsHeaderTitle{
   font-size: 20px;
   padding-top: 12px;
+}
+
+.optionsPart {
+  opacity: 0;
+  width: 100%;
+  margin-top: 150px;
+  height: 0;
+  position: absolute;
+  display: block;
+  z-index: -1;
 }
 
 .drinkRepeatContainer {
@@ -161,6 +179,9 @@ h1,h2,h3,h4,h5,h6 {
 
 .espressoMath-number{
   margin-right:15px;
+}
+
+.ion-coffee {
 }
 
 .optionText{
@@ -185,6 +206,8 @@ h1,h2,h3,h4,h5,h6 {
 
 .moreOptionsContainer{
   margin-bottom: 10px;
+  height: 0px;
+  opacity: 0;
 }
 
 .nameItem {
@@ -237,7 +260,6 @@ h1,h2,h3,h4,h5,h6 {
   border-radius: 5px;
   background-color: white;
   position: fixed;
-  z-index: 6;
 }
 
 .orderCell {
@@ -383,6 +405,10 @@ h1,h2,h3,h4,h5,h6 {
 
 .shoppingCartList {
   z-index: 200;
+  max-height: 295px;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-left: 5px;
 }
 
 .cartPhotoHolder {
@@ -399,6 +425,7 @@ h1,h2,h3,h4,h5,h6 {
 .cartContent{
   flex-grow: 1;
   padding-left: 10px;
+  text-align: center;
 }
 
 .cartActions{
@@ -439,7 +466,20 @@ h1,h2,h3,h4,h5,h6 {
   padding: 10px 10px;
   font-size: 22px;
   border-radius: 3px;
-  margin-top: 40px;
+  margin-top: 15px;
+}
+
+.checkoutContainer {
+  height: 75px;
+  width: 105%;
+  background-color: white;
+  border-top: 1px dotted grey;
+}
+
+.checkoutTotal {
+  font-size: 25px;
+  text-align: center;
+  padding-top: 20px;
 }
 
 .payButton {
@@ -630,5 +670,5 @@ body {
   font-size: 40px;
   margin-top: -5px;
   left: 0;
-  padding-left: 25px;
+  padding-left: 30px;
 }

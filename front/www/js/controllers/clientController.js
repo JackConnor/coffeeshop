@@ -13,13 +13,17 @@ angular.module('clientController', ['menuItemsFactory'])
     var vm = this;
     console.log(vm);
     // vm.chat = Chats.get($stateParams.chatId);
-    vm.optionsModal = false;
-    vm.moreOptions  = false;
-    vm.cartModal    = false;
-    vm.totalShots   = 0;
-    vm.currentDrink = {}
-    vm.currentOrder = [];
+    vm.optionsModal    = false;
+    vm.moreOptions     = false;
+    vm.cartModal       = false;
+    vm.totalShots      = 0;
+    vm.currentDrink    = {}
+    vm.currentOrder    = [];
+    vm.optionsArray    = false;
+    vm.orderTotalPrice = 0;
+    vm.openCart;
     vm.data;////////this is all menuItems
+    vm.totalShots;
 
     //////////////////////////////////////////////
     ////////End Global Variables//////////////////
@@ -46,9 +50,69 @@ angular.module('clientController', ['menuItemsFactory'])
     //////////////////////////////////////////////
 
     /////opens the options modal when user selects an item
-    function openOptionsModal(currentDrink){
+    function openOptionsModal(currentDrink, index, evt){
+      var index = index;
+      /////closure function to transition to options modal
+      function openUp(){
+        var clonedEl = $(evt.currentTarget).clone();
+        clonedEl.find('.sizeCell').on('click', choseSize);
+        clonedEl.find('.openMore').on('click', openMoreOptions);
+        clonedEl.addClass('optionOpen');
+        clonedEl.removeClass('optionClosed');
+        var removeCircle = clonedEl.find('.fa-plus-circle');
+        removeCircle.remove();
+        var elOffset   = $(evt.currentTarget).offset().top;
+        var drinkListTop = $('.drinkListContainer').offset().top;
+        var distance   = elOffset - drinkListTop;
+        clonedEl.css({
+          marginTop: distance
+          ,borderBottom: "2px solid black"
+          ,borderWidth: 1
+        });
+        $('.optionClosed').animate({
+          opacity: 0
+        }, 300);
+        setTimeout(function(){
+          $('.drinkListContainer').prepend(clonedEl[0]);
+        }, 100);
+        setTimeout(function(){
+          clonedEl.animate({
+            height: '450px'
+            ,width: '90%'
+            ,marginTop: '45px'
+            ,marginLeft: '5%'
+            ,borderWidth: 5
+            ,borderBottomWidth: 5
+          }, 500);
+          $('.drinkPhotoHolder').animate({
+            // marginLeft: '50px'
+            width: '120px'
+            ,height: '120px'
+            ,marginTop: '15px'
+            ,marginLeft: '15px'
+          }, 500);
+          $('.drinkInfo').animate({
+            fontSize: '28px'
+            ,paddingLeft: '0px'
+            ,width: '50%'
+            ,marginTop: '15px'
+          }, 500);
+          $('.drinkInfo-name').animate({
+            paddingLeft: '25px'
+          }, 500)
+          $('.drinkInfo-price').animate({
+            marginLeft: '25px'
+            ,marginTop: '10px'
+          }, 500);
+          $('.optionsPart').animate({
+            height: '200px'
+            ,opacity: 1
+            ,zIndex: 500
+          }, 500);
+        }, 500);
+      }
+      openUp();
       vm.currentDrink = currentDrink;
-      vm.optionsModal = true;
     }
     /////////function to close the options modal
     function closeModal(){
@@ -80,14 +144,20 @@ angular.module('clientController', ['menuItemsFactory'])
 
 
     function openMoreOptions(){
-      if(!vm.moreOptions){
-        vm.moreOptions = true;
-      }
-      else {
-        vm.moreOptions = false;
-      }
+      console.log('yoooooooo');
+      $('.drinkCell').animate({
+        height: '600px'
+      }, 300);
+      $('.moreOptionsContainer').animate({
+        height: '150px'
+      }, 300);
+      setTimeout(function(){
+        $('.moreOptionsContainer').animate({
+          opacity: 1
+        }, 500);
+      }, 200);
     }
-    vm.openMoreOptions = openMoreOptions;
+    // vm.openMoreOptions = openMoreOptions;
 
     function addShot(){
       vm.totalShots++;
@@ -99,70 +169,129 @@ angular.module('clientController', ['menuItemsFactory'])
     }
     vm.subtractShot = subtractShot;
 
+    var elSize;
+    var elem;
     function choseSize(evt){
-      $('.sizeSmall').removeClass('selected');
-      $('.sizeSmall').css({
-        backgroundColor: 'transparent'
-      })
-      $('.sizeMedium').removeClass('selected');
-      $('.sizeMedium').css({
-        backgroundColor: 'transparent'
-      })
-      $('.sizeLarge').removeClass('selected');
-      $('.sizeLarge').css({
-        backgroundColor: 'transparent'
-      })
-      if($(evt.currentTarget).hasClass('sizeSmall')){
-        if($(evt.currentTarget).hasClass('selected')){
-          $(evt.currentTarget).css({
+      if($(evt.target).hasClass('sizeSmall')){
+        var elSize = 'small';
+        var elem = $(evt.target);
+        $('.sizeMedium').removeClass('selected');
+        $('.sizeMedium').css({
+          backgroundColor: 'transparent'
+        })
+        $('.sizeLarge').removeClass('selected');
+        $('.sizeLarge').css({
+          backgroundColor: 'transparent'
+        });
+      }
+      else if($(evt.target).parent().hasClass('sizeSmall')){
+        var elSize = 'small';
+        var elem = $(evt.target).parent();
+        $('.sizeMedium').removeClass('selected');
+        $('.sizeMedium').css({
+          backgroundColor: 'transparent'
+        })
+        $('.sizeLarge').removeClass('selected');
+        $('.sizeLarge').css({
+          backgroundColor: 'transparent'
+        });
+      }
+      else if($(evt.target).hasClass('sizeMedium')){
+        var elSize = 'medium';
+        var elem = $(evt.target);
+        $('.sizeSmall').removeClass('selected');
+        $('.sizeSmall').css({
+          backgroundColor: 'transparent'
+        })
+        $('.sizeLarge').removeClass('selected');
+        $('.sizeLarge').css({
+          backgroundColor: 'transparent'
+        });
+      }
+      else if($(evt.target).parent().hasClass('sizeMedium')){
+        var elSize = 'medium';
+        var elem = $(evt.target).parent();
+        $('.sizeSmall').removeClass('selected');
+        $('.sizeSmall').css({
+          backgroundColor: 'transparent'
+        });
+        $('.sizeLarge').removeClass('selected');
+        $('.sizeLarge').css({
+          backgroundColor: 'transparent'
+        });
+      }
+      else if($(evt.target).hasClass('sizeLarge')){
+        var elSize = 'large';
+        var elem = $(evt.target);
+        $('.sizeSmall').removeClass('selected');
+        $('.sizeSmall').css({
+          backgroundColor: 'transparent'
+        });
+        $('.sizeMedium').removeClass('selected');
+        $('.sizeMedium').css({
+          backgroundColor: 'transparent'
+        });
+      }
+      else if($(evt.target).parent().hasClass('sizeLarge')){
+        var elSize = 'large';
+        var elem = $(evt.target).parent();
+        $('.sizeSmall').removeClass('selected');
+        $('.sizeSmall').css({
+          backgroundColor: 'transparent'
+        })
+        $('.sizeMedium').removeClass('selected');
+        $('.sizeMedium').css({
+          backgroundColor: 'transparent'
+        })
+      }
+      if(elSize === 'small'){
+        if(elem.hasClass('selected')){
+          elem.css({
             backgroundColor: 'transparent'
           })
-          $(evt.currentTarget).removeClass('selected')
+          elem.removeClass('selected')
         }
         else {
-          console.log('med');
-          $(evt.currentTarget).css({
+          elem.css({
             backgroundColor: '#dddddd'
           })
-          $(evt.currentTarget).addClass('selected')
+          elem.addClass('selected')
         }
       }
-      else if($(evt.currentTarget).hasClass('sizeMedium')){
-        if($(evt.currentTarget).hasClass('selected')){
-          $(evt.currentTarget).css({
+      else if(elSize === 'medium'){
+        if(elem.hasClass('selected')){
+          elem.css({
             backgroundColor: 'white'
           })
-          $(evt.currentTarget).removeClass('selected')
+          elem.removeClass('selected')
         }
         else {
-          console.log('med');
-          $(evt.currentTarget).css({
+          elem.css({
             backgroundColor: '#dddddd'
           })
-          $(evt.currentTarget).addClass('selected')
+          elem.addClass('selected')
         }
       }
-      else if($(evt.currentTarget).hasClass('sizeLarge')){
-        if($(evt.currentTarget).hasClass('selected')){
-          $(evt.currentTarget).css({
+      else if(elSize === 'large'){
+        if(elem.hasClass('selected')){
+          elem.css({
             backgroundColor: 'white'
           })
-          $(evt.currentTarget).removeClass('selected')
+          elem.removeClass('selected')
         }
         else {
-          console.log('med');
-          $(evt.currentTarget).css({
+          elem.css({
             backgroundColor: '#dddddd'
           })
-          $(evt.currentTarget).addClass('selected')
+          elem.addClass('selected')
         }
       }
     }
-    vm.choseSize = choseSize;
+    // vm.choseSize = choseSize;
 
     vm.removeItem = function(something, index) {
         console.log(something)
-        console.log("this is the index", index)
+        console.log("this is the index", index);
         vm.currentOrder.splice(index, 1)
         console.log(vm.currentOrder)
     }
@@ -194,12 +323,14 @@ angular.module('clientController', ['menuItemsFactory'])
       vm.optionsModal = false;
       vm.moreOptions  = false;
       vm.totalShots   = 0;
-      vm.currentOrder.push(drinkDetails)
+      vm.currentOrder.push(drinkDetails);
+      vm.orderTotalPrice += drinkDetails.price;
+      console.log(vm.currentOrder);
     }
     vm.submitDrinkOptions = submitDrinkOptions;
 
     //////functions to open/close shopping carts/////
-    function openCart(){
+    function openCart(evt){
       console.log('ipeing');
       $('.drinkRepeatContainer').animate({
         opacity: 0.0
@@ -210,7 +341,7 @@ angular.module('clientController', ['menuItemsFactory'])
           ,paddingTop: 0+'px'
           ,paddingRight: 5+'px'
           ,color: 'black'
-        }, 850);
+        }, 450);
         $('.cartModalHolder').animate({
           width: 90+"%"
           ,marginLeft: 0+'%'
@@ -218,27 +349,33 @@ angular.module('clientController', ['menuItemsFactory'])
           ,paddingTop: 10+'px'
           ,height: 450+"px"
           ,marginRight: 5+"%"
-        }, 850);
-      }, 250);
+        }, 450);
+      }, 100);
       setTimeout(function(){
         $('.cartModalHolder').prepend(
           "<div class='cartTitle'>Your Order</div>"
         );
-        $(".cartTitle").animate({
-          opacity: 1
-        }, 350);
         $('.cartModalHolder').animate({
           borderWidth: 5
-        }, 350);
-      }, 1250);
+        }, 200);
+      }, 250);
+      setTimeout(function(){
+        $(".cartTitle").animate({
+          opacity: 1
+        }, 300);
+      }, 700);
       $timeout(function(){
         vm.cartModal = true;
         console.log('wot?');
         addLayer(28, $('.drinkRepeatContainer'));
         // addBlackLayer(29, $('.navContainer'), .1);
-      }, 1500);
+      }, 700);
     }
-    vm.openCart = openCart;
+    vm.openCart = function(){
+      if(!vm.cartModal){
+        openCart();
+      }
+    };
 
     ///////function to close the shopping cart
     function closeCart(){
@@ -251,16 +388,16 @@ angular.module('clientController', ['menuItemsFactory'])
           fontSize: 30+"px"
           ,paddingTop: 0+'px'
           ,paddingRight: 0+'px'
-        }, 450);
+        }, 250);
         $('.cartModalHolder').animate({
           width: "auto"
           ,marginLeft: 0+'%'
           ,marginTop: 0+'px'
           ,paddingTop: 25+'px'
-          ,height: 100+"%"
+          ,height: "115%"
           ,marginRight: 0+"%"
-        }, 450);
-      }, 400);
+        }, 250);
+      }, 201);
       $('.clearLayer').remove();
       $('.blackLayer').remove();
       $('.cartTitle').remove();
@@ -268,8 +405,10 @@ angular.module('clientController', ['menuItemsFactory'])
         $('.drinkRepeatContainer').animate({
           opacity: 1
         }, 350);
-      }, 850);
-      vm.cartModal = false
+      }, 350);
+      $timeout(function(){
+        vm.cartModal = false
+      }, 100);
     }
     vm.closeCart = closeCart;
 
