@@ -24,6 +24,8 @@ angular.module('clientController', ['menuItemsFactory'])
     vm.openCart;
     vm.data;////////this is all menuItems
     vm.totalShots;
+    var elSize;
+    var elem;
 
     //////////////////////////////////////////////
     ////////End Global Variables//////////////////
@@ -60,6 +62,9 @@ angular.module('clientController', ['menuItemsFactory'])
           openMoreOptions(clonedEl);
         });
         clonedEl.find('.closeOptions').on('click', closeModal);
+        clonedEl.find('.espressoMath-less').on('click', subtractShot);
+        clonedEl.find('.espressoMath-more').on('click', addShot);
+        clonedEl.find('.submitItem').on('click', submitDrinkOptions);
         clonedEl.addClass('optionOpen');
         clonedEl.removeClass('optionClosed');
         var removeCircle = clonedEl.find('.fa-plus-circle');
@@ -75,6 +80,16 @@ angular.module('clientController', ['menuItemsFactory'])
         $('.optionClosed').animate({
           opacity: 0
         }, 300);
+        clonedEl.find('.drinkIn-price').animate({
+          opacity: 0
+        }, 300);
+        setTimeout(function(){
+          clonedEl.find('.drinkIn-price').css({
+            float: 'left'
+            ,marginLeft: '20px'
+            ,marginTop: '10px'
+          });
+        }, 900);
         setTimeout(function(){
           $('.drinkListContainer').prepend(clonedEl[0]);
         }, 100);
@@ -95,8 +110,6 @@ angular.module('clientController', ['menuItemsFactory'])
           }, 500);
           clonedEl.find('.drinkIn').animate({
             fontSize: '28px'
-            ,paddingLeft: '20px'
-            ,width: '50%'
             ,marginTop: '20px'
           }, 500);
         }, 500);
@@ -113,6 +126,11 @@ angular.module('clientController', ['menuItemsFactory'])
             ,zIndex: 500
           }, 500);
         }, 700);
+        setTimeout(function(){
+          clonedEl.find('.drinkIn-price').animate({
+            opacity: 1
+          }, 500);
+        }, 1000);
       }
       openUp();
       vm.currentDrink = currentDrink;
@@ -151,14 +169,13 @@ angular.module('clientController', ['menuItemsFactory'])
     }
 
     function openMoreOptions(parentEl){
-      console.log(parentEl);
       if(vm.moreOptions === false){
         console.log('yoooooooo');
         parentEl.animate({
-          height: '475px'
+          height: '425px'
         }, 300);
         parentEl.find('.moreOptionsContainer').animate({
-          height: '150px'
+          height: '100px'
         }, 300);
         setTimeout(function(){
           parentEl.find('.moreOptionsContainer').animate({
@@ -178,6 +195,7 @@ angular.module('clientController', ['menuItemsFactory'])
           ,opacity: 0
         }, 300);
         parentEl.find('.moreDrinkOps').text('Close Drink Options');
+        parentEl.find('.moreDrinkOps').text('More Drink Options');
         vm.moreOptions = false;
       }
     }
@@ -185,16 +203,16 @@ angular.module('clientController', ['menuItemsFactory'])
 
     function addShot(){
       vm.totalShots++;
+      $('.espressoMath-number').text(vm.totalShots);
     }
     vm.addShot = addShot;
 
     function subtractShot(){
       vm.totalShots--;
+      $('.espressoMath-number').text(vm.totalShots);
     }
     vm.subtractShot = subtractShot;
 
-    var elSize;
-    var elem;
     function choseSize(evt){
       if($(evt.target).hasClass('sizeSmall')){
         var elSize = 'small';
@@ -321,7 +339,7 @@ angular.module('clientController', ['menuItemsFactory'])
     }
 
     function submitDrinkOptions() {
-      var drinkDetails = {size: '', flavours: '', toppings: '', shots: 0}
+      var drinkDetails = {size: '', flavours: '', shots: 0}
       var sizeEl = $('.selected');
       if(sizeEl.hasClass('sizeSmall')){
         drinkDetails.size = 'small';
@@ -334,28 +352,31 @@ angular.module('clientController', ['menuItemsFactory'])
       } else {
           console.log("no size selected")
       }
-
-      drinkDetails.flavours = $('.flavourDropdown').val();
-      drinkDetails.toppings = $('.toppingDropdown').val();
-      drinkDetails.shots = vm.totalShots;
-      drinkDetails.photo = vm.currentDrink.photourl;
-      drinkDetails.price = vm.currentDrink.price;
-      drinkDetails.title = vm.currentDrink.name;
-      drinkDetails.itemId = vm.currentDrink._id
-      console.log(drinkDetails);
-      ///////put all settings back to zero
-      vm.optionsModal = false;
-      vm.moreOptions  = false;
-      vm.totalShots   = 0;
-      vm.currentOrder.push(drinkDetails);
-      vm.orderTotalPrice += drinkDetails.price;
-      console.log(vm.currentOrder);
+      console.log(typeof drinkDetails.size);
+      if(!drinkDetails.size == ''){
+        drinkDetails.flavours = $('.flavourDropdown').val();
+        drinkDetails.toppings = $('.toppingDropdown').val();
+        drinkDetails.shots = vm.totalShots;
+        drinkDetails.photo = vm.currentDrink.photourl;
+        drinkDetails.price = vm.currentDrink.price;
+        drinkDetails.title = vm.currentDrink.name;
+        drinkDetails.itemId = vm.currentDrink._id
+        ///////put all settings back to zero
+        vm.currentOrder.push(drinkDetails);
+        vm.totalShots   = 0;
+        vm.orderTotalPrice += drinkDetails.price;
+        console.log(vm.currentOrder);
+        closeModal();
+      }
+      else {
+        alert('Please Choose a Size');
+      }
     }
-    vm.submitDrinkOptions = submitDrinkOptions;
+    // vm.submitDrinkOptions = submitDrinkOptions;
 
     //////functions to open/close shopping carts/////
     function openCart(evt){
-      closeModal();
+      // closeModal();
       $('.drinkRepeatContainer').animate({
         opacity: 0.0
       }, 350);

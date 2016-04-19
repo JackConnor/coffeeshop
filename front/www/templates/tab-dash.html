@@ -135,7 +135,7 @@
              <div class="checkoutTotal col-xs-6">
                {{client.orderTotalPrice | currency}}
              </div>
-             <div class="checkoutButton col-xs-6"ng-click='client.checkout()'>
+             <div class="checkoutButton col-xs-5"ng-click='client.checkout()'>
                Checkout
              </div>
            </div>
@@ -198,7 +198,7 @@
                   </div>
                 </div>
               </div>
-              <div class="optionCell">
+              <!-- <div class="optionCell">
                 <div class="optionTopping">
                   <div class="optionText col-xs-6">
                     Add a Topping
@@ -212,10 +212,10 @@
                     </select>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="openMore col-xs-12">
-              <span class='moreDrinkOps' ng-if='!client.moreOptions'>
+              <span class='moreDrinkOps'>
                 More Drink Options <i class="icon ion-ios-arrow-down"></i>
               </span>
             </div>
@@ -223,8 +223,8 @@
               <!-- <div class="modalActionCancel col-xs-4">
                 <button ng-click='client.closeModal()'>BACK</button>
               </div> -->
-              <div class="modalActionSubmit col-xs-8">
-                <button ng-click='client.submitDrinkOptions()'>ADD TO ORDER</button>
+              <div class="modalActionSubmit col-xs-8 col-xs-offset-2">
+                <button class='submitItem'>ADD TO ORDER</button>
               </div>
             </div>
           </div>
@@ -235,7 +235,7 @@
             <div class="drinkIn-name">{{menuitem.name}}</div>
             <div class="drinkIn-price">${{menuitem.price}}</div>
           </div>
-          <div class="drinkAction"><i class="fa fa-plus-circle"></i></div>
+          <!-- <div class="drinkAction"><i class="fa fa-plus-circle"></i></div> -->
         </div>
       </div>
     </div>
