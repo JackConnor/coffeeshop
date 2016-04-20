@@ -62,7 +62,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         clonedEl.find('.openMore').on('click', function(){
           openMoreOptions(clonedEl);
         });
-        console.log(typeof evt.currentTarget);
         if(typeof evt.currentTarget !== 'string'){
           clonedEl.find('.submitItem')[0].id = $(evt.currentTarget)[0].classList[2];
           var elOffset   = $(evt.currentTarget).offset().top;
@@ -624,9 +623,22 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.shoppingCartCell').animate({
           opacity: 0
         }, 200);
-        $('.checkoutContainer').animate({
-          marginTop: -margDist
-        }, 400);
+        setTimeout(function(){
+          $('.checkoutContainer').animate({
+            marginTop: -margDist
+          }, 250);
+        })
+        $('.checkoutName').css({
+          marginLeft: '10%'
+        });
+        setTimeout(function(){
+          $('.checkoutName').animate({
+            opacity: 1
+          });
+        }, 250);
+        $('.cartModalHolder').animate({
+          height: '425px'
+        });
 
         vm.checkoutOpen = true;
         braintreeToken()
@@ -651,40 +663,34 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
               $http({
                 method: 'POST',
-                url: 'http://192.168.0.3:3000/payments/process',
+                url: 'http://192.168.0.18:3000/payments/process',
                 data: {
-                  amount: vm.orderTotalPrice,
-                  payment_method_nonce: nonce
+                  amount: vm.orderTotalPrice
+                  ,payment_method_nonce: nonce
                 }
               })
               .success(function (data) {
-                console.log('anything?');
-                console.log(vm.orderTotalPrice)
-                console.log(data.success);
-
                 if (data.success) {
                   vm.message = 'Payment authorized, thanks.';
                   vm.isError = false;
                   vm.isPaid = true;
                   var orderObj = {order: {
                     items: []
+                    ,name: $('.checkoutName').val()
+
                   }}
                   for (var i = 0; i < vm.currentOrder.length; i++) {
                     orderObj.order.items.push(vm.currentOrder[i].itemId);
-                    console.log(orderObj);
                   }
-                  console.log(orderObj);
                   if(vm.signedInUser){
                     orderObj.decoded.id = signedInUser.id
                   }
                   $http({
                     method: "POST"
-                    ,url: 'http://192.168.0.3:3000/orders'
+                    ,url: 'http://192.168.0.18:3000/orders'
                     ,data: orderObj
                   })
                   .then(function(data){
-                    console.log('order post callback');
-                    console.log(data);
                     vm.socket = io.connect('http://localhost:3000/');
                     vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
                   })
@@ -729,6 +735,17 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           height: '0px'
           ,opacity: 0
         }, 150);
+        $('.checkoutName').animate({
+          opacity: 0
+        }, 250);
+        setTimeout(function(){
+          $('.checkoutName').css({
+            marginLeft: '200%'
+          });
+        }, 255);
+        $('.cartModalHolder').animate({
+          height: '400px'
+        });
         $('.checkoutForm').prepend(
           "<div id='checkout'></div>"
         );

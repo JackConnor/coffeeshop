@@ -20,7 +20,7 @@ angular.module('vendorController', [])
       console.log(orderId);
       $http({
         method: "PATCH"
-        ,url: "http://192.168.0.3:3000/orders"
+        ,url: "http://192.168.0.18:3000/orders"
         ,data: {orderId: orderId}
       })
       .then(function(data){
@@ -112,7 +112,7 @@ angular.module('vendorController', [])
     //   console.log(vm.data.product)
     //   $http({
     //     method: "POST",
-    //     url: "http://192.168.0.3:3000/items/one",
+    //     url: "http://192.168.0.18:3000/items/one",
     //     data: {
     //
     //         name: vm.data.product,
@@ -136,7 +136,7 @@ angular.module('vendorController', [])
     //   console.log( 'TOKEN', window.localStorage.token )
     //   $http({
     //     method: "get",
-    //     url: "http://192.168.0.3:3000/orders",
+    //     url: "http://192.168.0.18:3000/orders",
     //     headers: {'x-access-token': window.localStorage.token}
     //
     //
