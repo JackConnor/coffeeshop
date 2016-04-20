@@ -2,9 +2,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
   .controller('clientCtrl', clientCtrl);
 
-  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken', 'braintreeProcess'];
+  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken', 'braintreeProcess', '$location'];
 
-  function clientCtrl($http, $timeout, menuItems, $rootScope, braintreeToken){
+  function clientCtrl($http, $timeout, menuItems, $rootScope, braintreeToken, $location){
 
     //////////////////////////////////////////////
     ////////All Global Variables//////////////////
@@ -62,6 +62,16 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         clonedEl.find('.openMore').on('click', function(){
           openMoreOptions(clonedEl);
         });
+        console.log(typeof evt.currentTarget);
+        if(typeof evt.currentTarget !== 'string'){
+          clonedEl.find('.submitItem')[0].id = $(evt.currentTarget)[0].classList[2];
+          var elOffset   = $(evt.currentTarget).offset().top;
+          var drinkListTop = $('.drinkListContainer').offset().top;
+          var distance   = elOffset - drinkListTop;
+        }
+        else {
+          var distance = $('.drinkListContainer').offset().top;
+        }
         clonedEl.find('.closeOptions').on('click', closeModal);
         clonedEl.find('.espressoMath-less').on('click', subtractShot);
         clonedEl.find('.espressoMath-more').on('click', addShot);
@@ -70,9 +80,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         clonedEl.removeClass('optionClosed');
         var removeCircle = clonedEl.find('.fa-plus-circle');
         removeCircle.remove();
-        var elOffset   = $(evt.currentTarget).offset().top;
-        var drinkListTop = $('.drinkListContainer').offset().top;
-        var distance   = elOffset - drinkListTop;
         clonedEl.css({
           marginTop: distance
           ,borderBottom: "0px solid black"
@@ -162,9 +169,106 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         opacity: 0
         ,height: 0
       }, 500);
+      vm.moreOptions = false;
     }
     vm.openOptionsModal = openOptionsModal;
+
+    function openOptionsFromCart(evt){
+      var offTopEl = $(evt.currentTarget).closest('.shoppingCartCell').offset().top;
+      var offTopCont = $('.shoppingCartList').offset().top;
+      var distance = offTopEl - offTopCont;
+      var targItem = $(evt.currentTarget).closest('.shoppingCartCell').clone();
+      console.log(targItem);
+      targItem.find('.cartActions').remove();
+      targItem.find('.cartPrice').remove();
+      /////clone the options things so we can add it
+      var optionClone = $($(".optionsPart")[0]).clone();
+      console.log(optionClone);
+      optionClone.find('.modalActionSubmit').remove();
+      optionClone.css({
+        "position": 'relative'
+        ,marginTop: '20px'
+      });
+      targItem.append(optionClone);
+      targItem.addClass('cartOptionOpen')
+      targItem.append(
+        "<div class='cartOpClose'>Close Options</div>"
+      );
+      targItem.css({
+        height: '325px'
+        ,position: 'absolute'
+        ,marginTop: distance+'px'
+        ,width: '90%'
+        ,backgroundColor: 'white'
+        ,left: '5%'
+        ,border: '2px solid black'
+        ,zIndex: 5
+      });
+      $('.shoppingCartList').prepend(
+        targItem
+      );
+      //////let's add all events
+      $('.cartOpClose').on('click', closeCartOptions);
+      targItem.find('.sizeCell').on('click', choseSize);
+      targItem.find('.openMore').on('click', function(){
+        openMoreOptions(targItem);
+        console.log(vm.moreOptions);
+        if(vm.moreOptions === true){
+          $('.cartOpClose').animate({
+            marginTop: '341px'
+          }, 300);
+        }
+        else {
+          $('.cartOpClose').animate({
+            marginTop: '241px'
+          }, 300);
+        }
+      });
+      targItem.find('.closeOptions').on('click', closeModal);
+      targItem.find('.espressoMath-less').on('click', subtractShot);
+      targItem.find('.espressoMath-more').on('click', addShot);
+
+      targItem.animate({
+        height: '375px'
+        ,marginTop: 0
+      }, 200);
+      setTimeout(function(){
+        optionClone.animate({
+          opacity: 1
+          ,height: '300px'
+        }, 200);
+      }, 200);
+      console.log(targItem);
+    }
+    vm.openOptionsFromCart = openOptionsFromCart;
     // vm.closeModal = closeModal;
+
+    function closeCartOptions(){
+      console.log('yoooooo');
+      var opEl = $('.cartOptionOpen');
+
+      opEl.animate({
+        height: '60px'
+        ,backgroundColor: 'tranparent'
+      }, 250);
+      opEl.find('.optionsPart').animate({
+        opacity: 0
+      }, 250);
+      opEl.find('.cartOpClose').animate({
+        opacity: 0
+      }, 250);
+      opEl.animate({
+        opacity: 0
+      }, 450)
+      setTimeout(function(){
+        opEl.find('.optionsPart').remove();
+        opEl.find('.cartOpClose').remove();
+        setTimeout(function(){
+
+          opEl.remove();
+        }, 250)
+      }, 420)
+    }
 
     //function to create a translucent layer to block all background clicks
     function addLayer(zIndex, jqEl){
@@ -211,7 +315,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           height: '0px'
           ,opacity: 0
         }, 300);
-        parentEl.find('.moreDrinkOps').text('Close Drink Options');
         parentEl.find('.moreDrinkOps').text('More Drink Options');
         vm.moreOptions = false;
       }
@@ -355,7 +458,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         console.log(vm.currentOrder)
     }
 
-    function submitDrinkOptions() {
+    function submitDrinkOptions(evt) {
+      console.log(evt.target.id);
       var drinkDetails = {size: '', flavours: '', shots: 0}
       var sizeEl = $('.selected');
       if(sizeEl.hasClass('sizeSmall')){
@@ -377,12 +481,16 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         drinkDetails.photo = vm.currentDrink.photourl;
         drinkDetails.price = vm.currentDrink.price;
         drinkDetails.title = vm.currentDrink.name;
-        drinkDetails.itemId = vm.currentDrink._id
+        drinkDetails.itemId = vm.currentDrink._id;
+        drinkDetails.evt = {currentTarget: ''}
+        drinkDetails.evt.currentTarget = evt.target.id;
+        console.log(drinkDetails.evt);
         ///////put all settings back to zero
         vm.currentOrder.push(drinkDetails);
         vm.totalShots   = 0;
         vm.orderTotalPrice += drinkDetails.price;
         console.log(vm.currentOrder);
+        vm.moreOptions = false;
         closeModal();
       }
       else {
@@ -414,7 +522,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         ,marginLeft: 0+'%'
         ,marginTop: 30+'px'
         ,paddingTop: 10+'px'
-        ,height: 450+"px"
+        ,height: 400+"px"
         ,marginRight: 5+"%"
       }, 250);
       // }, 150);
@@ -433,8 +541,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       }, 500);
       $timeout(function(){
         vm.cartModal = true;
-        console.log('wot?');
-        addLayer(28, $('.drinkRepeatContainer'));
+        // addLayer(28, $('.drinkRepeatContainer'));
         // addBlackLayer(29, $('.navContainer'), .1);
       }, 500);
     }
@@ -522,7 +629,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
               $http({
                 method: 'POST',
-                url: 'http://192.168.0.10:3000/payments/process',
+                url: 'http://192.168.0.3:3000/payments/process',
                 data: {
                   amount: vm.orderTotalPrice,
                   payment_method_nonce: nonce
@@ -550,19 +657,14 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                   }
                   $http({
                     method: "POST"
-                    ,url: 'http://192.168.0.10:3000/orders'
+                    ,url: 'http://192.168.0.3:3000/orders'
                     ,data: orderObj
                   })
                   .then(function(data){
                     console.log('order post callback');
                     console.log(data);
                     vm.socket = io.connect('http://localhost:3000/');
-                    console.log(vm.socket);
-                    // vm.socket.on('connection', function(data){
-                    console.log('it works', data);
-                    vm.socket.emit('test', {message: 'Testing Biatches', order: data.data});
-                    alert('Purchase Made!');
-                    window.location.reload();
+                    vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
                   })
                   //
 
@@ -592,17 +694,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.checkoutOpen = false;
         ////removes the cart and adds it back
         $('#checkout').remove();
-        $('.shoppingCartCell').animate({
-          opacity: 1
-        }, 250);
+        $('.checkoutButton').text('Checkout');
+        setTimeout(function(){
+          $('.shoppingCartCell').animate({
+            opacity: 1
+          }, 250);
+        }, 200);
         $('.checkoutContainer').animate({
           marginTop: 0
         });
         $('.checkoutSubmit').animate({
           height: '0px'
           ,opacity: 0
-        }, 250);
-        $('.checkoutForm').append(
+        }, 150);
+        $('.checkoutForm').prepend(
           "<div id='checkout'></div>"
         );
       }

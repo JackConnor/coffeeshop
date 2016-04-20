@@ -2,15 +2,56 @@ angular.module('vendorController', [])
 
   .controller('vendorCtrl', vendorCtrl);
 
-  vendorCtrl.$inject = [];
+  vendorCtrl.$inject = ['$http'];
 
-  function vendorCtrl(){
+  function vendorCtrl($http){
     var vm = this;
+
+    vm.orderList = ['hi'];
     console.log(vm);
-    // vm.socket = io( "http://192.168.0.10:3000" )
-    //   vm.socket.on('test', function(t){
-    //     console.log('working', t)
-    //   })
+    vm.socket = io.connect('http://localhost:3000/');
+    console.log(vm.socket);
+    vm.socket.on('orderForVendor', function(data){
+      console.log(data);
+      vm.orderList.push(data.order);
+      console.log('working');
+      console.log(vm.orderList);
+      var orderId = data.order.data._id;
+      console.log(orderId);
+      $http({
+        method: "PATCH"
+        ,url: "http://192.168.0.3:3000/orders"
+        ,data: {orderId: orderId}
+      })
+      .then(function(data){
+        console.log('order info callback');
+        console.log(data.data.data);
+        console.log(data.data.data.items);
+        addOrder(data.data.data.items);
+      })
+      // $('.ordersList').prepend(
+      //   "<div class='orderCell'>"+
+      //     +data.order+
+      //   "</div>"
+      // );
+    });
+
+    //////animations
+    function addOrder(orderItems){
+      console.log(orderItems);
+      var ordLength = orderItems.length;
+      for (var i = 0; i < ordLength; i++) {
+        console.log(orderItems[i]);
+        console.log(orderItems[i].name);
+        var name = orderItems[i].name.toString();
+        console.log(name);
+        $('.ordersList').prepend(
+          "<div class='orderVendorCell'>"+
+          name+
+          "</div>"
+        );
+      }
+    }
     //
     // vm.socket.on('new order', function(data){
     //   console.log('new order', data);
@@ -71,7 +112,7 @@ angular.module('vendorController', [])
     //   console.log(vm.data.product)
     //   $http({
     //     method: "POST",
-    //     url: "http://192.168.0.10:3000/items/one",
+    //     url: "http://192.168.0.3:3000/items/one",
     //     data: {
     //
     //         name: vm.data.product,
@@ -95,7 +136,7 @@ angular.module('vendorController', [])
     //   console.log( 'TOKEN', window.localStorage.token )
     //   $http({
     //     method: "get",
-    //     url: "http://192.168.0.10:3000/orders",
+    //     url: "http://192.168.0.3:3000/orders",
     //     headers: {'x-access-token': window.localStorage.token}
     //
     //

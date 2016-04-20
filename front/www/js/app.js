@@ -114,6 +114,7 @@ angular.module('starter', ['ionic', 'starter.services', 'clientController', 'log
     url: '/vendor'
     ,templateUrl: "templates/vendor.html"
     ,controller: "vendorCtrl"
+    ,controllerAs: "vendor"
   })
 
 

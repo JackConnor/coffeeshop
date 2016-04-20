@@ -5,7 +5,6 @@
         <div class="cartModalHolder">
           <div class="xCart fa fa-times" ng-click='client.closeCart()' ng-if='client.cartModal'></div>
          <i class='fa fa-shopping-cart' ng-click='client.openCart()'></i>
-
          <div class="listContainer">
            <div class="shoppingCartList" ng-if='client.cartModal'>
              <div ng-repeat='item in client.currentOrder' class="shoppingCartCell" >
@@ -17,7 +16,7 @@
                  </div>
                </div>
                <div class="cartActions">
-                 <div class="cartAction-container" ng-click='client.openOptionsModal("blah")'>
+                 <div class="cartAction-container" ng-click='client.openOptionsFromCart($event)'>
                    <i class="fa fa-pencil"></i>
                  </div>
                  <div class="cartAction-container removeItemIcon" ng-click='client.removeItem(item, $index)'>

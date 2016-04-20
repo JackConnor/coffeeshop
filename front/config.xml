@@ -11,6 +11,7 @@
   <access origin="*"/>
   <allow-navigation href="https://*.braintreegateway.com" />
   <allow-navigation href="https://*.paypal.com" />
+  <allow-navigation href="about:blank" />
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
