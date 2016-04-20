@@ -170,10 +170,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         ,height: 0
       }, 500);
       vm.moreOptions = false;
+      vm.totalShots = 0;
     }
     vm.openOptionsModal = openOptionsModal;
 
-    function openOptionsFromCart(evt){
+    function openOptionsFromCart(evt, itemObj){
+      console.log('item options yooooo');
+      console.log(itemObj);
       var offTopEl = $(evt.currentTarget).closest('.shoppingCartCell').offset().top;
       var offTopCont = $('.shoppingCartList').offset().top;
       var distance = offTopEl - offTopCont;
@@ -184,6 +187,32 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       /////clone the options things so we can add it
       var optionClone = $($(".optionsPart")[0]).clone();
       console.log(optionClone);
+      ////quick loop to add the proper size
+      var sizeArr = optionClone.find('.sizeCell');
+      var sizeLength = sizeArr.length;
+      console.log(sizeLength);
+      //////
+      if(vm.cartModal === true){
+        if(itemObj.size === 'small'){
+          $(sizeArr)[0].css({
+            backgroundColor: '#dddddd'
+          });
+        }
+        else if(itemObj.size === 'medium') {
+          $(sizeArr[1]).css({
+            backgroundColor: '#dddddd'
+          });
+        }
+        else if(itemObj.size === 'large') {
+          $(sizeArr[2]).css({
+            backgroundColor: '#dddddd'
+          });
+        }
+        vm.totalShots = itemObj.shots;
+        optionClone.find('.flavourDropdown').val(itemObj.flavours);
+      }
+
+
       optionClone.find('.modalActionSubmit').remove();
       optionClone.css({
         "position": 'relative'
@@ -195,11 +224,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         "<div class='cartOpClose'>Close Options</div>"
       );
       targItem.css({
-        height: '325px'
+        height: '60px'
         ,position: 'absolute'
         ,marginTop: distance+'px'
         ,width: '90%'
-        ,backgroundColor: 'white'
         ,left: '5%'
         ,border: '2px solid black'
         ,zIndex: 5
@@ -231,7 +259,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       targItem.animate({
         height: '375px'
         ,marginTop: 0
-      }, 200);
+        ,backgroundColor: 'white'
+      }, 350);
       setTimeout(function(){
         optionClone.animate({
           opacity: 1
@@ -246,7 +275,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function closeCartOptions(){
       console.log('yoooooo');
       var opEl = $('.cartOptionOpen');
-
+      vm.moreOptions = false;
       opEl.animate({
         height: '60px'
         ,backgroundColor: 'tranparent'
@@ -264,7 +293,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         opEl.find('.optionsPart').remove();
         opEl.find('.cartOpClose').remove();
         setTimeout(function(){
-
           opEl.remove();
         }, 250)
       }, 420)
@@ -501,12 +529,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     //////functions to open/close shopping carts/////
     function openCart(evt){
-      ////WE'LL USE this later for double modal loads
-      // closeModal();closeModal
-      // setTimeout(function(){
-      //
-      // })
-      // closeModal();
       $('.drinkRepeatContainer').animate({
         opacity: 0.0
       }, 150);
