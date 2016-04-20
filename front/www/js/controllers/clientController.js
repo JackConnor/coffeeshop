@@ -170,7 +170,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         ,height: 0
       }, 500);
       vm.moreOptions = false;
-      vm.totalShots = 0;
+
     }
     vm.openOptionsModal = openOptionsModal;
 
