@@ -10,7 +10,6 @@ var gateway = braintree.connect({
   publicKey: Dev.publicKey,
   privateKey: Dev.privateKey
 });
-
 //FUNCTIONS
 //===========================
 

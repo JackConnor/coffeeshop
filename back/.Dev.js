@@ -4,9 +4,6 @@ module.exports.PORT = 3000
 
 
 //braintree
-module.exports.merchantId = 'mn644vbnfr9z4q9z',
-module.exports.publicKey = 'cs6f49vx4d8x7hq3',
-module.exports.privateKey = '53aec9914fae244ccf53e174aaadbd3f'
-
-
-  
+module.exports.merchantId = 'ms4ywz6hq4r2hp45',
+module.exports.publicKey = '7vjmpg9dyczpss3z',
+module.exports.privateKey = '9f7f8095b0d4fa316fc3f48c031d9c35'

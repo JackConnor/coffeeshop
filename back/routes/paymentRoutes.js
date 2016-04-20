@@ -6,6 +6,6 @@ Auth.route( '/token' )
 
 Auth.route( '/process' )
   .post( paymentCtrl.processSale )
-  
+
 
 module.exports= Auth

@@ -14,13 +14,12 @@ var paymentRoutes = require( './paymentRoutes.js' )
 Router.use( '/payments', paymentRoutes)
 Router.use( '/users', userRoutes.noAuth )
 Router.use( '/items', itemRoutes.noAuth )
-
-Router.route( '/authenticate' ).post( authCtrl.authenticate )
-
-Router.use( authCtrl.isAuthentic )
-
 Router.use( '/orders', orderRoutes )
 Router.use( '/items', itemRoutes.auth )
+
+Router.route( '/authenticate' ).post( authCtrl.authenticate );
+
+Router.use( authCtrl.isAuthentic )
 
 Router.use( '/users', userRoutes.auth )
 

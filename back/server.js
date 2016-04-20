@@ -4,9 +4,10 @@ var express        = require( 'express' )
 var morgan           = require( 'morgan' )
 var mongoose           = require( 'mongoose' )
 var cors           = require( 'cors' )
-var bodyParser           = require( 'body-parser' )
-
 var app = express()
+var bodyParser           = require( 'body-parser' )
+var server = require( 'http' ).Server( app )
+var io = require( 'socket.io' )( server )
 
 var Dev = require( './.Dev.js' )
 var PORT = Dev.PORT
@@ -48,7 +49,23 @@ app.use( '*', function( req, res ) {
 } )
 
 //SERVER
+// var nsp = io.of( '/' )
+var mainSocket
+io.on( 'connection', function( socket ) {
+	mainSocket = socket
+	socket.on( 'orders', function( data ) {
+		console.log(data.order);
+		console.log(data.message);
+		io.emit('orderForVendor', data);
+		// io.emit('orderForVendor', "YOOOOO");
+	} )
+
+	// socket.on( 'new order', function( data ) {
+	// 	console.log( 'NNNNNNNNNNNNNNNNN', data )
+	// } )
+
+} )
 //===========================
-app.listen( PORT, function() {
+server.listen( PORT, function() {
 	console.log( 'Running on port: ', PORT )
 } )

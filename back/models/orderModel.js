@@ -6,7 +6,8 @@ var Order
 //SCHEMA
 //===========================
 Order = new mongoose.Schema({
-  uId         : { type: String, ref: 'User', required: true }, //require true later required: true, ref: 'User'
+  uId         : { type: String, ref: 'User' }, //require true later required: true, ref: 'User'
+  name       : String,////if no user id
   items       : [{ type: String, ref: 'Item'}],
   total       : Number,
   completed   : { type: Boolean, default: false },

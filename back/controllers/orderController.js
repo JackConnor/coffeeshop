@@ -5,21 +5,6 @@ var Order          = mongoose.model( 'Order' )
 
 
 var app   = require( 'express' )()
-var server = require( 'http' ).Server( app )
-var io = require( 'socket.io' )( server )
-// var nsp = io.of( '/' )
-var mainSocket
-io.on( 'connection', function( socket ) {
-	mainSocket = socket
-	socket.on( 'test', function( data ) {
-		console.log( 'Test!' )
-	} )
-
-	socket.on( 'new order', function( data ) {
-		console.log( 'NNNNNNNNNNNNNNNNN', data )
-	} )
-
-} )
 
 // io.on( 'new order', function( data ) {
 // 		console.log( 'NNNNNNNNNNNNNNNNN', data )
@@ -40,41 +25,73 @@ function sendErr( err, res ) {
 //CRUD
 //===========================
 function create( req, res ) {
-  var order = req.body.order
-  order.uId = req.decoded.id
-  var promise = Order.create( order )
-      promise.then( function( data ) {
-        // SOCKET!!!
-		// io.emit( 'new order', data )
-		// console.log( mainSocket )
-		// mainSocket.emit( 'new order', data )
-      mongoose.model( 'User' ).findOne( { _id: req.decoded.id }).exec(function(err, user){
-        user.currentOrder = data._id
-        user.orderHistory.push( user.currentOrder )
-        console.log(user)
-        if(user.orderHistory.length % 10 != 0) {
-          user.rewards++
-        }
-        user.save(function(err, status) {
-          console.log('PPPPPPPPPPPPPPPPPPP', err, status)
-        })
-        res.json( {
-              error: null,
-              status: 200,
-              message: 'Order has been placed!',
-              data: data
-            } )
-          } )
-      } )
-      .catch( function( err ) {
-        sendErr(err, res)
-      } )
+	console.log('yoooooooooo');
+  var order = req.body.order;
+	console.log(order);
+
+	Order.create({items: order.items, name: order.name}, function(err, newOrder){
+    console.log();
+		if(err)console.log(err);
+		if(req.body.hasOwnProperty('decoded')){
+			order.uId = req.decoded.id;
+			mongoose.model( 'User' ).findOne( { _id: req.body.decoded.id }).exec(function(err, user){
+				user.currentOrder = data._id
+				user.orderHistory.push( user.currentOrder )
+				console.log(user)
+				if(user.orderHistory.length % 10 != 0) {
+					user.rewards++
+				}
+				user.save(function(err, status) {
+					console.log('PPPPPPPPPPPPPPPPPPP', err, status)
+				})
+				res.json( {
+							error: null,
+							status: 200,
+							message: 'Order has been placed!',
+							data: newOrder
+						} )
+					} )
+		}
+		else {
+			console.log('no idea');
+			res.json( {
+						error: null,
+						status: 200,
+						message: 'Order has been placed!',
+						data: newOrder
+					} )
+		}
+	})
+}
+
+// function single(req, res){
+//
+// }
+
+function single( req, res ) {
+	console.log(req.body);
+  Order.findOne({'_id': req.body.orderId})
+	.populate('items')
+	.exec(function( err, data ) {
+		if(err) console.log(err);
+		console.log(data);
+    res.json( {
+      error: null,
+      status: 200,
+      message: 'Here are all the orders',
+      data: data
+    } )
+  } )
+  .catch( function( err ) {
+    sendErr( err, res )
+  } )
 }
 
 function index( req, res ) {
-  var promise = Order.find( { completed: false } ).exec()
+  var promise = Order.find( { completed: false } )
+  .populate('items')
+  .exec();
   promise.then( function( data ) {
-		console.log(data);
     res.json( {
       error: null,
       status: 200,
@@ -175,6 +192,7 @@ function destroy( req, res ) {
 
 module.exports = {
   create: create,
+	single: single,
   index: index,
   allUser: allUser,
   completed : completed,

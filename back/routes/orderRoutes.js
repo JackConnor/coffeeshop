@@ -7,6 +7,7 @@ auth.route('')
     .get( orderCtrl.index )
     .post( orderCtrl.create )
   	.put( orderCtrl.allUser )
+    .patch( orderCtrl.single)
 
 auth.route('/one')
     .post( orderCtrl.show )
