@@ -593,8 +593,14 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           ,marginLeft: 0+'%'
           ,marginTop: 0+'px'
           ,paddingTop: 25+'px'
-          ,height: "115%"
+          ,height: "40px"
           ,marginRight: 0+"%"
+        }, 250);
+        setTimeout(function(){
+          $('.cartModalHolder').css({
+            width: 'auto'
+            ,height: 'auto'
+          })
         }, 250);
       // }, 135);
       $('.clearLayer').remove();
@@ -604,8 +610,16 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.drinkRepeatContainer').animate({
           opacity: 1
         },200);
+        closeCartOptions();
+        vm.getToken();
+        $('.checkoutName').val('');
+        $(".checkoutName").css({
+          opacity: 0
+          ,marginLeft: '200%'
+        })
       }, 400);
       $timeout(function(){
+        vm.getToken();
         vm.cartModal = false
       }, 100);
     }
@@ -655,60 +669,60 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
             container: 'checkout' ,
             // Form is not submitted by default when paymentMethodNonceReceived is implemented
             paymentMethodNonceReceived: function (event, nonce) {
-
-              vm.message = 'Processing your payment...';
-              console.log(nonce);
-              console.log(event);
-              console.log('got it yoooo');
-
-              $http({
-                method: 'POST',
-                url: 'http://192.168.0.18:3000/payments/process',
-                data: {
-                  amount: vm.orderTotalPrice
-                  ,payment_method_nonce: nonce
-                }
-              })
-              .success(function (data) {
-                if (data.success) {
-                  vm.message = 'Payment authorized, thanks.';
-                  vm.isError = false;
-                  vm.isPaid = true;
-                  var orderObj = {order: {
-                    items: []
-                    ,name: $('.checkoutName').val()
-
-                  }}
-                  for (var i = 0; i < vm.currentOrder.length; i++) {
-                    orderObj.order.items.push(vm.currentOrder[i].itemId);
+              //////if-statement to check if user has added a name
+              if($('.checkoutName').val().length > 0){
+                vm.message = 'Processing your payment...';
+                $http({
+                  method: 'POST',
+                  url: 'http://192.168.0.18:3000/payments/process',
+                  data: {
+                    amount: vm.orderTotalPrice
+                    ,payment_method_nonce: nonce
                   }
-                  if(vm.signedInUser){
-                    orderObj.decoded.id = signedInUser.id
-                  }
-                  $http({
-                    method: "POST"
-                    ,url: 'http://192.168.0.18:3000/orders'
-                    ,data: orderObj
-                  })
-                  .then(function(data){
-                    vm.socket = io.connect('http://localhost:3000/');
-                    vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
-                  })
-                  //
+                })
+                .success(function (data) {
+                  if (data.success) {
+                    vm.message = 'Payment authorized, thanks.';
+                    vm.isError = false;
+                    vm.isPaid = true;
+                    var orderObj = {order: {
+                      items: []
+                      ,name: $('.checkoutName').val()
 
-                } else {
-                  // implement your solution to handle payment failures
-                  console.log(vm.orderTotalPrice)
-                  vm.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
+                    }}
+                    for (var i = 0; i < vm.currentOrder.length; i++) {
+                      orderObj.order.items.push(vm.currentOrder[i].itemId);
+                    }
+                    if(vm.signedInUser){
+                      orderObj.decoded.id = signedInUser.id
+                    }
+                    $http({
+                      method: "POST"
+                      ,url: 'http://192.168.0.18:3000/orders'
+                      ,data: orderObj
+                    })
+                    .then(function(data){
+                      vm.socket = io.connect('http://localhost:3000/');
+                      vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
+                    })
+                    //
+
+                  } else {
+                    // implement your solution to handle payment failures
+                    console.log(vm.orderTotalPrice)
+                    vm.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
+                    vm.isError = true;
+                  }
+
+                }).error(function (error) {
+                  vm.message = 'Error: cannot connect to server. Please make sure your server is running431.';
+
                   vm.isError = true;
-                }
-
-              }).error(function (error) {
-                vm.message = 'Error: cannot connect to server. Please make sure your server is running431.';
-
-                vm.isError = true;
-              });
-
+                });
+              }
+              else {
+                alert('Please add your name');
+              }
             }
           });
 
