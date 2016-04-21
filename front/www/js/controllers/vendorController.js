@@ -1,33 +1,42 @@
-angular.module('vendorController', [])
+angular.module('vendorController', ['allOrdersFactory'])
 
   .controller('vendorCtrl', vendorCtrl);
 
-  vendorCtrl.$inject = ['$http'];
+  vendorCtrl.$inject = ['$http', 'allOrders'];
 
-  function vendorCtrl($http){
+  function vendorCtrl($http, allOrders){
     var vm = this;
+    vm.slideHappening = false;
+
+    allOrders()
+    .then(function(yaa){
+      console.log(yaa)
+      vm.orderList = yaa.data.data;
+      console.log(vm.orderList);
+      vm.allItems = [];
+      var orderLength = vm.orderList.length;
+      for (var i = 0; i < orderLength; i++) {
+        for (var j = 0; j < vm.orderList[i].items.length; j++) {
+          vm.allItems.push({item: vm.orderList[i].items[j], name: vm.orderList[i].name});
+        }
+      }
+    })
 
     vm.orderList = ['hi'];
-    console.log(vm);
     vm.socket = io.connect('http://localhost:3000/');
-    console.log(vm.socket);
     vm.socket.on('orderForVendor', function(data){
+      console.log('raw order');
       console.log(data);
       vm.orderList.push(data.order);
-      console.log('working');
-      console.log(vm.orderList);
       var orderId = data.order.data._id;
-      console.log(orderId);
+      /////function to get an individual order
       $http({
         method: "PATCH"
-        ,url: "http://192.168.0.18:3000/orders"
+        ,url: "http://192.168.0.3:3000/orders"
         ,data: {orderId: orderId}
       })
-      .then(function(data){
-        console.log('order info callback');
-        console.log(data.data.data);
-        console.log(data.data.data.items);
-        addOrder(data.data.data.items);
+      .then(function(orderData){
+        addOrder(orderData.data.data.items, data.orderData, data.order.data.name);
       })
       // $('.ordersList').prepend(
       //   "<div class='orderCell'>"+
@@ -37,21 +46,125 @@ angular.module('vendorController', [])
     });
 
     //////animations
-    function addOrder(orderItems){
+    function addOrder(orderItems, orderSpecs, customerName){
+      var name = customerName.toString();
+      console.log(customerName);
+      /////these are the items, as pulled from db
+      var rawItems = orderItems;
+      /////these are the speicifcations for the items
+      var orderSpecs = orderSpecs;
+      console.log(orderSpecs);
+      console.log('orderItem coming');
       console.log(orderItems);
       var ordLength = orderItems.length;
       for (var i = 0; i < ordLength; i++) {
-        console.log(orderItems[i]);
-        console.log(orderItems[i].name);
-        var name = orderItems[i].name.toString();
-        console.log(name);
-        $('.ordersList').prepend(
-          "<div class='orderVendorCell'>"+
-          name+
+        vm.allItems.reverse();
+        vm.allItems.push();
+        vm.allItems.reverse();
+        $('.orderContainer').prepend(
+          "<div class='orderCell'>"+
+            "<div orderCellTitle>"+orderItems[i].name+"  ||  "+name+"</div>"+
+            "<div class='vendorCellShots'>|| Shots: "+orderSpecs[i].shots+"</div>"+
+            "<div class='vendorCellFlavours'>|| "+orderSpecs[i].flavours+"</div>"+
           "</div>"
         );
+        if(orderSpecs[i].shots === 0){
+          $('.vendorCellShots').remove();
+        }
+        if(orderSpecs[i].flavours.length === 0){
+          $('.vendorCellFlavours').remove();
+        }
       }
     }
+
+    function goToClientView(){
+      window.location.hash = "#/tab/dash"
+    }
+    vm.goToClientView = goToClientView;
+
+    ///animations
+    function cellSwipeLeft(evt){
+      console.log('left');
+      var target = $(evt.currentTarget);
+      console.log(target);
+      if(!vm.slideHappening){
+        if (target.hasClass('center')){
+          vm.slideHappening = true;
+          target.animate({
+            width: '70%'
+            ,backgroundColor: '#FCF5EB'
+          }, 180);
+          setTimeout(function(){
+            vm.slideHappening = false;
+          }, 180);
+          target.addClass('left');
+          target.removeClass('center');
+        }
+        else if(target.hasClass('left')){
+          return;
+        }
+        else if(target.hasClass('right')){
+          vm.slideHappening = true;
+          target.animate({
+            width: '100%'
+            ,marginLeft: '-2px'
+            ,backgroundColor: 'translucent'
+          }, 180);
+          setTimeout(function(){
+            vm.slideHappening = false;
+          }, 180);
+          target.addClass('center');
+          target.removeClass('right');
+        }
+        else {
+          return;
+        }
+      }
+      else {
+        console.log('slide is happpppppening');
+      }
+    }
+    vm.cellSwipeLeft = cellSwipeLeft;
+
+    function cellSwipeRight(evt){
+      var target = $(evt.currentTarget);
+      if(!vm.slideHappening){
+        if (target.hasClass('center')){
+          vm.slideHappening = true;
+          target.animate({
+            width: '70%'
+            ,marginLeft: '30%'
+            ,backgroundColor: '#FCF5EB'
+          }, 180);
+          setTimeout(function(){
+            vm.slideHappening = false;
+          }, 180);
+          target.addClass('right');
+          target.removeClass('center');
+        }
+        else if(target.hasClass('left')){
+          console.log('left to right');
+          vm.slideHappening = true;
+          target.animate({
+            width: '100%'
+            ,backgroundColor: 'translucent'
+          }, 180);
+          setTimeout(function(){
+            vm.slideHappening = false;
+          }, 180);
+          target.addClass('center');
+          target.removeClass('left');
+        }
+        else if(target.hasClass('right')){
+          return;
+        }
+      }
+      else {
+        console.log('slide is happpppppening');
+      }
+    }
+    vm.cellSwipeRight = cellSwipeRight;
+
     //
     // vm.socket.on('new order', function(data){
     //   console.log('new order', data);
@@ -112,7 +225,7 @@ angular.module('vendorController', [])
     //   console.log(vm.data.product)
     //   $http({
     //     method: "POST",
-    //     url: "http://192.168.0.18:3000/items/one",
+    //     url: "http://192.168.0.3:3000/items/one",
     //     data: {
     //
     //         name: vm.data.product,
@@ -136,7 +249,7 @@ angular.module('vendorController', [])
     //   console.log( 'TOKEN', window.localStorage.token )
     //   $http({
     //     method: "get",
-    //     url: "http://192.168.0.18:3000/orders",
+    //     url: "http://192.168.0.3:3000/orders",
     //     headers: {'x-access-token': window.localStorage.token}
     //
     //

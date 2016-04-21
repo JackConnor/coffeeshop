@@ -1,4 +1,16 @@
-<h2>Vendor View</h2>
-<div class="ordersList">
 
-</div>
+<ion-content>
+  <h2 class='vendorHeadline'>Vendor View</h2>
+  <div class="toClient" ng-click='vendor.goToClientView()'>
+    CLient View
+  </div>
+  <div class="orderContainer">
+    <div class="ordersList" ng-repeat='item in vendor.allItems'>
+      <div class='orderCell'>
+        <div class="orderCellInner center" on-swipe-right='vendor.cellSwipeRight($event)'   on-swipe-left='vendor.cellSwipeLeft($event)'>
+          <div class='orderCellTitle'><span class='orderName'>{{item.item.name}}</span> <br> <span class='orderCustomerName'>{{item.name}}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

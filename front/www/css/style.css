@@ -83,6 +83,7 @@ h1,h2,h3,h4,h5,h6 {
   font-size: 23px;
   margin-left: 200%;
   opacity: 0;
+  z-index: 1600;
 }
 
 .checkoutSubmit {
@@ -131,6 +132,14 @@ h1,h2,h3,h4,h5,h6 {
   opacity: 0.1;
 }
 
+.closeOptions {
+  text-align: left;
+  font-size: 22px;
+  margin-top: -3px;
+  margin-left: -3px;
+  position: absolute;
+}
+
 .coffeeSize {
   color: white;
   font-size: 35px;
@@ -138,6 +147,17 @@ h1,h2,h3,h4,h5,h6 {
   position: absolute;
   padding-top: 20px;
   padding-left: 2px;
+}
+
+.drinkAction{
+	width: 40px;
+	padding-left: 10px;
+}
+
+.drinkAction i{
+	font-size: 30px;
+	line-height: 50px;
+	color: dodgerblue;
 }
 
 .drinkCell{
@@ -151,17 +171,6 @@ h1,h2,h3,h4,h5,h6 {
 
 .drinkCell:first-child{
   /*border-width: 1px 0 1px;*/
-}
-
-.drinkPhotoHolder {
-  width: 50px;
-  height: 50px;
-}
-
-.drinkPhoto {
-	width: 100%;
-  height: 100%;
-  border-radius: 3px;
 }
 
 .drinkIn{
@@ -179,14 +188,6 @@ h1,h2,h3,h4,h5,h6 {
   width: 200px;
 }
 
-.checkoutDrinkInfo-name{
-  /*font-size: 1.2em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-top: 10px;*/
-}
-
 .drinkIn-price{
   /*font-size: 1em;
   color: black;*/
@@ -199,58 +200,27 @@ h1,h2,h3,h4,h5,h6 {
   margin-right: 15px;
 }
 
-.drinkAction{
-	width: 40px;
-	padding-left: 10px;
+.drinkPhotoHolder {
+  width: 50px;
+  height: 50px;
 }
 
-.drinkAction i{
-	font-size: 30px;
-	line-height: 50px;
-	color: dodgerblue;
+.drinkPhoto {
+	width: 100%;
+  height: 100%;
+  border-radius: 3px;
 }
 
-.editIcon {
-  font-size: 25px;
-  margin-left: 10px;
-}
-
-
-/****** Modal *******/
-
-.closeOptions {
-  text-align: left;
-  font-size: 22px;
-  margin-top: -3px;
-  margin-left: -3px;
-  position: absolute;
-}
-
-.optionOpen {
-  position: absolute;
-  z-index: 250
-}
-
-.optionsHeaderTitle{
-  font-size: 20px;
-  padding-top: 12px;
-}
-
-.optionsPart {
-  opacity: 0;
-  width: 100%;
-  margin-top: 90px;
-  height: 0;
-  position: absolute;
-  display: block;
-  z-index: -1;
-}
 
 .drinkRepeatContainer {
   height: auto;
   padding: 0px;
 }
 
+.editIcon {
+  font-size: 25px;
+  margin-left: 10px;
+}
 .espressoMath {
   text-align: right;
   font-size: 18px;
@@ -263,178 +233,6 @@ h1,h2,h3,h4,h5,h6 {
 
 .espressoMath-number{
   margin-right:15px;
-}
-
-.ion-coffee {
-}
-
-.optionText{
-  font-size: 16px;
-  margin-top: 3px;
-  padding: 0;
-}
-
-.optionInput{
-  text-align: right;
-  padding: 0;
-}
-
-.optionInput select{
-  width: 100px;
-  border: 1px solid #cccccc;
-  border-radius: 3px;
-  color: black;
-  font-size: 16px;
-  padding: 2px 6px;
-}
-
-.moreOptionsContainer{
-  margin-bottom: 10px;
-  height: 0px;
-  opacity: 0;
-}
-
-.nameItem {
-  /*border-right: 2px dotted gray;*/
-}
-
-.navContainer {
-  width: 100%;
-  height: 55px;
-  /*background-color: green;*/
-  border-bottom: '2px dotted grey'
-}
-
-.noPadding {
-  padding: 0px;
-}
-
-.openMore {
-  height: 50px;
-  text-align: center;
-  font-size: 18px;
-  color: grey;
-  padding-top: 10px;
-  outline: none;
-}
-
-.optionCell{
-  height: 50px;
-  border: 1px solid black;
-  border-width: 0 0 1px;
-  padding: 10px 5px;
-}
-
-.optionCell:first-child{
-  border-width: 1px 0 1px;
-}
-
-.orderFlavours {
-  padding: 0px;
-  height: 100%;
-}
-
-.optionsModal {
-  height: auto;
-  width: 90%;
-  left: 50%;
-  top: 30px;
-  margin-left: -45%;
-  box-shadow: 0 0 0 400px rgba(0,0,0,.4);
-  border-radius: 5px;
-  background-color: white;
-  position: fixed;
-}
-
-.orderCell {
-  height: 80px;
-  width: 100%;
-  border-bottom: 2px dashed gray;
-}
-
-.orderSection {
-  height: 100%;
-  padding: 0px;
-}
-
-.orderShots {
-  height: 100%;
-}
-
-.orderVendorCell {
-  width: 100%;
-  height: 70px;
-  border-bottom: 1px solid grey;
-  font-size: 23px;
-  text-align: center;
-  padding-top: 20px;
-}
-
-.sizeContainer{
-  height: 70px;
-  margin-top: 20px;
-}
-
-.sizeCellContainer{
-  text-align: center;
-  padding: 0;
-}
-
-.sizeCell{
-  /*border: 2px solid black;
-  width: 60px;
-  height: 60px;
-  display: inline-block;
-  text-align: center;
-  font-size: 19px;
-  border-radius: 50%;*/
-}
-
-.sizeSmall{
-  padding-top: 3px;
-  border: 2px solid black;
-  width: 40px;
-  height: 40px;
-  display: inline-block;
-  text-align: center;
-  font-size: 19px;
-  border-radius: 50%;
-  margin-top: 20px;
-}
-
-.sizeSmall i{
-  font-size: 30px;
-}
-
-.sizeMedium{
-  padding-top: 5px;
-  border: 2px solid black;
-  width: 50px;
-  height: 50px;
-  display: inline-block;
-  text-align: center;
-  font-size: 19px;
-  border-radius: 50%;
-  margin-top: 10px;
-}
-
-.sizeMedium i{
-  font-size: 35px;
-}
-
-.sizeLarge{
-  padding-top: 6px;
-  border: 2px solid black;
-  width: 60px;
-  height: 60px;
-  display: inline-block;
-  text-align: center;
-  font-size: 19px;
-  border-radius: 50%;
-}
-
-.sizeLarge i{
-  font-size: 40px;
 }
 
 .modalActionContainer{
@@ -471,6 +269,236 @@ h1,h2,h3,h4,h5,h6 {
 .moreDrinkOps {
   border-bottom: 1px dotted gray;
 }
+
+.moreOptionsContainer{
+  margin-bottom: 10px;
+  height: 0px;
+  opacity: 0;
+}
+
+.navContainer {
+  width: 100%;
+  height: 55px;
+  /*background-color: green;*/
+  border-bottom: '2px dotted grey'
+}
+
+.noPadding {
+  padding: 0px;
+}
+
+.openMore {
+  height: 50px;
+  text-align: center;
+  font-size: 18px;
+  color: grey;
+  padding-top: 10px;
+  outline: none;
+}
+
+.optionCell{
+  height: 50px;
+  border: 1px solid black;
+  border-width: 0 0 1px;
+  padding: 10px 5px;
+}
+
+.optionCell:first-child{
+  border-width: 1px 0 1px;
+}
+
+.optionOpen {
+  position: absolute;
+  z-index: 250
+}
+
+.optionsHeaderTitle{
+  font-size: 20px;
+  padding-top: 12px;
+}
+
+.optionInput{
+  text-align: right;
+  padding: 0;
+}
+
+.optionInput select{
+  width: 100px;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  color: black;
+  font-size: 16px;
+  padding: 2px 6px;
+}
+
+.optionsModal {
+  height: auto;
+  width: 90%;
+  left: 50%;
+  top: 30px;
+  margin-left: -45%;
+  box-shadow: 0 0 0 400px rgba(0,0,0,.4);
+  border-radius: 5px;
+  background-color: white;
+  position: fixed;
+}
+
+.optionsPart {
+  opacity: 0;
+  width: 100%;
+  margin-top: 90px;
+  height: 0;
+  position: absolute;
+  display: block;
+  z-index: -1;
+}
+
+.optionText{
+  font-size: 16px;
+  margin-top: 3px;
+  padding: 0;
+}
+
+.orderCell {
+  height: 80px;
+  width: 100%;
+  border-bottom: 2px dashed gray;
+  border-right: 2px solid gray;
+  border-left: 2px solid gray;
+}
+
+.orderCellInner {
+  width: 100%;
+  height: 100%;
+  outline: 1px solid gray;
+}
+
+.orderCellTitle {
+  display: block;
+  padding-top: 10px;
+}
+
+
+.orderContainer {
+  height: auto;
+  overflow-y: scroll;
+}
+
+.orderCustomerName {
+  font-size: 19px;
+  font-weight: 900;
+  margin-top: 2px;
+  margin-left: 5px;
+}
+
+.orderFlavours {
+  padding: 0px;
+  height: 100%;
+}
+
+.orderName {
+  font-size: 26px;
+  margin-left: 5px;
+}
+
+.orderSection {
+  height: 100%;
+  padding: 0px;
+}
+
+.orderShots {
+  height: 100%;
+}
+
+.orderVendorCell {
+  width: 100%;
+  height: 70px;
+  border-bottom: 1px solid grey;
+  font-size: 23px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.sizeCellContainer{
+  text-align: center;
+  padding: 0;
+}
+
+.sizeContainer{
+  height: 70px;
+  margin-top: 20px;
+}
+
+.sizeLarge{
+  padding-top: 6px;
+  border: 2px solid black;
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  text-align: center;
+  font-size: 19px;
+  border-radius: 50%;
+}
+
+.sizeLarge i{
+  font-size: 40px;
+}
+
+.sizeMedium{
+  padding-top: 5px;
+  border: 2px solid black;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  text-align: center;
+  font-size: 19px;
+  border-radius: 50%;
+  margin-top: 10px;
+}
+
+.sizeMedium i{
+  font-size: 35px;
+}
+
+.sizeSmall{
+  padding-top: 3px;
+  border: 2px solid black;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  font-size: 19px;
+  border-radius: 50%;
+  margin-top: 20px;
+}
+
+.sizeSmall i{
+  font-size: 30px;
+}
+
+.toClient {
+  border: 1px solid brown;
+  width: 15%;
+  position: absolute;
+  margin-left: 85%;
+  height: 40px;
+  padding-top: 5px;
+}
+
+/*//////////////////still ned to oranzie*/
+/*//////////////////still ned to oranzie*/
+/*//////////////////still ned to oranzie*/
+/*//////////////////still ned to oranzie*/
+/*////ssss////?*/
+
+/****** Modal *******/
+
+
+
+
+
+
+
 
 
 /****** Shopping Cart ******/
@@ -693,6 +721,11 @@ body {
   color: white;
   font-size: 28px;
   padding-top: 10px;
+}
+
+.vendorHeadline {
+  height: 80px;
+  border-bottom: 2px solid gray;
 }
 
 .vendorOrderList {

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.services', 'clientController', 'loginController', 'vendorController', 'menuItemsFactory', 'braintreeTokenFactory', 'braintreeProcessFactory'])
+angular.module('starter', ['ionic', 'starter.services', 'clientController', 'loginController', 'vendorController', 'menuItemsFactory', 'braintreeTokenFactory', 'braintreeProcessFactory', 'allOrdersFactory'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -104,8 +104,8 @@ angular.module('starter', ['ionic', 'starter.services', 'clientController', 'log
     url: '/account',
     views: {
       'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl as AccountCtrl'
+        templateUrl: 'templates/tab-account.html'
+        // controller: 'AccountCtrl as AccountCtrl'
       }
     }
   })

@@ -674,7 +674,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                 vm.message = 'Processing your payment...';
                 $http({
                   method: 'POST',
-                  url: 'http://192.168.0.18:3000/payments/process',
+                  url: 'http://192.168.0.3:3000/payments/process',
                   data: {
                     amount: vm.orderTotalPrice
                     ,payment_method_nonce: nonce
@@ -698,12 +698,14 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                     }
                     $http({
                       method: "POST"
-                      ,url: 'http://192.168.0.18:3000/orders'
+                      ,url: 'http://192.168.0.3:3000/orders'
                       ,data: orderObj
                     })
                     .then(function(data){
+                      console.log('order data');
+                      console.log(data);
                       vm.socket = io.connect('http://localhost:3000/');
-                      vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
+                      vm.socket.emit('orders', {message: 'Order Biatches', order: data.data, orderData: vm.currentOrder});
                     })
                     //
 
