@@ -1,13 +1,19 @@
-angular.module('vendorController', ['allOrdersFactory'])
+angular.module('vendorController', ['allOrdersFactory', 'processItemFactory'])
 
   .controller('vendorCtrl', vendorCtrl);
 
-  vendorCtrl.$inject = ['$http', 'allOrders'];
+  vendorCtrl.$inject = ['$http', 'allOrders', 'processItem'];
 
-  function vendorCtrl($http, allOrders){
+  function vendorCtrl($http, allOrders, processItem){
+    ///////////////////////////////
+    ////////global variables///////
     var vm = this;
     vm.slideHappening = false;
+    ////end global variables///////
+    ///////////////////////////////
 
+    /////////////////////////////////
+    ///////data calls anf functions//
     allOrders()
     .then(function(yaa){
       console.log(yaa)
@@ -23,39 +29,43 @@ angular.module('vendorController', ['allOrdersFactory'])
     })
 
     vm.orderList = ['hi'];
-    vm.socket = io.connect('http://localhost:3000/');
+    vm.socket = io.connect('http://192.168.0.10:3000/');
+    /////socket function which receives socket orders
     vm.socket.on('orderForVendor', function(data){
-      console.log('raw order');
-      console.log(data);
       vm.orderList.push(data.order);
       var orderId = data.order.data._id;
       /////function to get an individual order
       $http({
         method: "PATCH"
-        ,url: "http://192.168.0.3:3000/orders"
+        ,url: "http://192.168.0.10:3000/orders"
         ,data: {orderId: orderId}
       })
       .then(function(orderData){
         addOrder(orderData.data.data.items, data.orderData, data.order.data.name);
       })
-      // $('.ordersList').prepend(
-      //   "<div class='orderCell'>"+
-      //     +data.order+
-      //   "</div>"
-      // );
     });
+
+    function markAsDone(evt, itemId, status){
+      console.log(evt.currentTarget);
+      console.log(itemId);
+      console.log(status);
+      processItem(itemId, status)
+      .then(function(updatedItem){
+        console.log(updatedItem);
+      })
+    }
+    vm.markAsDone = markAsDone;
+
+    ///////end data calls anf functions//
+    /////////////////////////////////////
 
     //////animations
     function addOrder(orderItems, orderSpecs, customerName){
       var name = customerName.toString();
-      console.log(customerName);
       /////these are the items, as pulled from db
       var rawItems = orderItems;
       /////these are the speicifcations for the items
       var orderSpecs = orderSpecs;
-      console.log(orderSpecs);
-      console.log('orderItem coming');
-      console.log(orderItems);
       var ordLength = orderItems.length;
       for (var i = 0; i < ordLength; i++) {
         vm.allItems.reverse();
@@ -63,9 +73,12 @@ angular.module('vendorController', ['allOrdersFactory'])
         vm.allItems.reverse();
         $('.orderContainer').prepend(
           "<div class='orderCell'>"+
-            "<div orderCellTitle>"+orderItems[i].name+"  ||  "+name+"</div>"+
-            "<div class='vendorCellShots'>|| Shots: "+orderSpecs[i].shots+"</div>"+
-            "<div class='vendorCellFlavours'>|| "+orderSpecs[i].flavours+"</div>"+
+            "<div orderCellTitle>"+
+              "<span class='orderName'>"+orderItems[i].name+"</span>"+
+              "<br><span class='orderCustomerName'>"+name+"</span>"+
+              "<div class='vendorCellShots'>Shots: "+orderSpecs[i].shots+"</div>"+
+              "<div class='vendorCellFlavours'>|| "+orderSpecs[i].flavours+"</div>"+
+            "</div>"+
           "</div>"
         );
         if(orderSpecs[i].shots === 0){
@@ -84,13 +97,9 @@ angular.module('vendorController', ['allOrdersFactory'])
 
     ///animations
     function cellSwipeLeft(evt){
-      console.log('left');
       var target = $(evt.currentTarget);
       var rightSib = $(target).next();
       var leftSib = $(target).siblings();
-      console.log(leftSib);
-      console.log(rightSib);
-      console.log(target);
       if(!vm.slideHappening){
         if (target.hasClass('center')){
           vm.slideHappening = true;
@@ -250,7 +259,7 @@ angular.module('vendorController', ['allOrdersFactory'])
     //   console.log(vm.data.product)
     //   $http({
     //     method: "POST",
-    //     url: "http://192.168.0.3:3000/items/one",
+    //     url: "http://192.168.0.10:3000/items/one",
     //     data: {
     //
     //         name: vm.data.product,
@@ -274,7 +283,7 @@ angular.module('vendorController', ['allOrdersFactory'])
     //   console.log( 'TOKEN', window.localStorage.token )
     //   $http({
     //     method: "get",
-    //     url: "http://192.168.0.3:3000/orders",
+    //     url: "http://192.168.0.10:3000/orders",
     //     headers: {'x-access-token': window.localStorage.token}
     //
     //
