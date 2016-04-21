@@ -86,13 +86,22 @@ angular.module('vendorController', ['allOrdersFactory'])
     function cellSwipeLeft(evt){
       console.log('left');
       var target = $(evt.currentTarget);
+      var rightSib = $(target).next();
+      var leftSib = $(target).siblings();
+      console.log(leftSib);
+      console.log(rightSib);
       console.log(target);
       if(!vm.slideHappening){
         if (target.hasClass('center')){
           vm.slideHappening = true;
           target.animate({
             width: '70%'
-            ,backgroundColor: '#FCF5EB'
+            ,backgroundColor: '#e6f3f7'
+          }, 180);
+          rightSib.animate({
+            opacity: 1
+            ,width: '30%'
+            ,marginLeft: '70%'
           }, 180);
           setTimeout(function(){
             vm.slideHappening = false;
@@ -109,6 +118,10 @@ angular.module('vendorController', ['allOrdersFactory'])
             width: '100%'
             ,marginLeft: '-2px'
             ,backgroundColor: 'translucent'
+          }, 180);
+          leftSib.animate({
+            opacity: 0
+            ,width: '0%'
           }, 180);
           setTimeout(function(){
             vm.slideHappening = false;
@@ -128,13 +141,20 @@ angular.module('vendorController', ['allOrdersFactory'])
 
     function cellSwipeRight(evt){
       var target = $(evt.currentTarget);
+      var rightSib = $(target).next();
+      var leftSib = $(target).siblings();
+      console.log(leftSib);
       if(!vm.slideHappening){
         if (target.hasClass('center')){
           vm.slideHappening = true;
           target.animate({
             width: '70%'
             ,marginLeft: '30%'
-            ,backgroundColor: '#FCF5EB'
+            ,backgroundColor: '#e6f3f7'
+          }, 180);
+          leftSib.animate({
+            opacity: 1
+            ,width: '30%'
           }, 180);
           setTimeout(function(){
             vm.slideHappening = false;
@@ -148,6 +168,11 @@ angular.module('vendorController', ['allOrdersFactory'])
           target.animate({
             width: '100%'
             ,backgroundColor: 'translucent'
+          }, 180);
+          rightSib.animate({
+            opacity: 0
+            ,width: '0%'
+            ,marginLeft: '100%'
           }, 180);
           setTimeout(function(){
             vm.slideHappening = false;
