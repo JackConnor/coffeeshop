@@ -1,0 +1,26 @@
+<ion-view>
+  <ion-content class="padding">
+    <div class="ordersList">
+      <div class='orderCell'>
+        <div class="orderCellInner center">
+          <div class='orderCellTitle col-xs-4'>
+            <span class='orderName'>{{history.lastMenuItem.itemId.name}}</span>
+            <br>
+            <span class='orderCustomerName'>{{history.lastMenuItem.name}}  {{history.lastMenuItem.status}}</span>
+          </div>
+          <div class="orderCellDetails col-xs-5">
+            <div class="orderCellSize" ng-if='history.lastMenuItem.customizations[0].size'>
+              {{history.lastMenuItem.customizations[0].size}}
+            </div>
+            <div class="orderCellShots" ng-if='history.lastMenuItem.customizations[0].shots > 0'>
+              Espresso shots: {{history.lastMenuItem.customizations[0].shots}}
+            </div>
+            <div class="orderCellFlavours" ng-if='history.lastMenuItem.customizations[0].flavours'>
+              Additional flavours: {{history.lastMenuItem.customizations[0].flavours}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -703,8 +703,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                       ,data: orderObj
                     })
                     .then(function(data){
-                      console.log('order data');
                       console.log(data);
+                      var orderId = data.data.data._id;
+                      window.localStorage.lastOrder = orderId;
                       vm.socket = io.connect('http://192.168.0.3:3000/');
                       vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
                     })

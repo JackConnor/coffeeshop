@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.services', 'clientController', 'loginController', 'vendorController', 'menuItemsFactory', 'braintreeTokenFactory', 'braintreeProcessFactory', 'allOrdersFactory', 'processItemFactory', 'allMenuitemsFactory'])
+angular.module('starter', ['ionic', 'starter.services', 'clientController', 'loginController', 'historyController', 'vendorController', 'menuItemsFactory', 'braintreeTokenFactory', 'braintreeProcessFactory', 'allOrdersFactory', 'processItemFactory', 'allMenuitemsFactory', 'getLastOrderFactory'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -71,10 +71,11 @@ angular.module('starter', ['ionic', 'starter.services', 'clientController', 'log
     .state('tab.history', {
         url: '/history',
         views: {
-        'tab-account': {
-            templateUrl: 'templates/history.html',
-        controller: 'HistoryCtrl as HistoryCtrl'
-        }
+        'tab-history': {
+          templateUrl: 'templates/tab-history.html',
+          controller: 'historyCtrl',
+          controllerAs: 'history'
+          }
         }
     })
 
