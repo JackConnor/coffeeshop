@@ -2,9 +2,10 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
 
   .controller('vendorCtrl', vendorCtrl);
 
-  vendorCtrl.$inject = ['$http', 'allOrders', 'processItem', 'allMenuitems'];
+  vendorCtrl.$inject = ['$http', '$interval', 'allOrders', 'processItem', 'allMenuitems'];
 
-  function vendorCtrl($http, allOrders, processItem, allMenuitems){
+  function vendorCtrl($http, $interval, allOrders, processItem, allMenuitems){
+    console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
     ///////////////////////////////
     ////////global variables///////
     var vm = this;
@@ -18,7 +19,15 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
     allMenuitems()
     .then(function(data){
       console.log('firing');
-      vm.allItems = data.data.data.reverse();
+      var allItems = [];
+      var itemLength = data.data.data.length;
+      var itemArray = data.data.data;
+      for (var i = 0; i < itemLength; i++) {
+        if(itemArray[i].status === 'active'){
+          allItems.push(itemArray[i]);
+          vm.allItems = allItems.reverse();
+        }
+      }
     })
 
     vm.orderList = ['hi'];
@@ -63,6 +72,25 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
       })
     }
     vm.markAsDone = markAsDone;
+
+    ////quick function to convert the inline date using moment.js
+    function convertDate(isoDate){
+      // var convDate = moment(isoDate).format("DD-MM-YYYY")
+      var convDate = moment(isoDate).format("X")
+      return (convDate/60)
+    }
+    vm.convertDate = convertDate;
+
+    function broadcastCurrentDate(){
+      var rawCurrentDate = new Date();
+      var formattedDate = moment(rawCurrentDate).format("X");
+      vm.currentDate = formattedDate/60
+      console.log(vm.currentDate);
+    }
+    broadcastCurrentDate();
+    $interval(function(){
+      broadcastCurrentDate();
+    }, 3000);
 
     ///////end data calls anf functions//
     /////////////////////////////////////

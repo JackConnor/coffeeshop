@@ -6,18 +6,17 @@
   </div>
   <div class="orderContainer">
     <div class="ordersList" ng-repeat='item in vendor.allItems'>
-      <!-- {{item.customizations}} -->
       <div class='orderCell'>
         <div class="orderCellLeft" ng-click='vendor.markAsDone($event, item._id, "cancelled")'>
           hi!
         </div>
         <div class="orderCellInner center" on-swipe-right='vendor.cellSwipeRight($event)'   on-swipe-left='vendor.cellSwipeLeft($event)'>
-          <div class='orderCellTitle col-xs-5'>
+          <div class='orderCellTitle col-xs-4'>
             <span class='orderName'>{{item.itemId.name}}</span>
             <br>
             <span class='orderCustomerName'>{{item.name}}  {{item.item.status}}</span>
           </div>
-          <div class="orderCellDetails col-xs-7">
+          <div class="orderCellDetails col-xs-5">
             <div class="orderCellSize" ng-if='item.customizations[0].size'>
               {{item.customizations[0].size}}
             </div>
@@ -27,6 +26,9 @@
             <div class="orderCellFlavours" ng-if='item.customizations[0].flavours'>
               Additional flavours: {{item.customizations[0].flavours}}
             </div>
+          </div>
+          <div class="orderClock">
+            {{ vendor.currentDate - (vendor.convertDate(item.createdDate)) | number: 0}}<span class='minuteM'>M</span>
           </div>
         </div>
         <div class="orderCellRight" ng-click='vendor.markAsDone($event, item._id, "complete")'>

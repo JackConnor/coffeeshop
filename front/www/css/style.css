@@ -370,7 +370,7 @@ h1,h2,h3,h4,h5,h6 {
 .orderCellDetails {
   height: 100%;
   display: inline-block;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .orderCellLeft {
@@ -385,7 +385,8 @@ h1,h2,h3,h4,h5,h6 {
 .orderCellInner {
   width: 100%;
   height: 100%;
-  outline: 1px solid gray;
+  overflow: hidden;
+  /*outline: 1px solid gray;*/
 }
 
 .orderCellRight {
@@ -412,6 +413,10 @@ h1,h2,h3,h4,h5,h6 {
   padding: 0px;
 }
 
+.orderClock {
+  font-size: 20px;
+  padding-top: 15px;
+}
 
 .orderContainer {
   height: auto;
