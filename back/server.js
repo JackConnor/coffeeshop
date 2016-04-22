@@ -33,9 +33,7 @@ require( './socket.js' ).connect( io )
 //===========================
 var User = require( './models/userModel.js' )
 var Order = require( './models/orderModel.js')
-
-
-
+var Menuitem = require( './models/menuitem.js')
 var Item = require( './models/itemModel.js' )
 
 
@@ -54,16 +52,11 @@ var mainSocket
 io.on( 'connection', function( socket ) {
 	mainSocket = socket
 	socket.on( 'orders', function( data ) {
-		console.log(data.order);
-		console.log(data.message);
+		console.log('socket order coming soon');
+		console.log(data);
+		console.log('socket order over');
 		io.emit('orderForVendor', data);
-		// io.emit('orderForVendor', "YOOOOO");
 	} )
-
-	// socket.on( 'new order', function( data ) {
-	// 	console.log( 'NNNNNNNNNNNNNNNNN', data )
-	// } )
-
 } )
 //===========================
 server.listen( PORT, function() {

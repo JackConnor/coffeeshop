@@ -64,19 +64,21 @@ function show( req, res ) {
 }
 
 function update( req, res ) {
-	var item = req.body.item
-	var promise = Item.findByIdAndUpdate( item.id, item, { new: true } ).exec()
-	promise.then( function( data ) {
-		res.json( {
-					error: null,
-					status: 200,
-					message: 'Here is the item you updated!',
-					data: data
-				} )
-	} )
-	.catch( function( err ) {
-		sendErr( err, res )
-	} )
+	var itemId = req.body.itemId;
+	var newStatus = req.body.status;
+	Item.findOne( {_id: itemId}, function(err, item){
+		if(err){console.log(err)}
+		item.status = newStatus;
+		item.save(function(err, newItem){
+			if(err){console.log(err)}
+			res.json( {
+						error: null,
+						status: 200,
+						message: 'Here is the item you updated!',
+						data: newItem
+			} )
+		})
+	})
 }
 
 function destroy( req, res ) {

@@ -8,10 +8,10 @@ var Order
 Order = new mongoose.Schema({
   uId         : { type: String, ref: 'User' }, //require true later required: true, ref: 'User'
   name       : String,////if no user id
-  items       : [{ type: String, ref: 'Item'}],
+  menuitems       : [{ type: String, ref: 'Menuitem'}],
   total       : Number,
   completed   : { type: Boolean, default: false },
-  completedAt : Date
+  completedAt : Date,
 }, {timestamps: true}) //testing timestamps
 
 //METHODS

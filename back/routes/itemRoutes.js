@@ -7,10 +7,10 @@ var itemCtrl = require( '../controllers/itemController.js' )
 noAuth.route( '' )
 		.get( itemCtrl.index )
 		.post( itemCtrl.show )
+		.put( itemCtrl.update )
 
 Auth.route( '/one' )
 	.post( itemCtrl.create )
-	.put( itemCtrl.update )
 	.delete( itemCtrl.destroy )
 
 

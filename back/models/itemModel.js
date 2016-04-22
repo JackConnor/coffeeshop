@@ -8,6 +8,8 @@ Item = new mongoose.Schema( {
 	type : { type: String },
   quantity: { type: Number, default: 0 },
 	price: { type: Number },
+	// status: {type: String, default: 'active'},
+	// completedAt : Date,
 	description: { type: String }
 } )
 
