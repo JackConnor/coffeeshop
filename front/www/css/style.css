@@ -360,7 +360,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .orderCell {
-  height: 80px;
+  height: 100px;
   width: 100%;
   border-bottom: 2px dashed gray;
   border-right: 2px solid gray;
@@ -375,11 +375,15 @@ h1,h2,h3,h4,h5,h6 {
 
 .orderCellLeft {
   width: 0%;
-  height: 80px;
+  height: 100px;
   position: absolute;
   background-color: #ffb2b2;
   display: inline-block;
   opacity: 0;
+  color: white;
+  font-size: 15px;
+  padding: 15px 5px 0 5px;
+  text-align: center;
 }
 
 .orderCellInner {
@@ -394,10 +398,14 @@ h1,h2,h3,h4,h5,h6 {
   margin-left: 100%;
   width: 0%;
   display: inline-block;
-  height: 80px;
-  margin-top: -80px;
+  height: 100px;
+  margin-top: -100px;
   background-color: #bba3d0;
   opacity: 0;
+  color: white;
+  font-size: 15px;
+  padding: 5px 5px 0 5px;
+  text-align: center;
 }
 
 .orderCellShots {
@@ -436,8 +444,9 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .orderName {
-  font-size: 15px;
+  font-size: 19px;
   margin-left: 5px;
+  font-weight: 900;
 }
 
 .orderSection {
@@ -763,8 +772,10 @@ body {
 }
 
 .vendorHeadline {
-  height: 80px;
+  height: 50px;
   border-bottom: 2px solid gray;
+  font-size: 24px;
+  padding: 0px;
 }
 
 .vendorOrderList {

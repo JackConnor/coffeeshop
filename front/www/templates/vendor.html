@@ -1,6 +1,6 @@
 
 <ion-content>
-  <h2 class='vendorHeadline'>Vendor View</h2>
+  <div class='vendorHeadline'>Business Site</div>
   <div class="toClient" ng-click='vendor.goToClientView()'>
     CLient View
   </div>
@@ -8,7 +8,7 @@
     <div class="ordersList" ng-repeat='item in vendor.allItems'>
       <div class='orderCell'>
         <div class="orderCellLeft" ng-click='vendor.markAsDone($event, item._id, "cancelled")'>
-          hi!
+          Cancel This Order
         </div>
         <div class="orderCellInner center" on-swipe-right='vendor.cellSwipeRight($event)'   on-swipe-left='vendor.cellSwipeLeft($event)'>
           <div class='orderCellTitle col-xs-4'>
@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="orderCellRight" ng-click='vendor.markAsDone($event, item._id, "complete")'>
-          hi!
+          Mark This As Completed
         </div>
       </div>
     </div>
