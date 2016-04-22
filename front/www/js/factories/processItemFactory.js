@@ -8,8 +8,8 @@ angular.module('processItemFactory', [])
 
     function addStatus(itemId, status){
       return $http({
-        method: "PUT"
-        ,url: 'http://192.168.0.3:3000/items'
+        method: "POST"
+        ,url: 'http://192.168.0.3:3000/menuitems/updatestatus'
         ,data: {itemId: itemId, status: status}
       })
     }
