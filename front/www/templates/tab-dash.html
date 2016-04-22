@@ -39,7 +39,13 @@
              <div class="checkoutButton col-xs-5"ng-click='client.getToken()'>
                Checkout
              </div>
+             <h4 class='col-xs-12 addNameOrder'>Add Name to Your Order</h4>
              <input type="text" class='checkoutName' placeholder='Add Name for Order'>
+             <div class="addNameButton" ng-click='client.submitName()'>
+               Add Name
+             </div>
+
+
              <form class="checkoutForm">
                 <div id="checkout"></div>
                 <input type="submit" value="Submit" class='checkoutSubmit'/>
@@ -48,17 +54,173 @@
          </div>
         </div>
       </div>
-      <!-- <div ng-if='cartModal'>
-        <i class="fa fa-inverse ion-ios-arrow-left exitCart" ng-click='closeCart()'></i>
-    </div> -->
     </div>
+    <!-- Post-checkout Modal -->
+    <div class="postCheckoutModal" ng-if='client.postCartOpen'>
+      <div class="thankYouTitle">
+        Thank You for Your Order
+      </div>
+      <div class="thankYouImageHolder">
+        <img ng-src="http://s31.postimg.org/6e78vuj23/thumbsup.jpg" alt="" />
+      </div>
+      <div class="signupCreditCard">
+        <div class="signupCreditText">
+          Sign up now and save your credit card for next time
+        </div>
+        <div class="goToSignupCredit col-xs-8 col-xs-offset-2" ng-click='client.toLoginPage()'>
+          Sign Up
+        </div>
+        <div class="goBackToSite col-xs-8 col-xs-offset-2" ng-click='client.toBack()'>
+          Back to Site
+        </div>
+      </div>
+    </div>
+    <!-- End post checkout modal -->
     <div class="drinkRepeatContainer col-xs-12">
-      <!-- <div class='col-xs-12 text-center'>
-        <h2>Your logo here</h2>
-      </div> -->
-      <!-- <button type="button" name="button" class='btn btn-primary'></button> -->
       <div class="drinkListContainer">
-        <div class=" drinkCell optionClosed drinkCell_{{$index}}" ng-repeat='menuitem in client.data' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
+        <div class="categoryContainerHotDrinks">
+          <div class="categoryTitle">
+            Hot Drinks
+          </div>
+          <div class=" drinkCell optionClosed drinkCell_{{$index}}" ng-repeat='menuitem in client.hotDrinks' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
+            <div class="optionsPart">
+              <div class="sizeContainer col-xs-12">
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeSmall">
+                    <i class="icon ion-coffee"></i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeMedium">
+                    <i class="icon ion-coffee"></i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeLarge">
+                    <i class="icon ion-coffee"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="moreOptionsContainer col-xs-12">
+                <div class="optionCell">
+                  <div class="optionEspressoShot">
+                    <div class="col-xs-6 optionText">
+                      Espresso Shot
+                    </div>
+                    <div class="col-xs-6 espressoMath optionInput">
+                      <span class='fa fa-minus espressoMath-less' ng-click='client.subtractShot()'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more' ng-click='client.addShot()'></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell">
+                  <div class="optionFlavor">
+                    <div class="col-xs-6 optionText">
+                      Add a Flavour
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="flavourDropdown" name="">
+                        <option value="almond">Almond</option>
+                        <option value="chocolate">Chocolate</option>
+                        <option value="caramel">Caramel</option>
+                        <option value="pumpkin_spice">Pumpkin Spice</option>
+                        <option value="white_chocolate">White Chocolate</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="openMore col-xs-12">
+                <span class='moreDrinkOps'>
+                  More Drink Options <i class="icon ion-ios-arrow-down"></i>
+                </span>
+              </div>
+              <div class="modalActionContainer col-xs-12">
+                <div class="modalActionSubmit col-xs-8 col-xs-offset-2">
+                  <button class='submitItem'>ADD TO ORDER</button>
+                </div>
+              </div>
+            </div>
+            <div class="drinkPhotoHolder">
+              <img class='drinkPhoto' src="{{menuitem.photoLink}}" alt="" />
+            </div>
+            <div class="drinkIn">
+              <div class="drinkIn-name">{{menuitem.name}}</div>
+              <div class="drinkIn-price">${{menuitem.price}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="categoryContainerColdDrinks">
+          <div class="categoryTitle">
+            Cold Drinks
+          </div>
+          <div class=" drinkCell optionClosed drinkCell_{{$index}}" ng-repeat='menuitem in client.coldDrinks' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
+            <div class="optionsPart">
+              <div class="sizeContainer col-xs-12">
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeSmall">
+                    <i class="icon ion-coffee"></i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeMedium">
+                    <i class="icon ion-coffee"></i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeLarge">
+                    <i class="icon ion-coffee"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="moreOptionsContainer col-xs-12">
+                <div class="optionCell">
+                  <div class="optionEspressoShot">
+                    <div class="col-xs-6 optionText">
+                      Espresso Shot
+                    </div>
+                    <div class="col-xs-6 espressoMath optionInput">
+                      <span class='fa fa-minus espressoMath-less' ng-click='client.subtractShot()'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more' ng-click='client.addShot()'></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell">
+                  <div class="optionFlavor">
+                    <div class="col-xs-6 optionText">
+                      Add a Flavour
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="flavourDropdown" name="">
+                        <option value="almond">Almond</option>
+                        <option value="chocolate">Chocolate</option>
+                        <option value="caramel">Caramel</option>
+                        <option value="pumpkin_spice">Pumpkin Spice</option>
+                        <option value="white_chocolate">White Chocolate</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="openMore col-xs-12">
+                <span class='moreDrinkOps'>
+                  More Drink Options <i class="icon ion-ios-arrow-down"></i>
+                </span>
+              </div>
+              <div class="modalActionContainer col-xs-12">
+                <div class="modalActionSubmit col-xs-8 col-xs-offset-2">
+                  <button class='submitItem'>ADD TO ORDER</button>
+                </div>
+              </div>
+            </div>
+            <div class="drinkPhotoHolder">
+              <img class='drinkPhoto' src="{{menuitem.photoLink}}" alt="" />
+            </div>
+            <div class="drinkIn">
+              <div class="drinkIn-name">{{menuitem.name}}</div>
+              <div class="drinkIn-price">${{menuitem.price}}</div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class=" drinkCell optionClosed drinkCell_{{$index}}" ng-repeat='menuitem in client.data' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
           <div class="optionsPart">
             <div class="sizeContainer col-xs-12">
               <div class="sizeCellContainer col-xs-4">
@@ -104,21 +266,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="optionCell">
-                <div class="optionTopping">
-                  <div class="optionText col-xs-6">
-                    Add a Topping
-                  </div>
-                  <div class="col-xs-6 optionInput">
-                    <select class="toppingDropdown" name="">
-                      <option value="almond">Almond</option>
-                      <option value="chocolate">Chocolate</option>
-                      <option value="caramel">Caramel</option>
-                      <option value="white_chocolate">White Chocolate</option>
-                    </select>
-                  </div>
-                </div>
-              </div> -->
             </div>
             <div class="openMore col-xs-12">
               <span class='moreDrinkOps'>
@@ -126,23 +273,19 @@
               </span>
             </div>
             <div class="modalActionContainer col-xs-12">
-              <!-- <div class="modalActionCancel col-xs-4">
-                <button ng-click='client.closeModal()'>BACK</button>
-              </div> -->
               <div class="modalActionSubmit col-xs-8 col-xs-offset-2">
                 <button class='submitItem'>ADD TO ORDER</button>
               </div>
             </div>
           </div>
           <div class="drinkPhotoHolder">
-            <img class='drinkPhoto' src="{{menuitem.photourl}}" alt="" />
+            <img class='drinkPhoto' src="{{menuitem.photoLink}}" alt="" />
           </div>
           <div class="drinkIn">
             <div class="drinkIn-name">{{menuitem.name}}</div>
             <div class="drinkIn-price">${{menuitem.price}}</div>
           </div>
-          <!-- <div class="drinkAction"><i class="fa fa-plus-circle"></i></div> -->
-        </div>
+        </div> -->
       </div>
     </div>
   </ion-content>

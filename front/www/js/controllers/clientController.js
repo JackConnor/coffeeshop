@@ -18,6 +18,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.cartModal       = false;
     vm.optionsArray    = false;
     vm.checkoutOpen    = false;
+    vm.postCartOpen    = false;
     vm.totalShots      = 0;
     vm.currentDrink    = {}
     vm.currentOrder    = [];
@@ -41,6 +42,19 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     menuItems()
     .then(function(items){
       vm.data = items.data.data;/////all menu items
+      var dataLength = vm.data.length;
+      vm.hotDrinks  = [];
+      vm.coldDrinks = []
+      for (var i = 0; i < dataLength; i++) {
+        console.log(vm.data[i]);
+        if(vm.data[i].category === 'hot drink'){
+          console.log('ye');
+          vm.hotDrinks.push(vm.data[i]);
+        }
+        else if(vm.data[i].category === 'cold drink'){
+          vm.coldDrinks.push(vm.data[i]);
+        }
+      }
     });
 
     //////////////////////////////////////////////
@@ -90,6 +104,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.optionClosed').animate({
           opacity: 0
         }, 150);
+        $('.categoryTitle').animate({
+          opacity: 0
+        }, 150);
         clonedEl.find('.drinkIn-price').animate({
           opacity: 0
         }, 150);
@@ -130,10 +147,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
             "</div>"
           );
           clonedEl.animate({
-            // height: '325px'
-            // ,width: '90%'
-            // ,marginTop: '10px'
-            // ,marginLeft: '5%'
             borderWidth: 2
             ,borderBottomWidth: 2
           }, 250);
@@ -166,6 +179,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       $('.optionClosed').animate({
         opacity: 1
       }, 500);
+      $('.categoryTitle').animate({
+        opacity: 1
+      }, 150);
       $('.optionsPart').animate({
         opacity: 0
         ,height: 0
@@ -593,15 +609,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           width: "auto"
           ,marginLeft: 0+'%'
           ,marginTop: 0+'px'
-          ,paddingTop: 25+'px'
-          ,height: "40px"
+          ,paddingTop: 15+'px'
+          ,height: "60px"
           ,marginRight: 0+"%"
-        }, 250);
-        setTimeout(function(){
-          $('.cartModalHolder').css({
-            width: 'auto'
-            ,height: 'auto'
-          })
         }, 250);
       // }, 135);
       $('.clearLayer').remove();
@@ -612,7 +622,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           opacity: 1
         },200);
         closeCartOptions();
-        vm.getToken();
+        // vm.getToken();
         $('.checkoutName').val('');
         $(".checkoutName").css({
           opacity: 0
@@ -620,7 +630,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         })
       }, 400);
       $timeout(function(){
-        vm.getToken();
+        // vm.getToken();
         vm.cartModal = false
       }, 100);
     }
@@ -645,8 +655,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.checkoutName').css({
           marginLeft: '10%'
         });
+        $('.addNameOrder').css({
+          marginLeft: '0%'
+        });
+        $('.addNameButton').css({
+          marginLeft: '45%'
+        });
         setTimeout(function(){
           $('.checkoutName').animate({
+            opacity: 1
+          });
+          $('.addNameOrder').animate({
+            opacity: 1
+          });
+          $('.addNameButton').animate({
             opacity: 1
           });
         }, 250);
@@ -657,78 +679,185 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.checkoutOpen = true;
         braintreeToken()
         .success(function (data) {
-          setTimeout(function(){
-            $('.checkoutSubmit').animate({
-              height: '35px'
-              ,opacity: 1
-            }, 250);
-          }, 500);
-          braintree.setup(data.client_token, 'dropin', {
-            container: 'checkout' ,
-            // Form is not submitted by default when paymentMethodNonceReceived is implemented
-            paymentMethodNonceReceived: function (event, nonce) {
-              console.log(nonce);
-              console.log('total price');
-              console.log(vm.orderTotalPrice);
-              //////if-statement to check if user has added a name
-              if($('.checkoutName').val().length > 0){
-                vm.message = 'Processing your payment...';
-                $http({
-                  method: 'POST',
-                  url: 'http://192.168.0.3:3000/payments/process',
-                  data: {
-                    amount: vm.orderTotalPrice
-                    ,payment_method_nonce: nonce
-                  }
-                })
-                .success(function (data) {
-                  console.log('data coming');
-                  console.log(data);
-                  if (data.success) {
-                    vm.message = 'Payment authorized, thanks.';
-                    vm.isError = false;
-                    vm.isPaid = true;
-                    console.log(vm.currentOrder);
-                    var orderObj = {order: {
-                      items: vm.currentOrder
-                      ,name: $('.checkoutName').val()
-                    }}
-                    console.log(orderObj);
-                    if(vm.signedInUser){
-                      orderObj.decoded.id = signedInUser.id
-                    }
-                    $http({
-                      method: "POST"
-                      ,url: 'http://192.168.0.3:3000/orders'
-                      ,data: orderObj
-                    })
-                    .then(function(data){
-                      console.log(data);
-                      var orderId = data.data.data._id;
-                      window.localStorage.lastOrder = orderId;
-                      vm.socket = io.connect('http://192.168.0.3:3000/');
-                      vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
-                    })
-                    //
-
-                  } else {
-                    // implement your solution to handle payment failures
-                    console.log(vm.orderTotalPrice)
-                    vm.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
-                    vm.isError = true;
-                  }
-
-                }).error(function (error) {
-                  vm.message = 'Error: cannot connect to server. Please make sure your server is running431.';
-
-                  vm.isError = true;
+          ////function to bring in payment button
+          // setTimeout(function(){
+          //   $('.checkoutSubmit').animate({
+          //     height: '35px'
+          //     ,opacity: 1
+          //   }, 250);
+          // }, 500);
+          ///////begin braintree injection
+          vm.submitName = function(){
+            console.log('yoooo');
+            var name = $('.checkoutName').val();
+            console.log(name);
+            if(name.length > 0){
+              $('.checkoutName').animate({
+                opacity: 0
+              }, 250);
+              $('.addNameOrder').animate({
+                opacity: 0
+              }, 250);
+              $('.addNameButton').animate({
+                opacity: 0
+              }, 250);
+              setTimeout(function(){
+                $('.checkoutName').css({
+                  marginLeft: '200%'
                 });
-              }
-              else {
-                alert('Please add your name');
-              }
+                $('.addNameOrder').css({
+                  marginLeft: '200%'
+                });
+                $('.addNameButton').css({
+                  marginLeft: '200%'
+                });
+              }, 250);
+
+              braintreeStuff();
             }
-          });
+          }
+          function braintreeStuff(){
+            $('.checkoutForm').css({
+              marginTop: '-110px'
+            })
+            ////function to bring in payment button
+            setTimeout(function(){
+              $('.checkoutSubmit').animate({
+                height: '35px'
+                ,opacity: 1
+              }, 250);
+            }, 500);
+            braintree.setup(data.client_token, 'dropin', {
+              container: 'checkout' ,
+              // Form is not submitted by default when paymentMethodNonceReceived is implemented
+              paymentMethodNonceReceived: function (event, nonce) {
+                //////if-statement to check if user has added a name
+                if($('.checkoutName').val().length > 0){
+                  vm.message = 'Processing your payment...';
+                  $http({
+                    method: 'POST',
+                    url: 'http://192.168.0.11:3000/payments/process',
+                    data: {
+                      amount: vm.orderTotalPrice
+                      ,payment_method_nonce: nonce
+                    }
+                  })
+                  .success(function (data) {
+                    console.log('data coming');
+                    console.log(data);
+                    if (data.success) {
+                      vm.message = 'Payment authorized, thanks.';
+                      vm.isError = false;
+                      vm.isPaid = true;
+                      console.log(vm.currentOrder);
+                      var orderObj = {order: {
+                        items: vm.currentOrder
+                        ,name: $('.checkoutName').val()
+                      }}
+                      console.log(orderObj);
+                      if(vm.signedInUser){
+                        orderObj.decoded.id = signedInUser.id
+                      }
+                      $http({
+                        method: "POST"
+                        ,url: 'http://192.168.0.11:3000/orders'
+                        ,data: orderObj
+                      })
+                      .then(function(data){
+                        console.log(data);
+                        vm.postCartOpen = true;
+                        var orderId = data.data.data._id;
+                        window.localStorage.lastOrder = orderId;
+                        vm.socket = io.connect('http://192.168.0.11:3000/');
+                        vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
+                      })
+                      //
+
+                    } else {
+                      // implement your solution to handle payment failures
+                      console.log(vm.orderTotalPrice)
+                      vm.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
+                      vm.isError = true;
+                    }
+
+                  }).error(function (error) {
+                    vm.message = 'Error: cannot connect to server. Please make sure your server is running431.';
+
+                    vm.isError = true;
+                  });
+                }
+                else {
+                  alert('Please add your name');
+                }
+              }
+            });
+          }
+          //
+          //
+          // braintree.setup(data.client_token, 'dropin', {
+          //   container: 'checkout' ,
+          //   // Form is not submitted by default when paymentMethodNonceReceived is implemented
+          //   paymentMethodNonceReceived: function (event, nonce) {
+          //     //////if-statement to check if user has added a name
+          //     if($('.checkoutName').val().length > 0){
+          //       vm.message = 'Processing your payment...';
+          //       $http({
+          //         method: 'POST',
+          //         url: 'http://192.168.0.11:3000/payments/process',
+          //         data: {
+          //           amount: vm.orderTotalPrice
+          //           ,payment_method_nonce: nonce
+          //         }
+          //       })
+          //       .success(function (data) {
+          //         console.log('data coming');
+          //         console.log(data);
+          //         if (data.success) {
+          //           vm.message = 'Payment authorized, thanks.';
+          //           vm.isError = false;
+          //           vm.isPaid = true;
+          //           console.log(vm.currentOrder);
+          //           var orderObj = {order: {
+          //             items: vm.currentOrder
+          //             ,name: $('.checkoutName').val()
+          //           }}
+          //           console.log(orderObj);
+          //           if(vm.signedInUser){
+          //             orderObj.decoded.id = signedInUser.id
+          //           }
+          //           $http({
+          //             method: "POST"
+          //             ,url: 'http://192.168.0.11:3000/orders'
+          //             ,data: orderObj
+          //           })
+          //           .then(function(data){
+          //             console.log(data);
+          //             vm.postCartOpen = true;
+          //             var orderId = data.data.data._id;
+          //             window.localStorage.lastOrder = orderId;
+          //             vm.socket = io.connect('http://192.168.0.11:3000/');
+          //             vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
+          //           })
+          //           //
+          //
+          //         } else {
+          //           // implement your solution to handle payment failures
+          //           console.log(vm.orderTotalPrice)
+          //           vm.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
+          //           vm.isError = true;
+          //         }
+          //
+          //       }).error(function (error) {
+          //         vm.message = 'Error: cannot connect to server. Please make sure your server is running431.';
+          //
+          //         vm.isError = true;
+          //       });
+          //     }
+          //     else {
+          //       alert('Please add your name');
+          //     }
+          //   }
+          // });
 
         }).error(function (error) {
           vm.message = 'Error: cannot connect to server. Please make sure your server is running440.';
@@ -769,6 +898,19 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         );
       }
     };
+
+    //////function to go to login page
+    function toLoginPage(){
+      window.location.hash = "#/login";
+      window.location.reload();
+    }
+    vm.toLoginPage = toLoginPage;
+
+    function toBack(){
+      window.location.hash = "#/tab/dash";
+      window.location.reload();
+    }
+    vm.toBack = toBack;
   /////////////////////////////
   ///////end Client Ctrl///////
   /////////////////////////////

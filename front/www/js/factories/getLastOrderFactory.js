@@ -10,7 +10,7 @@ angular.module('getLastOrderFactory', [])
       console.log('yowza');
       return $http({
         method: "GET"
-        ,url: "http://192.168.0.3:3000/orders/one/"+orderId
+        ,url: "http://192.168.0.11:3000/orders/one/"+orderId
       })
     }
     return getAllOrs;

@@ -11,25 +11,26 @@ angular.module('historyController', ['getLastOrderFactory'])
 
     vm.lastOrder = window.localStorage.lastOrder;
     function getLast(){
-      console.log('running');
-      $http({
-        method: "GET"
-        ,url: "http://192.168.0.3:3000/orders/one/"+vm.lastOrder
-      })
-      .then(function(lastOrderObj){
-        console.log(lastOrderObj);
+      if(vm.lastOrder.length > 1){
+        console.log('running');
         $http({
           method: "GET"
-          ,url: 'http://192.168.0.3:3000/menuitems/full/'+lastOrderObj.data.data.menuitems[0]._id
+          ,url: "http://192.168.0.11:3000/orders/one/"+vm.lastOrder
         })
-        .then(function(menuItem){
-          console.log(menuItem);
-          vm.lastMenuItem = menuItem.data.data
-          console.log(vm.lastMenuItem);
-        })
-
-        vm.lastOrderObj = lastOrderObj.data;
-      });
+        .then(function(lastOrderObj){
+          console.log(lastOrderObj);
+          $http({
+            method: "GET"
+            ,url: 'http://192.168.0.11:3000/menuitems/full/'+lastOrderObj.data.data.menuitems[0]._id
+          })
+          .then(function(menuItem){
+            console.log(menuItem);
+            vm.lastMenuItem = menuItem.data.data
+            console.log(vm.lastMenuItem);
+          })
+          vm.lastOrderObj = lastOrderObj.data;
+        });
+      }
     }
     getLast();
 

@@ -2,7 +2,10 @@
 <ion-content>
   <div class='vendorHeadline'>Business Site</div>
   <div class="toClient" ng-click='vendor.goToClientView()'>
-    CLient View
+    Client View
+  </div>
+  <div class="toReload" ng-click='vendor.toReload()'>
+    reload client
   </div>
   <div class="orderContainer">
     <div class="ordersList" ng-repeat='item in vendor.allItems'>

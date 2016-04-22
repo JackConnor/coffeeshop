@@ -6,6 +6,24 @@ h1,h2,h3,h4,h5,h6 {
     /*font-family: 'Montserrat', sans-serif;*/
 }
 
+.addNameButton {
+  height: 35px;
+  width: 45%;
+  margin-left: 200%;
+  margin-top: 10px;
+  text-align: center;
+  padding-top: 7px;
+  font-size: 15px;
+  border: 2px solid gray;
+  opacity: 0;
+}
+
+.addNameOrder {
+  text-align: center;
+  margin-left: 200%;
+  opacity: 0;
+}
+
 .blackLayer {
   width: 100%;
   height: 1000px;
@@ -32,7 +50,7 @@ h1,h2,h3,h4,h5,h6 {
   width: auto;
   height: auto;
   padding-right: 15px;
-  padding-top: 25px;
+  padding-top: 15px;
   float: right;
   border: 0px solid black;
   overflow: hidden;
@@ -66,6 +84,14 @@ h1,h2,h3,h4,h5,h6 {
   padding-left: 15px;
   margin-top: 15px;
   opacity: 0;
+}
+
+.categoryTitle {
+  background-color: #bbc3cc;
+  height: 35px;
+  font-size: 25px;
+  padding-top: 5px;
+  padding-left: 5px;
 }
 
 #checkout {
@@ -235,6 +261,30 @@ h1,h2,h3,h4,h5,h6 {
   margin-right:15px;
 }
 
+.goBackToSite {
+  border: 2px solid white;
+  height: 40px;
+  text-align: center;
+  padding-top: 5px;
+  display: inline-block;
+  margin-top: 20px;
+  color: white;
+  top: 0;
+}
+
+.goToSignupCredit {
+  top: 0;
+  font-size: 14px;
+  border: 2px solid white;
+  height: 40px;
+  text-align: center;
+  padding-top: 5px;
+  display: inline-block;
+  color: white;
+  margin-top: 20px;
+
+}
+
 .modalActionContainer{
   display: flex;
   padding: 10px 0;
@@ -280,7 +330,6 @@ h1,h2,h3,h4,h5,h6 {
   width: 100%;
   height: 55px;
   /*background-color: green;*/
-  border-bottom: '2px dotted grey'
 }
 
 .noPadding {
@@ -467,6 +516,30 @@ h1,h2,h3,h4,h5,h6 {
   padding-top: 20px;
 }
 
+.postCheckoutModal {
+  width: 100%;
+  height: 1000px;
+  background-color: #CD8162;
+  margin-top: -55px;
+  z-index: 50;
+  position: absolute;
+}
+
+.signupCreditCard {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 20px;
+  height: 175px;
+  border: 2px solid white;
+}
+
+.signupCreditText {
+  width: 80%;
+  margin-left: 10%;
+  text-align: center;
+  color: white;
+}
+
 .sizeCellContainer{
   text-align: center;
   padding: 0;
@@ -524,13 +597,46 @@ h1,h2,h3,h4,h5,h6 {
   font-size: 30px;
 }
 
+.thankYouImageHolder {
+  width: 50%;
+  height: auto;
+  margin-top: 30px;
+  margin-left: 25%;
+}
+
+.thankYouImageHolder img{
+  width: 100%;
+  height: auto;
+}
+
+.thankYouTitle {
+  text-align: center;
+  color: white;
+  font-size: 35px;
+  margin-top: 25px;
+  height: 50px;
+  line-height:1.1;
+}
+
 .toClient {
   border: 1px solid brown;
-  width: 15%;
+  width: 60px;
   position: absolute;
-  margin-left: 85%;
+  margin-left: 230px;
+  font-size: 14px;
   height: 40px;
-  padding-top: 5px;
+  padding-top: 0px;
+  margin-top: -42px;
+}
+
+.toReload {
+  border: 1px solid brown;
+  width: 60px;
+  position: absolute;
+  margin-left: 290px;
+  height: 40px;
+  padding-top: 0px;
+  margin-top: -42px;
 }
 
 /*//////////////////still ned to oranzie*/

@@ -15,7 +15,7 @@ angular.module('loginController', [])
         if((vm.data.username !== undefined) && (vm.data.password !== undefined)){
             $http({
                 method: "POST",
-                url: "http://192.168.0.3:3000/authenticate",
+                url: "http://192.168.0.11:3000/authenticate",
                 data: {
                     user: {
                         email: vm.data.username,

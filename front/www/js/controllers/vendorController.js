@@ -31,7 +31,7 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
     })
 
     vm.orderList = ['hi'];
-    vm.socket = io.connect('http://192.168.0.3:3000/');
+    vm.socket = io.connect('http://192.168.0.11:3000/');
     /////socket function which receives socket orders
     vm.socket.on('orderForVendor', function(data){
       // vm.allItems[vm.allItems.length] = 'test'
@@ -218,6 +218,12 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
       }
     }
     vm.cellSwipeRight = cellSwipeRight;
+
+
+    function toReload(){
+      window.location.reload();
+    }
+    vm.toReload = toReload;
 
   //////////////////////////////////
   ////////end vendor controller/////  //////////////////////////////////
