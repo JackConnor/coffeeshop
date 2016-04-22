@@ -10,24 +10,25 @@
   <div class="orderContainer">
     <div class="ordersList" ng-repeat='item in vendor.allItems'>
       <div class='orderCell'>
-        <div class="orderCellLeft" ng-click='vendor.markAsDone($event, item._id, "cancelled")'>
-          Cancel This Order
+        <div class="orderCellLeft">
+          In Progress
         </div>
         <div class="orderCellInner center" on-swipe-right='vendor.cellSwipeRight($event)'   on-swipe-left='vendor.cellSwipeLeft($event)'>
           <div class='orderCellTitle col-xs-4'>
-            <span class='orderName'>{{item.itemId.name}}</span>
+            <span class='orderName'>{{item.item.itemId.name}}</span>
             <br>
-            <span class='orderCustomerName'>{{item.name}}  {{item.item.status}}</span>
+            <span class='orderCustomerName'>{{item.name}}</span>
           </div>
           <div class="orderCellDetails col-xs-5">
-            <div class="orderCellSize" ng-if='item.customizations[0].size'>
-              {{item.customizations[0].size}}
+            <!-- {{item}} -->
+            <div class="orderCellSize" ng-if='item.item.customizations[0].size'>
+              {{item.item.customizations[0].size}}
             </div>
-            <div class="orderCellShots" ng-if='item.customizations[0].shots > 0'>
-              Espresso shots: {{item.customizations[0].shots}}
+            <div class="orderCellShots" ng-if='item.item.customizations[0].shots > 0'>
+              Espresso shots: {{item.item.customizations[0].shots}}
             </div>
-            <div class="orderCellFlavours" ng-if='item.customizations[0].flavours'>
-              Additional flavours: {{item.customizations[0].flavours}}
+            <div class="orderCellFlavours" ng-if='item.item.customizations[0].flavours'>
+              Additional flavours: {{item.item.customizations[0].flavours}}
             </div>
           </div>
           <div class="orderClock">
@@ -35,7 +36,7 @@
           </div>
         </div>
         <div class="orderCellRight" ng-click='vendor.markAsDone($event, item._id, "complete")'>
-          Mark This As Completed
+          Mark As Complete
         </div>
       </div>
     </div>

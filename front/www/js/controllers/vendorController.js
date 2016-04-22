@@ -101,15 +101,11 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
       var name = customerName
       /////these are the items, as pulled from db
       var rawItems = menuItems;
-      /////these are the speicifcations for the items
-      var ordLength = menuItems.length;
-      console.log(ordLength);
-      for (var i = 0; i < ordLength; i++) {
-        console.log(vm.allItems);
-        vm.allItems.reverse();
-        vm.allItems.push({name: customerName, item: menuItems[i]});
-        vm.allItems.reverse();
-      }
+      console.log(vm.allItems);
+      vm.allItems.reverse();
+      vm.allItems.push({name: customerName, item: menuItems});
+      vm.allItems.reverse();
+
     }
 
     function goToClientView(){
