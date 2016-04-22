@@ -39,28 +39,18 @@ function create( req, res ) {
       Menuitem.findOne({_id: newMenuItem._id})
       .populate('itemId')
       .exec(function(err, popMenuItem){
-        console.log('menuitem with item item populated?');
-        console.log(popMenuItem);
         if(err){console.log(err)}
         newOrder.menuitems[i] = popMenuItem;
         if(itrue){
           newOrder.save(function(err, newerOrder){
             if(err){console.log(err)}
-            console.log('wlellllllll');
             if(itrue) {
-              console.log('hope that worked');
-              // Order.findOne({_id: newOrder._id})
-              // .populate('menuitems')
-              // .exec(function(err, thisOrder){
-              //   Menuitem.find
-                // console.log(thisOrder);
-                res.json( {
-                      error: null,
-                      status: 200,
-                      message: 'Order has been placed!',
-                      data: newerOrder
-                } );
-              // })
+              res.json( {
+                    error: null,
+                    status: 200,
+                    message: 'Order has been placed!',
+                    data: newerOrder
+              } );
             }
           })
         }
@@ -98,27 +88,6 @@ function index( req, res ) {
     console.log(data);
     res.json(data);
   });
-  // var promise = Order.find( { completed: false } )
-  // .populate('items')
-  // .exec();
-  // console.log(promise);
-  // promise.then( function( err, data ) {
-  //   console.log(err);
-  //   console.log(data);
-  //   console.log('yoooo');
-  //   console.log(data);
-  //   data = data.reverse();
-  //   var sendData = data.slice(0, 20);
-  //   res.json( {
-  //     error: null,
-  //     status: 200,
-  //     message: 'Here are all the orders',
-  //     data: sendData
-  //   } )
-  // } )
-  // .catch( function( err ) {
-  //   sendErr( err, res )
-  // } )
 }
 
 function allUser( req, res ) {
@@ -151,6 +120,21 @@ function show( req, res ) {
   .catch( function( err ) {
     sendErr( err, res )
   } )
+}
+
+function showOne(req, res){
+  var orderId = req.params.orderId;
+  Order.findOne({_id: orderId})
+  .populate('menuitems')
+  .exec(function(err, lastOrder){
+    if(err){throw err}
+    res.json( {
+      error: null,
+      status: 200,
+      message: 'Here is the order you updated!',
+      data: lastOrder
+      } )
+  })
 }
 
 function completed( req, res ) {
@@ -215,6 +199,7 @@ module.exports = {
   allUser: allUser,
   completed : completed,
   show: show,
+  showOne: showOne,
   update: update,
   destroy: destroy
 }

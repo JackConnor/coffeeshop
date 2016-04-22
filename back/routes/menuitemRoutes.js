@@ -8,4 +8,7 @@ auth.route('')
 auth.route('/updatestatus')
     .post( menuitemCtrl.updateStatus )
 
+auth.route('/full/:menuid')
+    .get( menuitemCtrl.single )
+
 module.exports = auth

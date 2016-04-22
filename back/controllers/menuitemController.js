@@ -39,14 +39,6 @@ function updateStatus(req, res){
   var newStatus = req.body.status;
   Menuitem.findOne( {_id: itemId}, function(err, item){
     if(err){console.log(err)}
-    console.log('item');
-    console.log('item');
-    console.log('itempppp');
-    console.log('item');
-    console.log('item');
-    console.log('item');
-    console.log('item');
-    console.log(item);
     if(err){console.log(err)}
     item.status = newStatus;
     item.save(function(err, newItem){
@@ -63,8 +55,28 @@ function updateStatus(req, res){
   })
 }
 
+function single(req, res){
+  console.log('in menu order thing');
+  var orderId = req.params.menuid;
+  console.log(orderId);
+  Menuitem.findOne({_id: orderId})
+  .populate('itemId')
+  .exec(function(err, lastOrder){
+    console.log('last order with itemId');
+    console.log(lastOrder);
+    if(err){throw err}
+    res.json( {
+      error: null,
+      status: 200,
+      message: 'Here is the order you updated!',
+      data: lastOrder
+      } )
+  })
+}
+
 module.exports = {
 
   index: index,
-  updateStatus: updateStatus
+  updateStatus: updateStatus,
+  single: single
 }

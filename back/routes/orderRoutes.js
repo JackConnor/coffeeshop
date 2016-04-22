@@ -15,6 +15,9 @@ auth.route('/one')
   	.patch( orderCtrl.completed )
     .delete( orderCtrl.destroy )
 
+auth.route('/one/:orderId')
+    .get( orderCtrl.showOne)
+
 module.exports = auth
 // {
 //   auth : auth
