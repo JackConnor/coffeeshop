@@ -367,6 +367,12 @@ h1,h2,h3,h4,h5,h6 {
   border-left: 2px solid gray;
 }
 
+.orderCellDetails {
+  height: 100%;
+  display: inline-block;
+  font-size: 13px;
+}
+
 .orderCellLeft {
   width: 0%;
   height: 80px;
@@ -393,9 +399,17 @@ h1,h2,h3,h4,h5,h6 {
   opacity: 0;
 }
 
-.orderCellTitle {
+.orderCellShots {
   display: block;
-  padding-top: 10px;
+}
+
+.orderCellSize {
+  /*height: 100%;*/
+}
+
+.orderCellTitle {
+  /*display: inline-block;*/
+  padding: 0px;
 }
 
 
@@ -405,7 +419,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .orderCustomerName {
-  font-size: 19px;
+  font-size: 16px;
   font-weight: 900;
   margin-top: 2px;
   margin-left: 5px;
@@ -417,7 +431,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .orderName {
-  font-size: 26px;
+  font-size: 15px;
   margin-left: 5px;
 }
 

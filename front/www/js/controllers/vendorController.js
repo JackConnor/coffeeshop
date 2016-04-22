@@ -45,8 +45,6 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
         var parentEl = $(evt.currentTarget).parent();
         var sibRight = parentEl.find('.orderCellRight');
         var sibLeft  = parentEl.find('.orderCellLeft');
-        console.log(sibRight);
-        console.log(sibLeft);
         sibRight.animate({
           height: '0px'
           ,marginTop: '0px'
