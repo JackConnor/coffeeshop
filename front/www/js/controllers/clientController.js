@@ -521,7 +521,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           console.log("no size selected")
       }
       if(!drinkDetails.customizations.size == ''){
-        drinkDetails.itemId = vm.currentDrink._id;
+        drinkDetails.itemId = vm.currentDrink;
         drinkDetails.customizations.flavours = $('.flavourDropdown').val();
         drinkDetails.customizations.toppings = $('.toppingDropdown').val();
         drinkDetails.customizations.shots = vm.totalShots;
@@ -529,6 +529,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         drinkDetails.price = drinkPrice;
         drinkDetails.evt = {currentTarget: ''}
         drinkDetails.evt.currentTarget = evt.target.id;
+        console.log(vm.currentOrder);
         ///////put all settings back to zero
         vm.currentOrder.push(drinkDetails);
         vm.totalShots   = 0;

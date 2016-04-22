@@ -12,7 +12,11 @@
                  <img src="{{item.photo}}" alt="" />
                </div> -->
                <div class="cartContent  shopping{{item.index}}">
+                 <!-- <div class="itemCartImageHolder"> -->
+                   <img class="itemCartImageHolder" src="{{item.itemId.photoLink}}" alt="" />
+                 <!-- </div> -->
                  <div class="checkoutDrinkInfo-name">
+                   {{item.itemId.name}}
                  </div>
                </div>
                <div class="cartActions">
@@ -100,6 +104,7 @@
                     <i class="icon ion-coffee"></i>
                   </div>
                 </div>
+                <p class='sizeLabel'>choose a size</p>
               </div>
               <div class="moreOptionsContainer col-xs-12">
                 <div class="optionCell">
