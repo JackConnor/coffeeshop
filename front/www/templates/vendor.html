@@ -6,15 +6,16 @@
   </div>
   <div class="orderContainer">
     <div class="ordersList" ng-repeat='item in vendor.allItems'>
+      <!-- {{item}} -->
       <div class='orderCell'>
         <div class="orderCellLeft" ng-click='vendor.markAsDone($event, item.item._id, "cancelled")'>
           hi!
         </div>
         <div class="orderCellInner center" on-swipe-right='vendor.cellSwipeRight($event)'   on-swipe-left='vendor.cellSwipeLeft($event)'>
           <div class='orderCellTitle'>
-            <span class='orderName'>{{item.item.name}}</span>
+            <span class='orderName'>{{item.itemId.name}}</span>
             <br>
-            <span class='orderCustomerName'>{{item.name}}</span>
+            <span class='orderCustomerName'>{{item.name}}  {{item.item.status}}</span>
           </div>
         </div>
         <div class="orderCellRight" ng-click='vendor.markAsDone($event, item.item._id, "complete")'>

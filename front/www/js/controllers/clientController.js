@@ -54,6 +54,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     /////opens the options modal when user selects an item
     function openOptionsModal(currentDrink, index, evt){
+      console.log(currentDrink);
+      vm.currentDrink = currentDrink
       var index = index;
       /////closure function to transition to options modal
       function openUp(){
@@ -487,35 +489,34 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     function submitDrinkOptions(evt) {
       console.log(evt.target.id);
-      var drinkDetails = {size: '', flavours: '', shots: 0}
+      var drinkDetails = {customizations: {}}
       var sizeEl = $('.selected');
+      var drinkPrice = vm.currentDrink.price;
+      console.log(drinkPrice);
       if(sizeEl.hasClass('sizeSmall')){
-        drinkDetails.size = 'small';
+        drinkDetails.customizations.size = 'small';
       }
       else if(sizeEl.hasClass('sizeMedium')){
-        drinkDetails.size = 'medium';
+        drinkDetails.customizations.size = 'medium';
       }
       else if(sizeEl.hasClass('sizeLarge')){
-        drinkDetails.size = 'large';
+        drinkDetails.customizations.size = 'large';
       } else {
           console.log("no size selected")
       }
-      console.log(typeof drinkDetails.size);
-      if(!drinkDetails.size == ''){
-        drinkDetails.flavours = $('.flavourDropdown').val();
-        drinkDetails.toppings = $('.toppingDropdown').val();
-        drinkDetails.shots = vm.totalShots;
-        drinkDetails.photo = vm.currentDrink.photourl;
-        drinkDetails.price = vm.currentDrink.price;
-        drinkDetails.title = vm.currentDrink.name;
+      if(!drinkDetails.customizations.size == ''){
         drinkDetails.itemId = vm.currentDrink._id;
+        drinkDetails.customizations.flavours = $('.flavourDropdown').val();
+        drinkDetails.customizations.toppings = $('.toppingDropdown').val();
+        drinkDetails.customizations.shots = vm.totalShots;
+        drinkDetails.status = 'active';
+        drinkDetails.price = drinkPrice;
         drinkDetails.evt = {currentTarget: ''}
         drinkDetails.evt.currentTarget = evt.target.id;
-        console.log(drinkDetails.evt);
         ///////put all settings back to zero
         vm.currentOrder.push(drinkDetails);
         vm.totalShots   = 0;
-        vm.orderTotalPrice += drinkDetails.price;
+        vm.orderTotalPrice += vm.currentDrink.price;
         console.log(vm.currentOrder);
         vm.moreOptions = false;
         closeModal();
@@ -529,7 +530,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     //////functions to open/close shopping carts/////
     function openCart(evt){
       $('.drinkRepeatContainer').animate({
-        opacity: 0.0
+        opacity: 0
       }, 150);
       // setTimeout(function(){
       $('.cartHolder i').animate({
@@ -628,7 +629,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     ///////payment and braintree injection function
     vm.getToken = function () {
       if(!vm.checkoutOpen){
-
         // animation stuff
         var listOffset = $('.shoppingCartList').offset().top;
         var checkoutOffset = $('.checkoutContainer').offset().top;
@@ -657,8 +657,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.checkoutOpen = true;
         braintreeToken()
         .success(function (data) {
-
-          console.log(data.client_token);
           setTimeout(function(){
             $('.checkoutSubmit').animate({
               height: '35px'
@@ -669,43 +667,46 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
             container: 'checkout' ,
             // Form is not submitted by default when paymentMethodNonceReceived is implemented
             paymentMethodNonceReceived: function (event, nonce) {
+              console.log(nonce);
+              console.log('total price');
+              console.log(vm.orderTotalPrice);
               //////if-statement to check if user has added a name
               if($('.checkoutName').val().length > 0){
                 vm.message = 'Processing your payment...';
                 $http({
                   method: 'POST',
-                  url: 'http://192.168.0.10:3000/payments/process',
+                  url: 'http://192.168.0.3:3000/payments/process',
                   data: {
                     amount: vm.orderTotalPrice
                     ,payment_method_nonce: nonce
                   }
                 })
                 .success(function (data) {
+                  console.log('data coming');
+                  console.log(data);
                   if (data.success) {
                     vm.message = 'Payment authorized, thanks.';
                     vm.isError = false;
                     vm.isPaid = true;
+                    console.log(vm.currentOrder);
                     var orderObj = {order: {
-                      items: []
+                      items: vm.currentOrder
                       ,name: $('.checkoutName').val()
-
                     }}
-                    for (var i = 0; i < vm.currentOrder.length; i++) {
-                      orderObj.order.items.push(vm.currentOrder[i].itemId);
-                    }
+                    console.log(orderObj);
                     if(vm.signedInUser){
                       orderObj.decoded.id = signedInUser.id
                     }
                     $http({
                       method: "POST"
-                      ,url: 'http://192.168.0.10:3000/orders'
+                      ,url: 'http://192.168.0.3:3000/orders'
                       ,data: orderObj
                     })
                     .then(function(data){
                       console.log('order data');
                       console.log(data);
-                      vm.socket = io.connect('http://192.168.0.10:3000/');
-                      vm.socket.emit('orders', {message: 'Order Biatches', order: data.data, orderData: vm.currentOrder});
+                      vm.socket = io.connect('http://192.168.0.3:3000/');
+                      vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
                     })
                     //
 

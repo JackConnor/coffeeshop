@@ -1,48 +1,80 @@
-angular.module('vendorController', ['allOrdersFactory', 'processItemFactory'])
+angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'allMenuitemsFactory'])
 
   .controller('vendorCtrl', vendorCtrl);
 
-  vendorCtrl.$inject = ['$http', 'allOrders', 'processItem'];
+  vendorCtrl.$inject = ['$http', 'allOrders', 'processItem', 'allMenuitems'];
 
-  function vendorCtrl($http, allOrders, processItem){
+  function vendorCtrl($http, allOrders, processItem, allMenuitems){
     ///////////////////////////////
     ////////global variables///////
     var vm = this;
+    vm.allItems = [];
     vm.slideHappening = false;
     ////end global variables///////
     ///////////////////////////////
 
     /////////////////////////////////
     ///////data calls anf functions//
-    allOrders()
-    .then(function(yaa){
-      console.log(yaa)
-      vm.orderList = yaa.data.data;
-      console.log(vm.orderList);
-      vm.allItems = [];
-      var orderLength = vm.orderList.length;
-      for (var i = 0; i < orderLength; i++) {
-        for (var j = 0; j < vm.orderList[i].items.length; j++) {
-          vm.allItems.push({item: vm.orderList[i].items[j], name: vm.orderList[i].name});
-        }
-      }
+    allMenuitems()
+    .then(function(data){
+      console.log('firing');
+      console.log(data.data.data);
+      vm.allItems = data.data.data.reverse();
     })
+    // allOrders()
+    // .then(function(yaa){
+    //   console.log(yaa)
+    //   vm.orderList = yaa.data;
+    //   console.log(vm.orderList);
+    //   vm.allItems = [];
+    //   var orderLength = vm.orderList.length;
+    //   for (var i = 0; i < orderLength; i++) {
+    //     for (var j = 0; j < vm.orderList[i].items.length; j++) {
+    //       var itemStatus = vm.orderList[i].items[j].status;
+    //       console.log(0+itemStatus);
+    //       if(1==1){
+    //         console.log(1+itemStatus);
+    //         vm.allItems.push({item: vm.orderList[i].items[j], name: vm.orderList[i].name});
+    //       }
+    //     }
+    //   }
+    // })
 
     vm.orderList = ['hi'];
-    vm.socket = io.connect('http://192.168.0.10:3000/');
+    vm.socket = io.connect('http://192.168.0.3:3000/');
     /////socket function which receives socket orders
     vm.socket.on('orderForVendor', function(data){
-      vm.orderList.push(data.order);
-      var orderId = data.order.data._id;
-      /////function to get an individual order
-      $http({
-        method: "PATCH"
-        ,url: "http://192.168.0.10:3000/orders"
-        ,data: {orderId: orderId}
-      })
-      .then(function(orderData){
-        addOrder(orderData.data.data.items, data.orderData, data.order.data.name);
-      })
+      console.log('socket data coming');
+      vm.allItems[vm.allItems.length] = 'test'
+      console.log(data);
+      var menuLength = data.order.data.menuitems.length;
+      console.log(menuLength);
+      // vm.allItems.push(data.order);
+      for (var i = 0; i < menuLength; i++) {
+        console.log('theres one');
+        if(data.order.data.menuitems[i] !== null){
+          var newMenuItem = data.order.data.menuitems[i];
+          console.log(newMenuItem);
+          vm.allItems.reverse();
+          vm.allItems.push(newMenuItem);
+          vm.allItems.reverse();
+          console.log(vm.allItems);
+        }
+      }
+
+      // var orderId = data.order.data._id;
+      // /////function to get an individual order
+      // console.log('order id next');
+      // console.log(data);
+      // $http({
+      //   method: "PATCH"
+      //   ,url: "http://192.168.0.3:3000/orders"
+      //   ,data: {orderId: orderId}
+      // })
+      // .then(function(orderData){
+      //   console.log(orderData);
+      //   addOrder(orderData.data.data.items, data.orderData, data.order.data.name);
+      // })
     });
 
     function markAsDone(evt, itemId, status){
@@ -68,25 +100,30 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory'])
       var orderSpecs = orderSpecs;
       var ordLength = orderItems.length;
       for (var i = 0; i < ordLength; i++) {
+        console.log(orderItems[i]);
+        console.log(orderSpecs[i]);
         vm.allItems.reverse();
-        vm.allItems.push();
+        vm.allItems.push({name: customerName, item: orderItems[i]});
         vm.allItems.reverse();
-        $('.orderContainer').prepend(
-          "<div class='orderCell'>"+
-            "<div orderCellTitle>"+
-              "<span class='orderName'>"+orderItems[i].name+"</span>"+
-              "<br><span class='orderCustomerName'>"+name+"</span>"+
-              "<div class='vendorCellShots'>Shots: "+orderSpecs[i].shots+"</div>"+
-              "<div class='vendorCellFlavours'>|| "+orderSpecs[i].flavours+"</div>"+
-            "</div>"+
-          "</div>"
-        );
-        if(orderSpecs[i].shots === 0){
-          $('.vendorCellShots').remove();
-        }
-        if(orderSpecs[i].flavours.length === 0){
-          $('.vendorCellFlavours').remove();
-        }
+        console.log(vm.allItems);
+           // $('.orderContainer').prepend(
+        //   "<div class='orderCell'>"+
+        //     "<div class='center' on-swipe-right='vendor.cellSwipeRight($event)'   on-swipe-left='vendor.cellSwipeLeft($event)'>"+
+        //       "<div orderCellTitle>"+
+        //         "<span class='orderName'>"+orderItems[i].name+"</span>"+
+        //         "<br><span class='orderCustomerName'>"+name+"</span>"+
+        //         "<div class='vendorCellShots'>Shots: "+orderSpecs[i].shots+"</div>"+
+        //         "<div class='vendorCellFlavours'>|| "+orderSpecs[i].flavours+"</div>"+
+        //       "</div>"+
+        //     "</div>"+
+        //   "</div>"
+        // );
+        // if(orderSpecs[i].shots === 0){
+        //   $('.vendorCellShots').remove();
+        // }
+        // if(orderSpecs[i].flavours.length === 0){
+        //   $('.vendorCellFlavours').remove();
+        // }
       }
     }
 
@@ -105,7 +142,6 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory'])
           vm.slideHappening = true;
           target.animate({
             width: '70%'
-            ,backgroundColor: '#e6f3f7'
           }, 180);
           rightSib.animate({
             opacity: 1
@@ -159,7 +195,6 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory'])
           target.animate({
             width: '70%'
             ,marginLeft: '30%'
-            ,backgroundColor: '#e6f3f7'
           }, 180);
           leftSib.animate({
             opacity: 1
@@ -259,7 +294,7 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory'])
     //   console.log(vm.data.product)
     //   $http({
     //     method: "POST",
-    //     url: "http://192.168.0.10:3000/items/one",
+    //     url: "http://192.168.0.3:3000/items/one",
     //     data: {
     //
     //         name: vm.data.product,
@@ -283,7 +318,7 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory'])
     //   console.log( 'TOKEN', window.localStorage.token )
     //   $http({
     //     method: "get",
-    //     url: "http://192.168.0.10:3000/orders",
+    //     url: "http://192.168.0.3:3000/orders",
     //     headers: {'x-access-token': window.localStorage.token}
     //
     //
