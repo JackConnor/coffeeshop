@@ -9,10 +9,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     //////////////////////////////////////////////
     ////////All Global Variables//////////////////
     //////////////////////////////////////////////
-
     var vm = this;
-    console.log(vm);
-    // vm.chat = Chats.get($stateParams.chatId);
     vm.optionsModal    = false;
     vm.moreOptions     = false;
     vm.cartModal       = false;
@@ -46,9 +43,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       vm.hotDrinks  = [];
       vm.coldDrinks = []
       for (var i = 0; i < dataLength; i++) {
-        console.log(vm.data[i]);
         if(vm.data[i].category === 'hot drink'){
-          console.log('ye');
           vm.hotDrinks.push(vm.data[i]);
         }
         else if(vm.data[i].category === 'cold drink'){
@@ -71,102 +66,97 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       console.log(currentDrink);
       vm.currentDrink = currentDrink
       var index = index;
-      /////closure function to transition to options modal
-      function openUp(){
-        var clonedEl = $(evt.currentTarget).clone();
-        clonedEl.find('.sizeCell').on('click', choseSize);
-        clonedEl.find('.openMore').on('click', function(){
-          openMoreOptions(clonedEl);
-        });
-        if(typeof evt.currentTarget !== 'string'){
-          clonedEl.find('.submitItem')[0].id = $(evt.currentTarget)[0].classList[2];
-          var elOffset   = $(evt.currentTarget).offset().top;
-          var drinkListTop = $('.drinkListContainer').offset().top;
-          var distance   = elOffset - drinkListTop;
-        }
-        else {
-          var distance = $('.drinkListContainer').offset().top;
-        }
-        clonedEl.find('.closeOptions').on('click', closeModal);
-        clonedEl.find('.espressoMath-less').on('click', subtractShot);
-        clonedEl.find('.espressoMath-more').on('click', addShot);
-        clonedEl.find('.submitItem').on('click', submitDrinkOptions);
-        clonedEl.addClass('optionOpen');
-        clonedEl.removeClass('optionClosed');
-        var removeCircle = clonedEl.find('.fa-plus-circle');
-        removeCircle.remove();
-        clonedEl.css({
-          marginTop: distance
-          ,borderBottom: "0px solid black"
-          ,borderWidth: 0
-          ,borderRadius: '5px'
-        });
-        $('.optionClosed').animate({
-          opacity: 0
-        }, 150);
-        $('.categoryTitle').animate({
-          opacity: 0
-        }, 150);
-        clonedEl.find('.drinkIn-price').animate({
-          opacity: 0
-        }, 150);
-        setTimeout(function(){
-          clonedEl.find('.drinkIn-price').css({
-            float: 'left'
-            ,marginLeft: '20px'
-            ,marginTop: '10px'
-          });
-        }, 500);
-        setTimeout(function(){
-          $('.drinkListContainer').prepend(clonedEl[0]);
-        }, 05);
-        setTimeout(function(){
-          clonedEl.animate({
-            height: '325px'
-            ,width: '90%'
-            ,marginTop: '10px'
-            ,marginLeft: '5%'
-            // ,borderWidth: 5
-            // ,borderBottomWidth: 5
-          }, 300);
-          clonedEl.find('.drinkPhotoHolder').animate({
-            width: '75px'
-            ,height: '75px'
-            ,marginTop: '20px'
-            ,marginLeft: '30px'
-          }, 300);
-          clonedEl.find('.drinkIn').animate({
-            fontSize: '28px'
-            ,marginTop: '20px'
-          }, 300);
-        }, 250);
-        setTimeout(function(){
-          clonedEl.prepend(
-            "<div class='col-xs-4 closeOptions'>"+
-              "<p class='fa fa-times'></p>"+
-            "</div>"
-          );
-          clonedEl.animate({
-            borderWidth: 2
-            ,borderBottomWidth: 2
-          }, 250);
-          clonedEl.find('.closeOptions').on('click', closeModal);
-          clonedEl.find('.optionsPart').animate({
-            height: '200px'
-            ,opacity: 1
-            ,zIndex: 500
-          }, 250);
-        }, 550);
-        setTimeout(function(){
-          clonedEl.find('.drinkIn-price').animate({
-            opacity: 1
-          }, 500);
-        }, 700);
+      var clonedEl = $(evt.currentTarget).clone();
+      clonedEl.find('.sizeCell').on('click', choseSize);
+      clonedEl.find('.openMore').on('click', function(){
+        openMoreOptions(clonedEl);
+      });
+      if(typeof evt.currentTarget !== 'string'){
+        clonedEl.find('.submitItem')[0].id = $(evt.currentTarget)[0].classList[2];
+        var elOffset   = $(evt.currentTarget).offset().top;
+        var drinkListTop = $('.drinkListContainer').offset().top;
+        var distance   = elOffset - drinkListTop;
       }
+      else {
+        var distance = $('.drinkListContainer').offset().top;
+      }
+      clonedEl.find('.closeOptions').on('click', closeModal);
+      clonedEl.find('.espressoMath-less').on('click', subtractShot);
+      clonedEl.find('.espressoMath-more').on('click', addShot);
+      clonedEl.find('.submitItem').on('click', submitDrinkOptions);
+      clonedEl.addClass('optionOpen');
+      clonedEl.removeClass('optionClosed');
+      var removeCircle = clonedEl.find('.fa-plus-circle');
+      removeCircle.remove();
+      clonedEl.css({
+        marginTop: distance
+        ,borderBottom: "0px solid black"
+        ,borderWidth: 0
+        ,borderRadius: '5px'
+      });
+      $('.optionClosed').animate({
+        opacity: 0
+      }, 150);
+      $('.categoryTitle').animate({
+        opacity: 0
+      }, 150);
+      clonedEl.find('.drinkIn-price').animate({
+        opacity: 0
+      }, 150);
+      setTimeout(function(){
+        clonedEl.find('.drinkIn-price').css({
+          float: 'left'
+          ,marginLeft: '20px'
+          ,marginTop: '10px'
+        });
+      }, 500);
+      setTimeout(function(){
+        $('.drinkListContainer').prepend(clonedEl[0]);
+      }, 05);
+      setTimeout(function(){
+        clonedEl.animate({
+          height: '325px'
+          ,width: '90%'
+          ,marginTop: '10px'
+          ,marginLeft: '5%'
+          // ,borderWidth: 5
+          // ,borderBottomWidth: 5
+        }, 300);
+        clonedEl.find('.drinkPhotoHolder').animate({
+          width: '75px'
+          ,height: '75px'
+          ,marginTop: '20px'
+          ,marginLeft: '30px'
+        }, 300);
+        clonedEl.find('.drinkIn').animate({
+          fontSize: '28px'
+          ,marginTop: '20px'
+        }, 300);
+      }, 250);
+      setTimeout(function(){
+        clonedEl.prepend(
+          "<div class='col-xs-4 closeOptions'>"+
+            "<p class='fa fa-times'></p>"+
+          "</div>"
+        );
+        clonedEl.animate({
+          borderWidth: 2
+          ,borderBottomWidth: 2
+        }, 250);
+        clonedEl.find('.closeOptions').on('click', closeModal);
+        clonedEl.find('.optionsPart').animate({
+          height: '200px'
+          ,opacity: 1
+          ,zIndex: 500
+        }, 250);
+      }, 550);
+      setTimeout(function(){
+        clonedEl.find('.drinkIn-price').animate({
+          opacity: 1
+        }, 500);
+      }, 700);
       vm.currentDrink        = currentDrink;
       vm.currentDrink.index  = index;
-      // vm.currentDrink.evt.currentTarget   = evt.currentTarget;
-      openUp();
     }
     /////////function to close the options modal
     function closeModal(){
@@ -192,22 +182,17 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.openOptionsModal = openOptionsModal;
 
     function openOptionsFromCart(evt, itemObj){
-      console.log('item options yooooo');
-      console.log(itemObj);
       var offTopEl = $(evt.currentTarget).closest('.shoppingCartCell').offset().top;
       var offTopCont = $('.shoppingCartList').offset().top;
       var distance = offTopEl - offTopCont;
       var targItem = $(evt.currentTarget).closest('.shoppingCartCell').clone();
-      console.log(targItem);
       targItem.find('.cartActions').remove();
       targItem.find('.cartPrice').remove();
       /////clone the options things so we can add it
       var optionClone = $($(".optionsPart")[0]).clone();
-      console.log(optionClone);
       ////quick loop to add the proper size
       var sizeArr = optionClone.find('.sizeCell');
       var sizeLength = sizeArr.length;
-      console.log(sizeLength);
       //////
       if(vm.cartModal === true){
         if(itemObj.size === 'small'){
@@ -257,7 +242,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       targItem.find('.sizeCell').on('click', choseSize);
       targItem.find('.openMore').on('click', function(){
         openMoreOptions(targItem);
-        console.log(vm.moreOptions);
         if(vm.moreOptions === true){
           $('.cartOpClose').animate({
             marginTop: '341px'
@@ -290,7 +274,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     // vm.closeModal = closeModal;
 
     function closeCartOptions(){
-      console.log('yoooooo');
       var opEl = $('.cartOptionOpen');
       vm.moreOptions = false;
       opEl.animate({
@@ -336,7 +319,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     function openMoreOptions(parentEl){
       if(vm.moreOptions === false){
-        console.log('yoooooooo');
         parentEl.animate({
           height: '425px'
         }, 300);
@@ -497,18 +479,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     // vm.choseSize = choseSize;
 
     vm.removeItem = function(something, index) {
-        console.log(something)
-        console.log("this is the index", index);
         vm.currentOrder.splice(index, 1)
-        console.log(vm.currentOrder)
     }
 
     function submitDrinkOptions(evt) {
-      console.log(evt.target.id);
       var drinkDetails = {customizations: {}}
       var sizeEl = $('.selected');
       var drinkPrice = vm.currentDrink.price;
-      console.log(drinkPrice);
       if(sizeEl.hasClass('sizeSmall')){
         drinkDetails.customizations.size = 'small';
       }
@@ -529,12 +506,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         drinkDetails.price = drinkPrice;
         drinkDetails.evt = {currentTarget: ''}
         drinkDetails.evt.currentTarget = evt.target.id;
-        console.log(vm.currentOrder);
         ///////put all settings back to zero
         vm.currentOrder.push(drinkDetails);
         vm.totalShots   = 0;
         vm.orderTotalPrice += vm.currentDrink.price;
-        console.log(vm.currentOrder);
         vm.moreOptions = false;
         closeModal();
       }
@@ -559,7 +534,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       $('.cartModalHolder').animate({
         width: 90+"%"
         ,marginLeft: 0+'%'
-        ,marginTop: 30+'px'
+        ,marginTop: 40+'px'
         ,paddingTop: 10+'px'
         ,height: 400+"px"
         ,marginRight: 5+"%"
@@ -649,8 +624,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           opacity: 0
         }, 200);
         setTimeout(function(){
-          $('.checkoutContainer').animate({
-            marginTop: -margDist
+          $('.shoppingCartList').animate({
+            height: '0px'
           }, 250);
         })
         $('.checkoutName').css({
@@ -680,18 +655,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.checkoutOpen = true;
         braintreeToken()
         .success(function (data) {
-          ////function to bring in payment button
-          // setTimeout(function(){
-          //   $('.checkoutSubmit').animate({
-          //     height: '35px'
-          //     ,opacity: 1
-          //   }, 250);
-          // }, 500);
           ///////begin braintree injection
           vm.submitName = function(){
-            console.log('yoooo');
             var name = $('.checkoutName').val();
-            console.log(name);
             if(name.length > 0){
               $('.checkoutName').animate({
                 opacity: 0
@@ -713,7 +679,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                   marginLeft: '200%'
                 });
               }, 250);
-
               braintreeStuff();
             }
           }
@@ -737,46 +702,42 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                   vm.message = 'Processing your payment...';
                   $http({
                     method: 'POST',
-                    url: 'http://192.168.0.11:3000/payments/process',
+                    url: 'http://192.168.0.3:3000/payments/process',
                     data: {
                       amount: vm.orderTotalPrice
                       ,payment_method_nonce: nonce
                     }
                   })
                   .success(function (data) {
-                    console.log('data coming');
-                    console.log(data);
                     if (data.success) {
                       vm.message = 'Payment authorized, thanks.';
                       vm.isError = false;
                       vm.isPaid = true;
-                      console.log(vm.currentOrder);
                       var orderObj = {order: {
                         items: vm.currentOrder
                         ,name: $('.checkoutName').val()
                       }}
-                      console.log(orderObj);
                       if(vm.signedInUser){
                         orderObj.decoded.id = signedInUser.id
                       }
                       $http({
                         method: "POST"
-                        ,url: 'http://192.168.0.11:3000/orders'
+                        ,url: 'http://192.168.0.3:3000/orders'
                         ,data: orderObj
                       })
                       .then(function(data){
-                        console.log(data);
                         vm.postCartOpen = true;
                         var orderId = data.data.data._id;
-                        window.localStorage.lastOrder = orderId;
-                        vm.socket = io.connect('http://192.168.0.11:3000/');
+                        console.log(window.localStorage);
+                        //////////we store up to fie localstorage orders on a device, seperated by  an -&-
+                        storeLocal(orderId);
+                        vm.socket = io.connect('http://192.168.0.3:3000/');
                         vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
                       })
                       //
 
                     } else {
                       // implement your solution to handle payment failures
-                      console.log(vm.orderTotalPrice)
                       vm.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
                       vm.isError = true;
                     }
@@ -793,72 +754,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
               }
             });
           }
-          //
-          //
-          // braintree.setup(data.client_token, 'dropin', {
-          //   container: 'checkout' ,
-          //   // Form is not submitted by default when paymentMethodNonceReceived is implemented
-          //   paymentMethodNonceReceived: function (event, nonce) {
-          //     //////if-statement to check if user has added a name
-          //     if($('.checkoutName').val().length > 0){
-          //       vm.message = 'Processing your payment...';
-          //       $http({
-          //         method: 'POST',
-          //         url: 'http://192.168.0.11:3000/payments/process',
-          //         data: {
-          //           amount: vm.orderTotalPrice
-          //           ,payment_method_nonce: nonce
-          //         }
-          //       })
-          //       .success(function (data) {
-          //         console.log('data coming');
-          //         console.log(data);
-          //         if (data.success) {
-          //           vm.message = 'Payment authorized, thanks.';
-          //           vm.isError = false;
-          //           vm.isPaid = true;
-          //           console.log(vm.currentOrder);
-          //           var orderObj = {order: {
-          //             items: vm.currentOrder
-          //             ,name: $('.checkoutName').val()
-          //           }}
-          //           console.log(orderObj);
-          //           if(vm.signedInUser){
-          //             orderObj.decoded.id = signedInUser.id
-          //           }
-          //           $http({
-          //             method: "POST"
-          //             ,url: 'http://192.168.0.11:3000/orders'
-          //             ,data: orderObj
-          //           })
-          //           .then(function(data){
-          //             console.log(data);
-          //             vm.postCartOpen = true;
-          //             var orderId = data.data.data._id;
-          //             window.localStorage.lastOrder = orderId;
-          //             vm.socket = io.connect('http://192.168.0.11:3000/');
-          //             vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
-          //           })
-          //           //
-          //
-          //         } else {
-          //           // implement your solution to handle payment failures
-          //           console.log(vm.orderTotalPrice)
-          //           vm.message = 'Payment failed: ' + data.message + ' Please refresh the page and try again.';
-          //           vm.isError = true;
-          //         }
-          //
-          //       }).error(function (error) {
-          //         vm.message = 'Error: cannot connect to server. Please make sure your server is running431.';
-          //
-          //         vm.isError = true;
-          //       });
-          //     }
-          //     else {
-          //       alert('Please add your name');
-          //     }
-          //   }
-          // });
 
         }).error(function (error) {
           vm.message = 'Error: cannot connect to server. Please make sure your server is running440.';
@@ -876,8 +771,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
             opacity: 1
           }, 250);
         }, 200);
-        $('.checkoutContainer').animate({
-          marginTop: 0
+        $('.shoppingCartList').animate({
+          height: '100%'
         });
         $('.checkoutSubmit').animate({
           height: '0px'
@@ -899,6 +794,25 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         );
       }
     };
+
+    function storeLocal(newOrderId){
+      if(window.localStorage.hasOwnProperty('lastOrder')){
+        var stor = window.localStorage.lastOrder;
+        var splitStor = stor.split('-&-');
+        if(splitStor.length < 5){
+          window.localStorage.lastOrder+=newOrderId+"-&-";
+        }
+        else {
+          splitStor.pop();
+          splitStor.push(newOrderId);
+          window.localStorage.lastOrder = splitStor.join('-&-');
+        }
+      }
+      else {
+        window.localStorage.lastOrder = newOrderId+"-&-";
+      }
+
+    }
 
     //////function to go to login page
     function toLoginPage(){

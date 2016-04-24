@@ -15,20 +15,19 @@
         </div>
         <div class="orderCellInner center" on-swipe-right='vendor.cellSwipeRight($event)'   on-swipe-left='vendor.cellSwipeLeft($event)'>
           <div class='orderCellTitle col-xs-4'>
-            <span class='orderName'>{{item.item.itemId.name}}</span>
+            <span class='orderName'>{{item.itemId.name}}</span>
             <br>
             <span class='orderCustomerName'>{{item.name}}</span>
           </div>
           <div class="orderCellDetails col-xs-5">
-            <!-- {{item}} -->
-            <div class="orderCellSize" ng-if='item.item.customizations[0].size'>
-              {{item.item.customizations[0].size}}
+            <div class="orderCellSize" ng-if='item.customizations[0].size'>
+              {{item.customizations[0].size}}
             </div>
-            <div class="orderCellShots" ng-if='item.item.customizations[0].shots > 0'>
-              Espresso shots: {{item.item.customizations[0].shots}}
+            <div class="orderCellShots" ng-if='item.customizations[0].shots > 0'>
+              Espresso shots: {{item.customizations[0].shots}}
             </div>
-            <div class="orderCellFlavours" ng-if='item.item.customizations[0].flavours'>
-              Additional flavours: {{item.item.customizations[0].flavours}}
+            <div class="orderCellFlavours" ng-if='item.customizations[0].flavours'>
+              Additional flavours: {{item.customizations[0].flavours}}
             </div>
           </div>
           <div class="orderClock">

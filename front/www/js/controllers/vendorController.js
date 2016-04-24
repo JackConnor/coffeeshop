@@ -25,13 +25,13 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
       for (var i = 0; i < itemLength; i++) {
         if(itemArray[i].status === 'active'){
           allItems.push(itemArray[i]);
-          vm.allItems = allItems.reverse();
+          vm.allItems = allItems;
         }
       }
     })
 
     vm.orderList = ['hi'];
-    vm.socket = io.connect('http://192.168.0.11:3000/');
+    vm.socket = io.connect('http://192.168.0.3:3000/');
     /////socket function which receives socket orders
     vm.socket.on('orderForVendor', function(data){
       // vm.allItems[vm.allItems.length] = 'test'
@@ -99,12 +99,20 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
     function addOrder(menuItems, customerName){
       console.log(menuItems);
       var name = customerName
+      console.log(customerName);
       /////these are the items, as pulled from db
       var rawItems = menuItems;
+      console.log(menuItems.itemId.name);
+      // menuItems.itemId.name = customerName;
+      console.log(menuItems);
       console.log(vm.allItems);
-      vm.allItems.reverse();
-      vm.allItems.push({name: customerName, item: menuItems});
-      vm.allItems.reverse();
+      // vm.allItems.reverse();
+      vm.allItems.push({name: customerName, item: menuItems, customizations: menuItems.customizations});
+      // vm.allItems.reverse();
+      console.log(vm.allItems);
+      setTimeout(function(){
+        $($('.orderName')[$('.orderName').length-1]).append(menuItems.itemId.name)
+      }, 3000);
 
     }
 
