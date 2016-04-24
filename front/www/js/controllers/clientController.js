@@ -720,6 +720,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                       if(vm.signedInUser){
                         orderObj.decoded.id = signedInUser.id
                       }
+                      console.log(vm.currentOrder);
                       $http({
                         method: "POST"
                         ,url: 'http://192.168.0.3:3000/orders'
@@ -728,7 +729,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                       .then(function(data){
                         vm.postCartOpen = true;
                         var orderId = data.data.data._id;
-                        console.log(window.localStorage);
                         //////////we store up to fie localstorage orders on a device, seperated by  an -&-
                         storeLocal(orderId);
                         vm.socket = io.connect('http://192.168.0.3:3000/');
@@ -804,7 +804,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         }
         else {
           splitStor.pop();
-          splitStor.push(newOrderId);
+          splitStor.push(newOrderId+"-&-");
           window.localStorage.lastOrder = splitStor.join('-&-');
         }
       }

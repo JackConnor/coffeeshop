@@ -1,25 +1,24 @@
 <ion-view>
   <ion-content class="padding">
     <div class="ordersList">
-      <div class='orderCell'>
-        <div class="orderCellInner center">
-          <div class='orderCellTitle col-xs-4'>
-            <span class='orderName'>{{history.lastMenuItem.itemId.name}}</span>
-            <br>
-            <span class='orderCustomerName'>{{history.lastMenuItem.name}}  {{history.lastMenuItem.status}}</span>
-          </div>
-          <div class="orderCellDetails col-xs-5">
-            <div class="orderCellSize" ng-if='history.lastMenuItem.customizations[0].size'>
-              {{history.lastMenuItem.customizations[0].size}}
-            </div>
-            <div class="orderCellShots" ng-if='history.lastMenuItem.customizations[0].shots > 0'>
-              Espresso shots: {{history.lastMenuItem.customizations[0].shots}}
-            </div>
-            <div class="orderCellFlavours" ng-if='history.lastMenuItem.customizations[0].flavours'>
-              Additional flavours: {{history.lastMenuItem.customizations[0].flavours}}
-            </div>
-          </div>
+      <div class="" ng-repeat='order in history.lastOrderHistory'>
+
+        <div class="orderDate col-xs-12">
+          <!-- {{order}} -->
+          Ordered On: {{order.createdAt}}
         </div>
+        <div class="orderMenuList col-xs-" ng-repeat='menuitem in order.menuitems'>
+          {{menuitem.itemId.name}}
+        </div>
+
+
+        <!-- <div class="drinkPhotoHolder">
+          <img class='drinkPhoto' src="{{menuitem.photoLink}}" alt="" />
+        </div>
+        <div class="drinkIn">
+          <div class="drinkIn-name">{{menuitem.name}}</div>
+          <div class="drinkIn-price">${{menuitem.price}}</div>
+        </div> -->
       </div>
     </div>
   </ion-content>

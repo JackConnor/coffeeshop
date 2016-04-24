@@ -6,35 +6,55 @@ angular.module('historyController', ['getLastOrderFactory'])
 
   function historyCtrl(getLastOrder, $http){
     var vm = this;
+    vm.lastOrderObj;
+    vm.lastMenuItemHistory = [];
+    vm.lastOrderHistory = [];
+    vm.lastOrder    = [];
     // console.log(getLastOrder());
     console.log('in history...');
 
-    if(window.localStorage.hasOwnProperty('lastOrder')){
-      vm.lastOrder = window.localStorage.lastOrder;
+    function getHistory(){
+      console.log(window.localStorage);
+      if(window.localStorage.hasOwnProperty('lastOrder')){
+        var lastOrder = window.localStorage.lastOrder.split('-&-');
+        vm.lastOrder = lastOrder.reverse().slice(1, 6);
+        console.log(vm.lastOrder);
+      }
+      else {
+        vm.lastOrder = [];
+      }
     }
-    else {
-      vm.lastOrder = 0;
-    }
+
     function getLast(){
-      if(vm.lastOrder.length > 1){
-        console.log('running');
-        $http({
-          method: "GET"
-          ,url: "http://192.168.0.3:3000/orders/one/"+vm.lastOrder
-        })
-        .then(function(lastOrderObj){
-          console.log(lastOrderObj);
-          $http({
-            method: "GET"
-            ,url: 'http://192.168.0.3:3000/menuitems/full/'+lastOrderObj.data.data.menuitems[0]._id
-          })
-          .then(function(menuItem){
-            console.log(menuItem);
-            vm.lastMenuItem = menuItem.data.data
-            console.log(vm.lastMenuItem);
-          })
-          vm.lastOrderObj = lastOrderObj.data;
-        });
+      getHistory();
+      var lastOrderLength = vm.lastOrder.length;
+      if(lastOrderLength > 0){
+        for (var i = 0; i < lastOrderLength; i++) {
+          if(vm.lastOrder[i] !== ''){
+            $http({
+              method: "GET"
+              ,url: "http://192.168.0.3:3000/orders/one/"+vm.lastOrder[i]
+            })
+            .then(function(lastOrderObj){
+              console.log(lastOrderObj);
+              console.log(lastOrderObj.data.data);
+              // for (var j = 0; j < lastOrderObj.data.data.menuitems.length; j++) {
+              //   $http({
+              //     method: "GET"
+              //     ,url: 'http://192.168.0.3:3000/menuitems/full/'+lastOrderObj.data.data.menuitems[j]._id
+              //   })
+              //   .then(function(menuItem){
+              //     console.log(menuItem);
+              //     console.log(lastOrderObj);
+              //     console.log(lastOrderObj.data.data);
+              //     lastOrderObj.data.data.menuitems[j] = menuItem.data.data;
+              //     console.log(lastOrderObj);
+              //   })
+              // }
+              vm.lastOrderHistory.push(lastOrderObj.data.data);
+            });
+          }
+        }
       }
     }
     getLast();
