@@ -16,8 +16,8 @@ angular.module('historyController', ['getLastOrderFactory'])
     function getHistory(){
       console.log(window.localStorage);
       if(window.localStorage.hasOwnProperty('lastOrder')){
-        var lastOrder = window.localStorage.lastOrder.split('-&-');
-        vm.lastOrder = lastOrder.reverse().slice(1, 6);
+        vm.lastOrder = window.localStorage.lastOrder.split('-&-').reverse();
+        // vm.lastOrder = lastOrder.reverse().slice(1, 6);
         console.log(vm.lastOrder);
       }
       else {
