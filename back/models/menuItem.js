@@ -5,7 +5,7 @@ var Menuitem;
 
 Menuitem = new mongoose.Schema( {
 	name : { type: String, unique: false },
-	itemId : { type: String, ref: "Item" },
+	itemId : Object,
 	price: { type: Number },
 	status: {type: String, default: 'active'},
   createdDate: Date,

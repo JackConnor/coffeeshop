@@ -28,33 +28,24 @@ function create( req, res ) {
   var items = order.items;
   var newOrder = new Order();
   newOrder.name = order.name;
+  var counter = [];
   ///////now we create a menuitem for each thing ordered
   for (var i = 0; i < items.length; i++) {
-    var itrue = false;
-    if(i == items.length-1){
-      itrue = true;
-    }
     Menuitem.create({itemId: items[i].itemId, price: items[i].price, name: order.name, status: 'active', createdDate: new Date(), customizations: items[i].customizations, order: newOrder._id}, function(err, newMenuItem){
-
-      Menuitem.findOne({_id: newMenuItem._id})
-      .populate('itemId')
-      .exec(function(err, popMenuItem){
-        if(err){console.log(err)}
-        newOrder.menuitems[i] = popMenuItem;
-        if(itrue){
-          newOrder.save(function(err, newerOrder){
-            if(err){console.log(err)}
-            if(itrue) {
-              res.json( {
-                    error: null,
-                    status: 200,
-                    message: 'Order has been placed!',
-                    data: newerOrder
-              } );
-            }
-          })
-        }
-      })
+      if(err){console.log(err)}
+      newOrder.menuitems[counter.length] = newMenuItem;
+      counter.push('x');
+      if(counter.length == items.length){
+        newOrder.save(function(err, newerOrder){
+          if(err){console.log(err)}
+          res.json( {
+                error: null,
+                status: 200,
+                message: 'Order has been placed!',
+                data: newerOrder
+          } );
+        });
+      }
     })
   }
 }
@@ -124,6 +115,7 @@ function show( req, res ) {
 
 function showOne(req, res){
   var orderId = req.params.orderId;
+  console.log(orderId);
   Order.findOne({_id: orderId})
   .populate('menuitems')
   .exec(function(err, lastOrder){
