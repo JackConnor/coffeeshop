@@ -583,6 +583,7 @@ h1,h2,h3,h4,h5,h6 {
 .sizeLabel {
   font-size: 12px;
   margin-left: 10%;
+  text-align: left;
 }
 
 .sizeLarge{

@@ -196,8 +196,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       var offTopCont = $('.shoppingCartList').offset().top;
       var distance = offTopEl - offTopCont;
       var targItem = $(evt.currentTarget).closest('.shoppingCartCell').clone();
+      console.log(targItem);
       targItem.find('.cartActions').remove();
-      targItem.find('.cartPrice').remove();
+      // targItem.find('.cartPrice').remove();
       /////clone the options things so we can add it
       var optionClone = $($(".optionsPart")[0]).clone();
       ////quick loop to add the proper size
@@ -205,17 +206,17 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       var sizeLength = sizeArr.length;
       //////
       if(vm.cartModal === true){
-        if(itemObj.customizations.size === 'small'){
+        if(itemObj.customizations.size.sizing === 'small'){
           $(sizeArr)[0].css({
             backgroundColor: '#dddddd'
           });
         }
-        else if(itemObj.customizations.size === 'medium') {
+        else if(itemObj.customizations.size.sizing === 'medium') {
           $(sizeArr[1]).css({
             backgroundColor: '#dddddd'
           });
         }
-        else if(itemObj.customizations.size === 'large') {
+        else if(itemObj.customizations.size.sizing === 'large') {
           $(sizeArr[2]).css({
             backgroundColor: '#dddddd'
           });
@@ -223,12 +224,15 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         // vm.totalShots = itemObj.shots;
         optionClone.find('.flavourDropdown').val(itemObj.customizations.flavours);
       }
-
-
       optionClone.find('.modalActionSubmit').remove();
+      optionClone.find('.espressoMath-number').text(itemObj.customizations.shots)
       optionClone.css({
         "position": 'relative'
-        ,marginTop: '20px'
+        ,marginTop: '55px'
+        ,marginLeft: '-156px'
+      });
+      targItem.find('.checkoutDrinkInfo-name').css({
+        marginTop: '12px'
       });
       targItem.append(optionClone);
       targItem.addClass('cartOptionOpen')
@@ -244,7 +248,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         ,border: '2px solid black'
         ,zIndex: 5
       });
-      $('.shoppingCartList').prepend(
+      $(evt.currentTarget).closest('.shoppingCartCell').append(
         targItem
       );
       //////let's add all events
@@ -278,7 +282,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           ,height: '300px'
         }, 200);
       }, 200);
-      console.log(targItem);
     }
     vm.openOptionsFromCart = openOptionsFromCart;
     // vm.closeModal = closeModal;
@@ -658,10 +661,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.currentDrink = {};
         vm.totalShots   = 0;
         vm.moreOptions = false;
-        console.log(vm.currentOrder);
-        console.log(vm.ogPrice);
-        console.log(vm.currentOpenModal);
-        $("."+vm.currentOpenModal).find('.drinkIn-price').text('$'+vm.ogPrice);
+        setTimeout(function(){
+          $("."+vm.currentOpenModal).find('.drinkIn-price').text('$'+vm.ogPrice);
+        }, 700);
         $('.activePrice').removeClass('activePrice');
         closeModal();
       }
