@@ -10,22 +10,17 @@ angular.module('historyController', ['getLastOrderFactory'])
     vm.lastMenuItemHistory = [];
     vm.lastOrderHistory = [];
     vm.lastOrder    = [];
-    // console.log(getLastOrder());
-    console.log('in history...');
 
     function getHistory(){
-      console.log(window.localStorage);
       if(window.localStorage.hasOwnProperty('lastOrder')){
         vm.lastOrder = window.localStorage.lastOrder.split('-&-').reverse();
-        // vm.lastOrder = lastOrder.reverse().slice(1, 6);
-        console.log(vm.lastOrder);
       }
       else {
         vm.lastOrder = [];
       }
     }
 
-    function getLast(){
+    function getLast(){ 
       getHistory();
       var lastOrderLength = vm.lastOrder.length;
       if(lastOrderLength > 0){
