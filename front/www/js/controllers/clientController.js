@@ -165,8 +165,11 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       vm.currentDrink        = currentDrink;
       vm.currentDrink.index  = index;
     }
+    vm.openOptionsModal = openOptionsModal;
+
     /////////function to close the options modal
     function closeModal(){
+      /////animation work
       $('.optionOpen').animate({
         opacity: 0
       }, 200);
@@ -186,10 +189,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       vm.moreOptions = false;
 
     }
-    vm.openOptionsModal = openOptionsModal;
 
-    function openOptionsFromCart(evt, itemObj){
+    function openOptionsFromCart(evt, itemObj, index){
+      console.log(index);
       console.log(itemObj);
+      vm.currentDrink = itemObj;
+      var shotPrice = itemObj.itemId.customFields.espressoShots.addedPrice;
+      console.log('shots are: '+shotPrice);
       vm.currentItemShots = itemObj.customizations.shots;
       console.log(vm.currentItemShots);
       var offTopEl = $(evt.currentTarget).closest('.shoppingCartCell').offset().top;
@@ -201,22 +207,23 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       // targItem.find('.cartPrice').remove();
       /////clone the options things so we can add it
       var optionClone = $($(".optionsPart")[0]).clone();
+      targItem.find('.cartPrice').addClass('activeCartPrice');
       ////quick loop to add the proper size
       var sizeArr = optionClone.find('.sizeCell');
       var sizeLength = sizeArr.length;
       //////
       if(vm.cartModal === true){
-        if(itemObj.customizations.size.sizing === 'small'){
-          $(sizeArr)[0].css({
+        if(itemObj.customizations.size === 'small'){
+          $(sizeArr[0]).css({
             backgroundColor: '#dddddd'
           });
         }
-        else if(itemObj.customizations.size.sizing === 'medium') {
+        else if(itemObj.customizations.size === 'medium') {
           $(sizeArr[1]).css({
             backgroundColor: '#dddddd'
           });
         }
-        else if(itemObj.customizations.size.sizing === 'large') {
+        else if(itemObj.customizations.size === 'large') {
           $(sizeArr[2]).css({
             backgroundColor: '#dddddd'
           });
@@ -252,8 +259,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         targItem
       );
       //////let's add all events
-      $('.cartOpClose').on('click', closeCartOptions);
-      targItem.find('.sizeCell').on('click', choseSize);
+      $('.cartOpClose').on('click', function(){
+        closeCartOptions(index);
+      });
+      targItem.find('.sizeCell').on('click', choseSizeCart);
       targItem.find('.openMore').on('click', function(){
         openMoreOptions(targItem);
         if(vm.moreOptions === true){
@@ -267,9 +276,16 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           }, 300);
         }
       });
-      targItem.find('.closeOptions').on('click', closeModal);
-      targItem.find('.espressoMath-less').on('click', subtractShot);
-      targItem.find('.espressoMath-more').on('click', addShot);
+      targItem.find('.closeOptions').on('click', function(){
+        closeCartOptions();
+      });
+      vm.totalShots = itemObj.customizations.shots;
+      targItem.find('.espressoMath-less').on('click', function(){
+        subtractShot(shotPrice)
+      });
+      targItem.find('.espressoMath-more').on('click', function(){
+        addShot(shotPrice)
+      });
 
       targItem.animate({
         height: '375px'
@@ -286,7 +302,16 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.openOptionsFromCart = openOptionsFromCart;
     // vm.closeModal = closeModal;
 
-    function closeCartOptions(){
+    function closeCartOptions(itemObj){
+      console.log('closing');
+      ////data stuff
+      var targetIndex = itemObj;
+      var currentItem = vm.currentOrder[targetIndex];
+      console.log(vm.totalShots);
+      currentItem.customizations.shots = vm.totalShots;
+      currentItem
+
+      //////animation stuff
       var opEl = $('.cartOptionOpen');
       vm.moreOptions = false;
       opEl.animate({
@@ -308,7 +333,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         setTimeout(function(){
           opEl.remove();
         }, 250)
-      }, 420)
+      }, 420);
+      vm.totalShots = 0;
+      vm.currentDrink = null;
     }
 
     //function to create a translucent layer to block all background clicks
@@ -366,6 +393,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       vm.currentDrink.price += shotPrice;
       $('.activePrice').text('');
       $('.activePrice').text("$"+vm.currentDrink.price);
+      $('.activeCartPrice').text('');
+      $('.activeCartPrice').text("$"+vm.currentDrink.price);
       vm.currentOrder.shots = vm.totalShots;
       $('.espressoMath-number').text(vm.totalShots);
     }
@@ -375,8 +404,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       if(vm.totalShots > 0){
         vm.totalShots--;
         vm.currentDrink.price -= shotPrice;
-        $('.activePrice').text('');
-        $('.activePrice').text("$"+vm.currentDrink.price);
+        $('.activeCartPrice').text('');
+        $('.activeCartPrice').text("$"+vm.currentDrink.price);
         vm.currentOrder.shots = vm.totalShots;
       }
       // vm.currentOrder.shotss = vm.totalShots;
@@ -385,11 +414,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.subtractShot = subtractShot;
 
     function choseSize(evt){
-      console.log('currentsize');
-      console.log(vm.currentDrink.customFields.size.sizes.value);
-      console.log(vm.currentDrink);
       if($(evt.target).hasClass('sizeSmall')){
-        console.log('small');
         var elSize = 'small';
         var elem = $(evt.target);
 
@@ -398,19 +423,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
           vm.currentDrink.customFields.size.sizes.value = 'small';
-          console.log(vm.currentDrink.price);
-          console.log(vm.currentDrink.customFields.size.sizes.medium);
           vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.medium;
-          console.log(vm.currentDrink.price);
-          console.log(vm.currentDrink.customFields.size.sizes.medium);
           $('.activePrice').text('');
           $('.activePrice').text("$"+vm.currentDrink.price);
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'large'){
           vm.currentDrink.customFields.size.sizes.value = 'small';
           vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.large;
-          console.log(vm.currentDrink.price);
-          console.log(vm.currentDrink.customFields.size.sizes.medium);
           $('.activePrice').text('');
           $('.activePrice').text("$"+vm.currentDrink.price);
         }
@@ -425,7 +444,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         });
       }
       if($(evt.target).parent().hasClass('sizeSmall')){
-        console.log('small');
         var elSize = 'small';
         var elem = $(evt.target).parent();
 
@@ -434,10 +452,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
           vm.currentDrink.customFields.size.sizes.value = 'small';
-          console.log(vm.currentDrink.price);
           vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.medium;
-          console.log(vm.currentDrink.price);
-          console.log(vm.currentDrink.customFields.size.sizes.medium);
           $('.activePrice').text('');
           $('.activePrice').text("$"+vm.currentDrink.price);
         }
@@ -458,7 +473,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         });
       }
       else if($(evt.target).hasClass('sizeMedium')){
-        console.log('med');
         var elSize = 'medium';
         var elem = $(evt.target);
         if(vm.currentDrink.customFields.size.sizes.value === null){
@@ -489,7 +503,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         });
       }
       else if($(evt.target).parent().hasClass('sizeMedium')){
-        console.log('med');
         var elSize = 'medium';
         var elem = $(evt.target).parent();
         if(vm.currentDrink.customFields.size.sizes.value === null){
@@ -569,6 +582,215 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.price += (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
           $('.activePrice').text('');
           $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        $('.sizeSmall').removeClass('selected');
+        $('.sizeSmall').css({
+          backgroundColor: 'transparent'
+        })
+        $('.sizeMedium').removeClass('selected');
+        $('.sizeMedium').css({
+          backgroundColor: 'transparent'
+        })
+      }
+      if(elSize === 'small'){
+        if(elem.hasClass('selected')){
+          elem.css({
+            backgroundColor: 'transparent'
+          })
+          elem.removeClass('selected')
+        }
+        else {
+          elem.css({
+            backgroundColor: '#dddddd'
+          })
+          elem.addClass('selected')
+        }
+      }
+      else if(elSize === 'medium'){
+        if(elem.hasClass('selected')){
+          elem.css({
+            backgroundColor: 'white'
+          })
+          elem.removeClass('selected')
+        }
+        else {
+          elem.css({
+            backgroundColor: '#dddddd'
+          })
+          elem.addClass('selected')
+        }
+      }
+      else if(elSize === 'large'){
+        if(elem.hasClass('selected')){
+          elem.css({
+            backgroundColor: 'white'
+          })
+          elem.removeClass('selected')
+        }
+        else {
+          elem.css({
+            backgroundColor: '#dddddd'
+          })
+          elem.addClass('selected')
+        }
+      }
+      console.log(vm.currentDrink);
+    }
+
+    function choseSizeCart(evt){
+      console.log(evt);
+      console.log('yoouoyoyoyo');
+      if($(evt.target).hasClass('sizeSmall')){
+        console.log('small');
+        var elSize = 'small';
+        var elem = $(evt.target);
+
+        if(vm.currentDrink.customizations.size === 'medium'){
+          vm.currentDrink.customizations.size = 'small';
+          console.log('medium to small');
+          vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.medium;
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customizations.size === 'large'){
+          vm.currentDrink.customizations.size = 'small';
+          vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.large;
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        //////animate
+        $('.sizeMedium').removeClass('selected');
+        $('.sizeMedium').css({
+          backgroundColor: 'transparent'
+        })
+        $('.sizeLarge').removeClass('selected');
+        $('.sizeLarge').css({
+          backgroundColor: 'transparent'
+        });
+      }
+      if($(evt.target).parent().hasClass('sizeSmall')){
+        console.log('sm');
+        var elSize = 'small';
+        var elem = $(evt.target).parent();
+        console.log(vm.currentDrink);
+
+        if(vm.currentDrink.customizations.size === 'medium'){
+          vm.currentDrink.customizations.size = 'small';
+          console.log('medium to small');
+          vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.medium;
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customizations.size === 'large'){
+          vm.currentDrink.customizations.size = 'small';
+          vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.large;
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        //////animate
+        $('.sizeMedium').removeClass('selected');
+        $('.sizeMedium').css({
+          backgroundColor: 'transparent'
+        })
+        $('.sizeLarge').removeClass('selected');
+        $('.sizeLarge').css({
+          backgroundColor: 'transparent'
+        });
+      }
+      else if($(evt.target).hasClass('sizeMedium')){
+        console.log('med');
+        var elSize = 'medium';
+        var elem = $(evt.target);
+
+        if(vm.currentDrink.customizations.size === 'small'){
+          vm.currentDrink.customizations.size = 'medium';
+          vm.currentDrink.price += vm.currentDrink.itemId.customFields.size.sizes.medium;
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customizations.size === 'large'){
+          vm.currentDrink.customizations.size = 'medium';
+          vm.currentDrink.price -= (vm.currentDrink.itemId.customFields.size.sizes.large - vm.currentDrink.itemId.customFields.size.sizes.medium)
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        $('.sizeSmall').removeClass('selected');
+        $('.sizeSmall').css({
+          backgroundColor: 'transparent'
+        })
+        $('.sizeLarge').removeClass('selected');
+        $('.sizeLarge').css({
+          backgroundColor: 'transparent'
+        });
+      }
+      else if($(evt.target).parent().hasClass('sizeMedium')){
+        console.log('med');
+        var elSize = 'medium';
+        var elem = $(evt.target).parent();
+
+        if(vm.currentDrink.customizations.size === 'small'){
+          vm.currentDrink.customizations.size = 'medium';
+          vm.currentDrink.price += vm.currentDrink.itemId.customFields.size.sizes.medium;
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customizations.size === 'large'){
+          vm.currentDrink.customizations.size = 'medium';
+          vm.currentDrink.price -= (vm.currentDrink.itemId.customFields.size.sizes.large - vm.currentDrink.itemId.customFields.size.sizes.medium)
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        $('.sizeSmall').removeClass('selected');
+        $('.sizeSmall').css({
+          backgroundColor: 'transparent'
+        })
+        $('.sizeLarge').removeClass('selected');
+        $('.sizeLarge').css({
+          backgroundColor: 'transparent'
+        });
+      }
+      else if($(evt.target).hasClass('sizeLarge')){
+        console.log('lg');
+        var elSize = 'large';
+        var elem = $(evt.target);
+
+        if(vm.currentDrink.customizations.size === 'small'){
+          vm.currentDrink.customizations.size = 'large';
+          vm.currentDrink.price += vm.currentDrink.itemId.customFields.size.sizes.large;
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customizations.size === 'medium'){
+          vm.currentDrink.customizations.size = 'large';
+          vm.currentDrink.price -= (vm.currentDrink.itemId.customFields.size.sizes.large - vm.currentDrink.itemId.customFields.size.sizes.medium)
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        $('.sizeSmall').removeClass('selected');
+        $('.sizeSmall').css({
+          backgroundColor: 'transparent'
+        });
+        $('.sizeMedium').removeClass('selected');
+        $('.sizeMedium').css({
+          backgroundColor: 'transparent'
+        });
+      }
+      else if($(evt.target).parent().hasClass('sizeLarge')){
+        console.log('lg');
+        var elSize = 'large';
+        var elem = $(evt.target).parent();
+
+        if(vm.currentDrink.customizations.size === 'small'){
+          vm.currentDrink.customizations.size = 'large';
+          vm.currentDrink.price += vm.currentDrink.itemId.customFields.size.sizes.large;
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customizations.size === 'medium'){
+          vm.currentDrink.customizations.size = 'large';
+          vm.currentDrink.price += (vm.currentDrink.itemId.customFields.size.sizes.large - vm.currentDrink.itemId.customFields.size.sizes.medium)
+          $('.activeCartPrice').text('');
+          $('.activeCartPrice').text("$"+vm.currentDrink.price);
         }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
