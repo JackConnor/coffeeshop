@@ -124,8 +124,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           ,width: '90%'
           ,marginTop: '10px'
           ,marginLeft: '5%'
-          // ,borderWidth: 5
-          // ,borderBottomWidth: 5
         }, 300);
         clonedEl.find('.drinkPhotoHolder').animate({
           width: '75px'
@@ -380,9 +378,36 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.subtractShot = subtractShot;
 
     function choseSize(evt){
+      console.log('currentsize');
+      console.log(vm.currentDrink.customFields.size.sizes.value);
+      console.log(vm.currentDrink);
       if($(evt.target).hasClass('sizeSmall')){
+        console.log('small');
         var elSize = 'small';
         var elem = $(evt.target);
+
+        if(vm.currentDrink.customFields.size.sizes.value === null){
+          vm.currentDrink.customFields.size.sizes.value = 'small'
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
+          vm.currentDrink.customFields.size.sizes.value = 'small';
+          console.log(vm.currentDrink.price);
+          console.log(vm.currentDrink.customFields.size.sizes.medium);
+          vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.medium;
+          console.log(vm.currentDrink.price);
+          console.log(vm.currentDrink.customFields.size.sizes.medium);
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'large'){
+          vm.currentDrink.customFields.size.sizes.value = 'small';
+          vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.large;
+          console.log(vm.currentDrink.price);
+          console.log(vm.currentDrink.customFields.size.sizes.medium);
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        //////animate
         $('.sizeMedium').removeClass('selected');
         $('.sizeMedium').css({
           backgroundColor: 'transparent'
@@ -392,9 +417,30 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           backgroundColor: 'transparent'
         });
       }
-      else if($(evt.target).parent().hasClass('sizeSmall')){
+      if($(evt.target).parent().hasClass('sizeSmall')){
+        console.log('small');
         var elSize = 'small';
         var elem = $(evt.target).parent();
+
+        if(vm.currentDrink.customFields.size.sizes.value === null){
+          vm.currentDrink.customFields.size.sizes.value = 'small'
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
+          vm.currentDrink.customFields.size.sizes.value = 'small';
+          console.log(vm.currentDrink.price);
+          vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.medium;
+          console.log(vm.currentDrink.price);
+          console.log(vm.currentDrink.customFields.size.sizes.medium);
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'large'){
+          vm.currentDrink.customFields.size.sizes.value = 'small';
+          vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.large;
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        //////animate
         $('.sizeMedium').removeClass('selected');
         $('.sizeMedium').css({
           backgroundColor: 'transparent'
@@ -405,8 +451,27 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         });
       }
       else if($(evt.target).hasClass('sizeMedium')){
+        console.log('med');
         var elSize = 'medium';
         var elem = $(evt.target);
+        if(vm.currentDrink.customFields.size.sizes.value === null){
+          vm.currentDrink.customFields.size.sizes.value = 'medium';
+          vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.medium;
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'small'){
+          vm.currentDrink.customFields.size.sizes.value = 'medium';
+          vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.medium;
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'large'){
+          vm.currentDrink.customFields.size.sizes.value = 'medium';
+          vm.currentDrink.price -= (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
@@ -417,12 +482,31 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         });
       }
       else if($(evt.target).parent().hasClass('sizeMedium')){
+        console.log('med');
         var elSize = 'medium';
         var elem = $(evt.target).parent();
+        if(vm.currentDrink.customFields.size.sizes.value === null){
+          vm.currentDrink.customFields.size.sizes.value = 'medium';
+          vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.medium;
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'small'){
+          vm.currentDrink.customFields.size.sizes.value = 'medium';
+          vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.medium;
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'large'){
+          vm.currentDrink.customFields.size.sizes.value = 'medium';
+          vm.currentDrink.price -= (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
-        });
+        })
         $('.sizeLarge').removeClass('selected');
         $('.sizeLarge').css({
           backgroundColor: 'transparent'
@@ -431,6 +515,24 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       else if($(evt.target).hasClass('sizeLarge')){
         var elSize = 'large';
         var elem = $(evt.target);
+        if(vm.currentDrink.customFields.size.sizes.value === null){
+          vm.currentDrink.customFields.size.sizes.value = 'large';
+          vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'small'){
+          vm.currentDrink.customFields.size.sizes.value = 'large';
+          vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
+          vm.currentDrink.customFields.size.sizes.value = 'large';
+          vm.currentDrink.price -= (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
@@ -443,6 +545,24 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       else if($(evt.target).parent().hasClass('sizeLarge')){
         var elSize = 'large';
         var elem = $(evt.target).parent();
+        if(vm.currentDrink.customFields.size.sizes.value === null){
+          vm.currentDrink.customFields.size.sizes.value = 'large';
+          vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'small'){
+          vm.currentDrink.customFields.size.sizes.value = 'large';
+          vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
+        else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
+          vm.currentDrink.customFields.size.sizes.value = 'large';
+          vm.currentDrink.price += (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
+          $('.activePrice').text('');
+          $('.activePrice').text("$"+vm.currentDrink.price);
+        }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
@@ -494,6 +614,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           elem.addClass('selected')
         }
       }
+      console.log(vm.currentDrink);
     }
     // vm.choseSize = choseSize;
 
@@ -505,6 +626,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       var drinkDetails = {customizations: {}}
       var sizeEl = $('.selected');
       var drinkPrice = vm.currentDrink.price;
+      console.log(vm.currentDrink);
       if(sizeEl.hasClass('sizeSmall')){
         drinkDetails.customizations.size = 'small';
       }
@@ -525,11 +647,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         drinkDetails.price = drinkPrice;
         drinkDetails.evt = {currentTarget: ''}
         drinkDetails.evt.currentTarget = evt.target.id;
+        vm.orderTotalPrice += vm.currentDrink.price;
         ///////put all settings back to zero
         vm.currentOrder.push(drinkDetails);
+        vm.currentDrink = {};
         vm.totalShots   = 0;
-        vm.orderTotalPrice += vm.currentDrink.price;
         vm.moreOptions = false;
+        console.log(vm.currentOrder);
         closeModal();
       }
       else {
