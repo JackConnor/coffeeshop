@@ -198,23 +198,23 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       var sizeLength = sizeArr.length;
       //////
       if(vm.cartModal === true){
-        if(itemObj.size === 'small'){
+        if(itemObj.customizations.size === 'small'){
           $(sizeArr)[0].css({
             backgroundColor: '#dddddd'
           });
         }
-        else if(itemObj.size === 'medium') {
+        else if(itemObj.customizations.size === 'medium') {
           $(sizeArr[1]).css({
             backgroundColor: '#dddddd'
           });
         }
-        else if(itemObj.size === 'large') {
+        else if(itemObj.customizations.size === 'large') {
           $(sizeArr[2]).css({
             backgroundColor: '#dddddd'
           });
         }
         // vm.totalShots = itemObj.shots;
-        optionClone.find('.flavourDropdown').val(itemObj.flavours);
+        optionClone.find('.flavourDropdown').val(itemObj.customizations.flavours);
       }
 
 
@@ -708,7 +708,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                   vm.message = 'Processing your payment...';
                   $http({
                     method: 'POST',
-                    url: 'http://192.168.0.3:3000/payments/process',
+                    url: 'http://192.168.0.8:3000/payments/process',
                     data: {
                       amount: vm.orderTotalPrice
                       ,payment_method_nonce: nonce
@@ -730,7 +730,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                       console.log(vm.currentOrder);
                       $http({
                         method: "POST"
-                        ,url: 'http://192.168.0.3:3000/orders'
+                        ,url: 'http://192.168.0.8:3000/orders'
                         ,data: orderObj
                       })
                       .then(function(data){
@@ -738,7 +738,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                         var orderId = data.data.data._id;
                         //////////we store up to fie localstorage orders on a device, seperated by  an -&-
                         storeLocal(orderId);
-                        vm.socket = io.connect('http://192.168.0.3:3000/');
+                        vm.socket = io.connect('http://192.168.0.8:3000/');
                         vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
                       })
                       //

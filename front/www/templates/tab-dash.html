@@ -110,7 +110,8 @@
                 <p class='sizeLabel'>choose a size</p>
               </div>
               <div class="moreOptionsContainer col-xs-12">
-                <div class="optionCell">
+                <!-- {{menuitem.customFields}} -->
+                <div class="optionCell" ng-if='menuitem.customFields.espressoShots.on'>
                   <div class="optionEspressoShot">
                     <div class="col-xs-6 optionText">
                       Espresso Shot
