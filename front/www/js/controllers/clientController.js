@@ -20,6 +20,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.currentDrink    = {}
     vm.currentOrder    = [];
     vm.orderTotalPrice = 0;
+    vm.ogPrice;
     vm.openCart;
     vm.data;////////this is all menuItems
     vm.totalShots;
@@ -63,6 +64,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     /////opens the options modal when user selects an item
     function openOptionsModal(currentDrink, index, evt){
+      vm.ogPrice = currentDrink.price;
+      vm.currentOpenModal = $(evt.currentTarget)[0].classList[2];
+      console.log(vm.currentOpenModal);
       var shotPrice = currentDrink.customFields.espressoShots.addedPrice;
       vm.currentDrink = currentDrink
       var index = index;
@@ -623,6 +627,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     }
 
     function submitDrinkOptions(evt) {
+      console.log(vm.ogPrice);
       var drinkDetails = {customizations: {}}
       var sizeEl = $('.selected');
       var drinkPrice = vm.currentDrink.price;
@@ -654,6 +659,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.totalShots   = 0;
         vm.moreOptions = false;
         console.log(vm.currentOrder);
+        console.log(vm.ogPrice);
+        console.log(vm.currentOpenModal);
+        $("."+vm.currentOpenModal).find('.drinkIn-price').text('$'+vm.ogPrice);
+        $('.activePrice').removeClass('activePrice');
         closeModal();
       }
       else {
@@ -698,8 +707,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       }, 500);
       $timeout(function(){
         vm.cartModal = true;
-        // addLayer(28, $('.drinkRepeatContainer'));
-        // addBlackLayer(29, $('.navContainer'), .1);
       }, 500);
     }
     vm.openCart = function(){
