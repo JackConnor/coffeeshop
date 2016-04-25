@@ -117,7 +117,7 @@
                       Espresso Shot
                     </div>
                     <div class="col-xs-6 espressoMath optionInput">
-                      <span class='fa fa-minus espressoMath-less' ng-click='client.subtractShot()'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more' ng-click='client.addShot()'></span>
+                      <span class='fa fa-minus espressoMath-less'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more'></span>
                     </div>
                   </div>
                 </div>
@@ -154,7 +154,7 @@
             </div>
             <div class="drinkIn">
               <div class="drinkIn-name">{{menuitem.name}}</div>
-              <div class="drinkIn-price">${{menuitem.price}}</div>
+              <div class="drinkIn-price">{{menuitem.price | currency}}</div>
             </div>
           </div>
         </div>
@@ -182,13 +182,13 @@
                 </div>
               </div>
               <div class="moreOptionsContainer col-xs-12">
-                <div class="optionCell">
+                <div class="optionCell" ng-if='menuitem.customFields.espressoShots.on'>
                   <div class="optionEspressoShot">
                     <div class="col-xs-6 optionText">
                       Espresso Shot
                     </div>
                     <div class="col-xs-6 espressoMath optionInput">
-                      <span class='fa fa-minus espressoMath-less' ng-click='client.subtractShot()'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more' ng-click='client.addShot()'></span>
+                      <span class='fa fa-minus espressoMath-less' ng-click='client.subtractShot()'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more'></span>
                     </div>
                   </div>
                 </div>

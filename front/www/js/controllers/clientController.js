@@ -63,10 +63,11 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     /////opens the options modal when user selects an item
     function openOptionsModal(currentDrink, index, evt){
-      console.log(currentDrink);
+      var shotPrice = currentDrink.customFields.espressoShots.addedPrice;
       vm.currentDrink = currentDrink
       var index = index;
       var clonedEl = $(evt.currentTarget).clone();
+      clonedEl.find('.drinkIn-price').addClass('activePrice');
       clonedEl.find('.sizeCell').on('click', choseSize);
       clonedEl.find('.openMore').on('click', function(){
         openMoreOptions(clonedEl);
@@ -81,8 +82,12 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         var distance = $('.drinkListContainer').offset().top;
       }
       clonedEl.find('.closeOptions').on('click', closeModal);
-      clonedEl.find('.espressoMath-less').on('click', subtractShot);
-      clonedEl.find('.espressoMath-more').on('click', addShot);
+      clonedEl.find('.espressoMath-less').on('click', function(){
+        subtractShot(shotPrice);
+      });
+      clonedEl.find('.espressoMath-more').on('click', function(){
+        addShot(shotPrice);
+      });
       clonedEl.find('.submitItem').on('click', submitDrinkOptions);
       clonedEl.addClass('optionOpen');
       clonedEl.removeClass('optionClosed');
@@ -351,16 +356,24 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     }
     // vm.openMoreOptions = openMoreOptions;
 
-    function addShot(){
+    function addShot(shotPrice){
       vm.totalShots++;
-      console.log(vm.currentOrder);
-      // vm.currentOrder.shots = vm.totalShots;
+      vm.currentDrink.price += shotPrice;
+      $('.activePrice').text('');
+      $('.activePrice').text("$"+vm.currentDrink.price);
+      vm.currentOrder.shots = vm.totalShots;
       $('.espressoMath-number').text(vm.totalShots);
     }
     vm.addShot = addShot;
 
-    function subtractShot(){
-      vm.totalShots--;
+    function subtractShot(shotPrice){
+      if(vm.totalShots > 0){
+        vm.totalShots--;
+        vm.currentDrink.price -= shotPrice;
+        $('.activePrice').text('');
+        $('.activePrice').text("$"+vm.currentDrink.price);
+        vm.currentOrder.shots = vm.totalShots;
+      }
       // vm.currentOrder.shotss = vm.totalShots;
       $('.espressoMath-number').text(vm.totalShots);
     }
