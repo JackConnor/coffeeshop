@@ -182,6 +182,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.openOptionsModal = openOptionsModal;
 
     function openOptionsFromCart(evt, itemObj){
+      console.log(itemObj);
+      vm.currentItemShots = itemObj.customizations.shots;
+      console.log(vm.currentItemShots);
       var offTopEl = $(evt.currentTarget).closest('.shoppingCartCell').offset().top;
       var offTopCont = $('.shoppingCartList').offset().top;
       var distance = offTopEl - offTopCont;
@@ -210,7 +213,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
             backgroundColor: '#dddddd'
           });
         }
-        vm.totalShots = itemObj.shots;
+        // vm.totalShots = itemObj.shots;
         optionClone.find('.flavourDropdown').val(itemObj.flavours);
       }
 
@@ -350,12 +353,15 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     function addShot(){
       vm.totalShots++;
+      console.log(vm.currentOrder);
+      // vm.currentOrder.shots = vm.totalShots;
       $('.espressoMath-number').text(vm.totalShots);
     }
     vm.addShot = addShot;
 
     function subtractShot(){
       vm.totalShots--;
+      // vm.currentOrder.shotss = vm.totalShots;
       $('.espressoMath-number').text(vm.totalShots);
     }
     vm.subtractShot = subtractShot;
@@ -713,6 +719,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                       vm.message = 'Payment authorized, thanks.';
                       vm.isError = false;
                       vm.isPaid = true;
+                      vm.currentOrder.shots = vm.totalShots
                       var orderObj = {order: {
                         items: vm.currentOrder
                         ,name: $('.checkoutName').val()

@@ -18,7 +18,7 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
     ///////data calls anf functions//
     allMenuitems()
     .then(function(data){
-      console.log('firing');
+      console.log(data);
       var allItems = [];
       var itemLength = data.data.data.length;
       var itemArray = data.data.data;
