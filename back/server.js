@@ -33,7 +33,7 @@ require( './socket.js' ).connect( io )
 //===========================
 var User = require( './models/userModel.js' )
 var Order = require( './models/orderModel.js')
-var Menuitem = require( './models/menuitem.js')
+var Menuitem = require( './models/menuItem.js')
 var Item = require( './models/itemModel.js' )
 
 
