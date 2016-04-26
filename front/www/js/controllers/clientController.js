@@ -330,6 +330,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           opEl.remove();
         }, 250)
       }, 420);
+      $('.cartPrice').text("$"+vm.currentDrink.price);
       vm.totalShots = 0;
       vm.currentDrink = null;
     }
