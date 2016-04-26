@@ -1,13 +1,13 @@
 //DECLARING VARIABLES
 //===========================
 var express        = require( 'express' )
-var morgan           = require( 'morgan' )
-var mongoose           = require( 'mongoose' )
+var morgan         = require( 'morgan' )
+var mongoose       = require( 'mongoose' )
 var cors           = require( 'cors' )
-var app = express()
-var bodyParser           = require( 'body-parser' )
-var server = require( 'http' ).Server( app )
-var io = require( 'socket.io' )( server )
+var app            = express()
+var bodyParser     = require( 'body-parser' )
+var server         = require( 'http' ).Server( app )
+var io             = require( 'socket.io' )( server )
 
 var Dev = require( './.Dev.js' )
 var PORT = Dev.PORT
@@ -16,6 +16,7 @@ var DB   = Dev.DB
 //DB
 //===========================
 mongoose.connect( DB )
+console.log(mongoose);
 
 //MIDDLEWARE
 //===========================
@@ -28,7 +29,6 @@ app.use( morgan( 'dev' ) )
 var server = require( 'http' ).Server( app )
 var io = require( 'socket.io' )( server )
 require( './socket.js' ).connect( io )
-
 //MODELS
 //===========================
 var User = require( './models/userModel.js' )
@@ -52,9 +52,6 @@ var mainSocket
 io.on( 'connection', function( socket ) {
 	mainSocket = socket
 	socket.on( 'orders', function( data ) {
-		console.log('socket order coming soon');
-		console.log(data);
-		console.log('socket order over');
 		io.emit('orderForVendor', data);
 	} )
 } )

@@ -33,8 +33,10 @@ function create( req, res ) {
 }
 
 function index( req, res ) {
+	console.log('made it here');
 	var promise = Item.find().exec()
 	promise.then( function( data ) {
+		console.log(data);
 		res.json( {
 			error: null,
 			status: 200,
@@ -43,6 +45,7 @@ function index( req, res ) {
 		} )
 	} )
 	.catch( function( err ) {
+		console.log(err);
 		sendErr( err, res )
 	} )
 }
