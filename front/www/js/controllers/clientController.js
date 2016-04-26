@@ -191,20 +191,14 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     }
 
     function openOptionsFromCart(evt, itemObj, index){
-      console.log(index);
-      console.log(itemObj);
       vm.currentDrink = itemObj;
       var shotPrice = itemObj.itemId.customFields.espressoShots.addedPrice;
-      console.log('shots are: '+shotPrice);
       vm.currentItemShots = itemObj.customizations.shots;
-      console.log(vm.currentItemShots);
       var offTopEl = $(evt.currentTarget).closest('.shoppingCartCell').offset().top;
       var offTopCont = $('.shoppingCartList').offset().top;
       var distance = offTopEl - offTopCont;
       var targItem = $(evt.currentTarget).closest('.shoppingCartCell').clone();
-      console.log(targItem);
       targItem.find('.cartActions').remove();
-      // targItem.find('.cartPrice').remove();
       /////clone the options things so we can add it
       var optionClone = $($(".optionsPart")[0]).clone();
       targItem.find('.cartPrice').addClass('activeCartPrice');
@@ -230,6 +224,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         }
         // vm.totalShots = itemObj.shots;
         optionClone.find('.flavourDropdown').val(itemObj.customizations.flavours);
+        optionClone.find('.flavourDropdown').addClass('flavourCart');
       }
       optionClone.find('.modalActionSubmit').remove();
       optionClone.find('.espressoMath-number').text(itemObj.customizations.shots)
@@ -309,7 +304,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       var currentItem = vm.currentOrder[targetIndex];
       console.log(vm.totalShots);
       currentItem.customizations.shots = vm.totalShots;
-      currentItem
+      currentItem.customizations.flavours = $('.flavourCart').val();
+      console.log($('.flavoursCart').val());
 
       //////animation stuff
       var opEl = $('.cartOptionOpen');
@@ -1140,33 +1136,98 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.checkoutOpen = false;
         ////removes the cart and adds it back
         $('#checkout').remove();
-        $('.checkoutButton').text('Checkout');
-        setTimeout(function(){
-          $('.shoppingCartCell').animate({
-            opacity: 1
-          }, 250);
-        }, 200);
-        $('.shoppingCartList').animate({
-          height: '100%'
-        });
+        // $('.checkoutName').animate({
+        //   opacity: 0
+        // }, 250);
+        // $('.addNameOrder').animate({
+        //   opacity: 0
+        // }, 250);
+        // $('.addNameButton').animate({
+        //   opacity: 0
+        // }, 250);
+        // $('.checkoutButton').text('Checkout');
+        // setTimeout(function(){
+        //   $('.checkoutName').css({
+        //     marginLeft: '200%'
+        //   });
+        //   $('.addNameToOrder').css({
+        //     marginLeft: '200%'
+        //   });
+        //   $('.addNameButton').css({
+        //     marginLeft: '200%'
+        //   });
+        //   $('.checkoutSubmit').animate({
+        //     height: '0px'
+        //     ,opacity: 0
+        //   }, 550);
+        //   $('.shoppingCartList').animate({
+        //     height: '100%'
+        //   }, 250);
+        //   $('.shoppingCartCell').animate({
+        //     opacity: 1
+        //   }, 250);
+        // }, 200);
+        // $('.checkoutSubmit').animate({
+        //   height: '0px'
+        //   ,opacity: 0
+        // }, 150);
+        // $('.checkoutName').animate({
+        //   opacity: 0
+        // }, 250);
+        // setTimeout(function(){
+        //   $('.checkoutName').css({
+        //     marginLeft: '200%'
+        //   });
+        // }, 255);
+        // $('.cartModalHolder').animate({
+        //   height: '400px'
+        // });
+        $('.checkoutContainer').animate({
+          marginTop: '60px'
+        }, 250);
+        $('.checkoutName').animate({
+          opacity: 0
+        }, 250);
         $('.checkoutSubmit').animate({
           height: '0px'
           ,opacity: 0
         }, 150);
-        $('.checkoutName').animate({
+        $('.addNameOrder').animate({
           opacity: 0
         }, 250);
-        setTimeout(function(){
-          $('.checkoutName').css({
-            marginLeft: '200%'
-          });
-        }, 255);
+        $('.addNameButton').animate({
+          opacity: 0
+        }, 250);
         $('.cartModalHolder').animate({
           height: '400px'
         });
+        setTimeout(function(){
+          $('.shoppingCartCell').animate({
+            opacity: 1
+          }, 250);
+          $('.checkoutName').css({
+            marginLeft: '200%'
+          });
+          $('.addNameOrder').css({
+            marginLeft: '200%'
+          });
+          $('.addNameButton').css({
+            marginLeft: '200%'
+          });
+          $('.shoppingCartList').animate({
+            height: '100%'
+          }, 250);
+          $('.checkoutContainer').animate({
+            marginTop: '0px'
+          }, 0);
+        }, 250);
+        setTimeout(function(){
+
+        }, 500);
         $('.checkoutForm').prepend(
           "<div id='checkout'></div>"
         );
+        $('.checkoutButton').text('Checkout');
       }
     };
 
