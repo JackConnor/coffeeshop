@@ -333,6 +333,25 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       $('.cartPrice').text("$"+vm.currentDrink.price);
       vm.totalShots = 0;
       vm.currentDrink = null;
+      var newTotal = getPrice();
+      console.log(newTotal);
+      $('.checkoutTotal').text("$"+newTotal);
+    }
+
+    /////function to get total price
+    function getPrice(){
+      var totalPrice = 0;
+      console.log(vm.currentOrder);
+      for (var i = 0; i < vm.currentOrder.length; i++) {
+        console.log(vm.currentOrder[i]);
+        totalPrice += vm.currentOrder[i].price;
+        console.log(totalPrice);
+        vm.totalPrice = totalPrice;
+        if(i === vm.currentOrder.length - 1){
+          return totalPrice;
+        }
+      }
+
     }
 
     //function to create a translucent layer to block all background clicks
