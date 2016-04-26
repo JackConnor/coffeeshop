@@ -1203,22 +1203,22 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     };
 
     function storeLocal(newOrderId){
-      if(window.localStorage.hasOwnProperty('lastOrder')){
-        var stor = window.localStorage.lastOrder;
+      if(localStorage.hasOwnProperty('lastOrder')){
+        var stor = localStorage.lastOrder;
         var splitStor = stor.split('-&-').splice(0, stor.split('-&-').length-1);
         if(splitStor.length < 5){
-          window.localStorage.lastOrder+=newOrderId+"-&-";
+          localStorage.lastOrder+=newOrderId+"-&-";
         }
         else {
           splitStor = splitStor.reverse();
           splitStor = splitStor.slice(0, 4);
           splitStor = splitStor.reverse();
           splitStor.push(newOrderId+"-&-");
-          window.localStorage.lastOrder = splitStor.join('-&-');
+          localStorage.lastOrder = splitStor.join('-&-');
         }
       }
       else {
-        window.localStorage.lastOrder = newOrderId+"-&-";
+        localStorage.lastOrder = newOrderId+"-&-";
       }
 
     }

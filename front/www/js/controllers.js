@@ -77,7 +77,7 @@ $scope.addNewItem =function(){
 
         name: vm.data.product,
         price: vm.data.price,
-        token: window.localStorage.token
+        token: localStorage.token
 
   //                       name : { type: String, unique: false },
   // type : { type: String },
@@ -93,11 +93,11 @@ $scope.addNewItem =function(){
 }
 
 function getOrders(){
-  console.log( 'TOKEN', window.localStorage.token )
+  console.log( 'TOKEN', localStorage.token )
   $http({
     method: "get",
     url: "52.29.40.7/orders",
-    headers: {'x-access-token': window.localStorage.token}
+    headers: {'x-access-token': localStorage.token}
 
 
             }).then(function(response){
@@ -421,10 +421,10 @@ getOrders()
             }).then(function(response){
                 console.log(response)
                 if (response.data.vendor === true ){
-                    window.localStorage.admin = true
+                    localStorage.admin = true
                     $location.path('/vendor')
                 }
-                window.localStorage.token = response.data.token
+                localStorage.token = response.data.token
                 $location.path('/tab/dash')
             })
         }
@@ -438,7 +438,7 @@ getOrders()
     vm.message = 'Please use the form below to pay:';
 
     console.log("sjdlfjlasdjfalsdf-=========================")
-    var token = window.localStorage.token;
+    var token = localStorage.token;
     var itemIds = [];
     var totalPrice = 0;
     console.log($rootScope.currentOrder);

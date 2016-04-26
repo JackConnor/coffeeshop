@@ -25,10 +25,10 @@ angular.module('loginController', [])
             }).then(function(response){
                 console.log(response)
                 if (response.data.vendor === true ){
-                    window.localStorage.admin = true
+                    localStorage.admin = true
                     $location.path('/vendor')
                 }
-                window.localStorage.token = response.data.token
+                localStorage.token = response.data.token
                 $location.path('/tab/dash')
             })
         }
