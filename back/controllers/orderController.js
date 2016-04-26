@@ -51,12 +51,10 @@ function create( req, res ) {
 }
 
 function single( req, res ) {
-	console.log(req.body);
   Order.findOne({'_id': req.body.orderId})
 	.populate('items')
 	.exec(function( err, data ) {
 		if(err) console.log(err);
-		console.log(data);
     res.json( {
       error: null,
       status: 200,
@@ -70,13 +68,10 @@ function single( req, res ) {
 }
 
 function index( req, res ) {
-  console.log('yooooooosippp');
   Order.find({})
   // .populate('Menuitems')
   .exec(function(err, data){
     if(err){console.log(err)}
-    console.log('oh data');
-    console.log(data);
     res.json(data);
   });
 }

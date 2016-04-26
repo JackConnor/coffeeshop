@@ -20,9 +20,9 @@ function sendErr( err, res ) {
 
 function index(req, res){
   Menuitem.find({})
-  .populate('itemId')
   .exec(function(err, allMenuItems){
     if(err) {throw err}
+    console.log(allMenuItems);
     res.json({
       error: null,
       status: 200,
