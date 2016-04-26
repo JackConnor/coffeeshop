@@ -35,10 +35,12 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     //////////////////////////////////////////////
     ////////All Data Function (i/o)///////////////
     //////////////////////////////////////////////
-
+    console.log('wat');
     ///////function returns all menu items for restaurant
     menuItems()
     .then(function(items){
+      console.log('yoooooooo');
+      console.log(items);
       vm.data = items.data.data;/////all menu items
       var dataLength = vm.data.length;
       vm.hotDrinks  = [];
@@ -51,7 +53,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.coldDrinks.push(vm.data[i]);
         }
       }
-    });
+    })
+    .catch( function( err ) {
+      console.log( 'Error', err )
+    } );
 
     //////////////////////////////////////////////
     ////////End Data Function (i/o)///////////////
@@ -298,15 +303,11 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     // vm.closeModal = closeModal;
 
     function closeCartOptions(itemObj){
-      console.log('closing');
       ////data stuff
       var targetIndex = itemObj;
       var currentItem = vm.currentOrder[targetIndex];
-      console.log(vm.totalShots);
       currentItem.customizations.shots = vm.totalShots;
       currentItem.customizations.flavours = $('.flavourCart').val();
-      console.log($('.flavoursCart').val());
-
       //////animation stuff
       var opEl = $('.cartOptionOpen');
       vm.moreOptions = false;
@@ -334,18 +335,14 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       vm.totalShots = 0;
       vm.currentDrink = null;
       var newTotal = getPrice();
-      console.log(newTotal);
       $('.checkoutTotal').text("$"+newTotal);
     }
 
     /////function to get total price
     function getPrice(){
       var totalPrice = 0;
-      console.log(vm.currentOrder);
       for (var i = 0; i < vm.currentOrder.length; i++) {
-        console.log(vm.currentOrder[i]);
         totalPrice += vm.currentOrder[i].price;
-        console.log(totalPrice);
         vm.totalPrice = totalPrice;
         if(i === vm.currentOrder.length - 1){
           return totalPrice;
@@ -1092,7 +1089,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                   vm.message = 'Processing your payment...';
                   $http({
                     method: 'POST',
-                    url: 'http://192.168.0.8:3000/payments/process',
+                    url: 'http://192.168.0.7:3000/payments/process',
                     data: {
                       amount: vm.orderTotalPrice
                       ,payment_method_nonce: nonce
@@ -1114,7 +1111,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                       console.log(vm.currentOrder);
                       $http({
                         method: "POST"
-                        ,url: 'http://192.168.0.8:3000/orders'
+                        ,url: 'http://192.168.0.7:3000/orders'
                         ,data: orderObj
                       })
                       .then(function(data){
@@ -1122,7 +1119,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                         var orderId = data.data.data._id;
                         //////////we store up to fie localstorage orders on a device, seperated by  an -&-
                         storeLocal(orderId);
-                        vm.socket = io.connect('http://192.168.0.8:3000/');
+                        vm.socket = io.connect('http://192.168.0.7:3000/');
                         vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
                       })
                       //
@@ -1156,52 +1153,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.checkoutOpen = false;
         ////removes the cart and adds it back
         $('#checkout').remove();
-        // $('.checkoutName').animate({
-        //   opacity: 0
-        // }, 250);
-        // $('.addNameOrder').animate({
-        //   opacity: 0
-        // }, 250);
-        // $('.addNameButton').animate({
-        //   opacity: 0
-        // }, 250);
-        // $('.checkoutButton').text('Checkout');
-        // setTimeout(function(){
-        //   $('.checkoutName').css({
-        //     marginLeft: '200%'
-        //   });
-        //   $('.addNameToOrder').css({
-        //     marginLeft: '200%'
-        //   });
-        //   $('.addNameButton').css({
-        //     marginLeft: '200%'
-        //   });
-        //   $('.checkoutSubmit').animate({
-        //     height: '0px'
-        //     ,opacity: 0
-        //   }, 550);
-        //   $('.shoppingCartList').animate({
-        //     height: '100%'
-        //   }, 250);
-        //   $('.shoppingCartCell').animate({
-        //     opacity: 1
-        //   }, 250);
-        // }, 200);
-        // $('.checkoutSubmit').animate({
-        //   height: '0px'
-        //   ,opacity: 0
-        // }, 150);
-        // $('.checkoutName').animate({
-        //   opacity: 0
-        // }, 250);
-        // setTimeout(function(){
-        //   $('.checkoutName').css({
-        //     marginLeft: '200%'
-        //   });
-        // }, 255);
-        // $('.cartModalHolder').animate({
-        //   height: '400px'
-        // });
         $('.checkoutContainer').animate({
           marginTop: '60px'
         }, 250);

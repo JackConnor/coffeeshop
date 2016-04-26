@@ -9,14 +9,14 @@ angular.module('braintreeProcessFactory', [])
       console.log(price);
       console.log(nonce);
       return price;
-      // return $http({
-      //   method: 'POST',
-      //   url: 'http://192.168.0.8:3000/payments/process',
-      //   data: {
-      //     amount: price,
-      //     payment_method_nonce: nonce
-      //   }
-      // })
+      return $http({
+        method: 'POST',
+        url: 'http://192.168.0.7:3000/payments/process',
+        data: {
+          amount: price,
+          payment_method_nonce: nonce
+        }
+      })
     }
     return processPayment;
 

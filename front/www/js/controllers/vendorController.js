@@ -31,7 +31,7 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
     })
 
     vm.orderList = ['hi'];
-    vm.socket = io.connect('http://192.168.0.8:3000/');
+    vm.socket = io.connect('http://192.168.0.7:3000/');
     /////socket function which receives socket orders
     vm.socket.on('orderForVendor', function(data){
       // vm.allItems[vm.allItems.length] = 'test'

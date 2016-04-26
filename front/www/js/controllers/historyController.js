@@ -20,7 +20,7 @@ angular.module('historyController', ['getLastOrderFactory'])
       }
     }
 
-    function getLast(){ 
+    function getLast(){
       getHistory();
       var lastOrderLength = vm.lastOrder.length;
       if(lastOrderLength > 0){
@@ -28,7 +28,7 @@ angular.module('historyController', ['getLastOrderFactory'])
           if(vm.lastOrder[i] !== ''){
             $http({
               method: "GET"
-              ,url: "http://192.168.0.8:3000/orders/one/"+vm.lastOrder[i]
+              ,url: "http://192.168.0.7:3000/orders/one/"+vm.lastOrder[i]
             })
             .then(function(lastOrderObj){
               console.log(lastOrderObj);
@@ -36,7 +36,7 @@ angular.module('historyController', ['getLastOrderFactory'])
               // for (var j = 0; j < lastOrderObj.data.data.menuitems.length; j++) {
               //   $http({
               //     method: "GET"
-              //     ,url: 'http://192.168.0.8:3000/menuitems/full/'+lastOrderObj.data.data.menuitems[j]._id
+              //     ,url: '52.29.40.7/menuitems/full/'+lastOrderObj.data.data.menuitems[j]._id
               //   })
               //   .then(function(menuItem){
               //     console.log(menuItem);

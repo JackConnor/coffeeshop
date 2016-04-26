@@ -8,7 +8,7 @@ angular.module('braintreeTokenFactory', [])
     function getBrToken() {
        return $http({
         method: 'POST'
-        ,url: 'http://192.168.0.8:3000/payments/token'
+        ,url: 'http://192.168.0.7:3000/payments/token'
         ,data: {}
       })
     }
