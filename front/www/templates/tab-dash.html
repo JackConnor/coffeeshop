@@ -8,9 +8,6 @@
          <div class="listContainer">
            <div class="shoppingCartList" ng-if='client.cartModal'>
              <div ng-repeat='item in client.currentOrder' class="shoppingCartCell" >
-               <!-- <div class="cartPhotoHolder">
-                 <img src="{{item.photo}}" alt="" />
-               </div> -->
                <div class="cartContent  shopping{{item.index}}">
                  <img class="itemCartImageHolder" src="{{item.itemId.photoLink}}" alt="" />
                  <div class="checkoutDrinkInfo-name">
@@ -46,8 +43,6 @@
              <div class="addNameButton" ng-click='client.submitName()'>
                Add Name
              </div>
-
-
              <form class="checkoutForm">
                 <div id="checkout"></div>
                 <input type="submit" value="Submit" class='checkoutSubmit'/>
@@ -119,7 +114,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="optionCell">
+                <div class="optionCell" ng-if='menuitem.customFields.flavourShot.on'>
                   <div class="optionFlavor">
                     <div class="col-xs-6 optionText">
                       Add a Flavour
@@ -195,7 +190,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="optionCell">
+                <div class="optionCell" ng-if='menuitem.customFields.espressoShots.on'>
                   <div class="optionFlavor">
                     <div class="col-xs-6 optionText">
                       Add a Flavour

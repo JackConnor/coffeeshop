@@ -208,6 +208,15 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     function openOptionsFromCart(evt, itemObj, index){
       vm.currentDrink = itemObj;
+      console.log(vm.currentDrink);
+      console.log(itemObj.itemId.customFields.flavourShot.on);
+      if(itemObj.itemId.customFields.espressoShots.on === false){
+        $('.optionEspressoShot').parent().remove();
+      }
+      if(itemObj.itemId.customFields.flavourShot.on == false){
+        console.log('falsljfslfa');
+        $('.optionFlavor').parent().remove();
+      }
       var shotPrice = itemObj.itemId.customFields.espressoShots.addedPrice;
       vm.currentItemShots = itemObj.customizations.shots;
       var offTopEl = $(evt.currentTarget).closest('.shoppingCartCell').offset().top;
@@ -1119,6 +1128,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     //////functions to open/close shopping carts/////
     function openCart(evt){
+      console.log(vm.currentOrder);
       $('.drinkRepeatContainer').animate({
         opacity: 0
       }, 150);
@@ -1137,7 +1147,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         ,height: 400+"px"
         ,marginRight: 5+"%"
       }, 250);
-      // }, 150);
       setTimeout(function(){
         $('.cartModalHolder').prepend(
           "<div class='cartTitle'>Your Order</div>"
