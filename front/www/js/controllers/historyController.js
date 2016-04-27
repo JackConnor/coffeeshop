@@ -28,7 +28,7 @@ angular.module('historyController', ['getLastOrderFactory'])
           if(vm.lastOrder[i] !== ''){
             $http({
               method: "GET"
-              ,url: "http://52.39.40.7/orders/one/"+vm.lastOrder[i]
+              ,url: "http://192.168.0.9:3000/orders/one/"+vm.lastOrder[i]
             })
             .then(function(lastOrderObj){
               vm.lastOrderHistory.push(lastOrderObj.data.data);

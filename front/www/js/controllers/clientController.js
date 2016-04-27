@@ -1,10 +1,10 @@
-angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory', 'braintreeProcessFactory'])
+angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory', 'braintreeProcessFactory', 'singleOrderFactory'])
 
   .controller('clientCtrl', clientCtrl);
 
-  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken', 'braintreeProcess', '$location', '$ionicScrollDelegate'];
+  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken', 'braintreeProcess', '$location', '$ionicScrollDelegate', 'singleOrder'];
 
-  function clientCtrl($http, $timeout, menuItems, $rootScope, braintreeToken, braintreeProcess, $location, $ionicScrollDelegate){
+  function clientCtrl($http, $timeout, menuItems, $rootScope, braintreeToken, braintreeProcess, $location, $ionicScrollDelegate, singleOrder){
     //////////////////////////////////////////////
     ////////All Global Variables//////////////////
     //////////////////////////////////////////////
@@ -55,6 +55,19 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     .catch( function( err ) {
       console.log( 'Error', err )
     } );
+
+    ////function to get the data from last order
+    function getLastOrder(){
+      var lastOrderStr = window.localStorage.lastOrder;
+      var lastOrderArr = lastOrderStr.split('-&-');
+      var lastOrderItem = lastOrderArr[lastOrderArr.length-2];
+      singleOrder(lastOrderItem)
+      .then(function(lastOrderDetails){
+        vm.lastOrder = lastOrderDetails.data.data;
+        console.log(vm.lastOrder);
+      })
+    }
+    getLastOrder();
 
     //////////////////////////////////////////////
     ////////End Data Function (i/o)///////////////
@@ -393,6 +406,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       }
     }
 
+    ////////function to add last order to yoru cart
+    function addLastOrderCart(){
+      console.log(vm.currentOrder);
+      console.log(vm.lastOrder.menuitems[0]);
+      var newCartItem = {}
+      newCartItem.customizations = vm.lastOrder.menuitems[0].customizations[0];
+      newCartItem.itemId = vm.lastOrder.menuitems[0].itemId;
+      newCartItem.price = vm.lastOrder.menuitems[0].price;
+      newCartItem.status = vm.lastOrder.menuitems[0].status;
+      console.log(newCartItem);
+      vm.currentOrder.push(newCartItem);
+    }
+    vm.addLastOrderCart = addLastOrderCart;
+
     //function to create a translucent layer to block all background clicks
     function addLayer(zIndex, jqEl){
       jqEl.prepend(
@@ -429,7 +456,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           parentEl.find('.moreOptionsContainer').animate({
             opacity: 1
           }, 500);
-          parentEl.find('.moreDrinkOps').html('Close Drink Options <span><i class="fa fa-angle-up"></i></span>');
+          parentEl.find('.moreDrinkOps').html('Close Options <span><i class="fa fa-angle-up"></i></span>');
         }, 200);
         vm.moreOptions = true;
       }
@@ -442,7 +469,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           height: '0px'
           ,opacity: 0
         }, 300);
-        parentEl.find('.moreDrinkOps').html('More Drink Options <span><i class="fa fa-angle-down"></i></span>');
+        parentEl.find('.moreDrinkOps').html('More Options <span><i class="fa fa-angle-down"></i></span>');
         vm.moreOptions = false;
         $ionicScrollDelegate.scrollTo(0, 30, true);
       }

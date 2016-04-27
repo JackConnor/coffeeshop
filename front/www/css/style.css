@@ -209,6 +209,17 @@ h1,h2,h3,h4,h5,h6 {
   z-index: 10;
 }
 
+.drinkCellLastOrder{
+  height: 100px;
+  width: 100%;
+  padding: 10px 5px;
+  border: 0px solid #D4D4D4;
+  border-bottom: 1px solid #D4D4D4;
+  display: flex;
+  background-color: white;
+  z-index: 10;
+}
+
 .drinkCell:first-child{
   /*border-width: 1px 0 1px;*/
 }
@@ -227,6 +238,14 @@ h1,h2,h3,h4,h5,h6 {
   width: 50px;
 }
 
+.drinkIn-allDetails {
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 20px;
+  font-size: 14px;
+  font-weight: 100;
+}
+
 .drinkIn-name{
   line-height: 0.85;
 	padding-left: 20px;
@@ -235,6 +254,16 @@ h1,h2,h3,h4,h5,h6 {
   font-size: 18px;
   display: inline-block;
   width: 100%;
+}
+
+.drinkIn-nameLast{
+  line-height: 0.85;
+	padding-left: 20px;
+  font-weight: bold;
+  padding-top: 5px;
+  font-size: 18px;
+  display: inline-block;
+  width: 120px;
 }
 
 .drinkIn-price{
@@ -246,6 +275,13 @@ h1,h2,h3,h4,h5,h6 {
   display: inline-block;
   width: auto;
   margin-left: 22px;
+}
+
+.drinkIn-size {
+  font-size: 18px;
+  position: absolute;
+  margin-left: 40%;
+  margin-top: -20px;
 }
 
 .drinkPhotoHolder {
@@ -289,6 +325,10 @@ h1,h2,h3,h4,h5,h6 {
   margin-right:14px;
 }
 
+.flavourDropdown {
+  width: 140px;
+}
+
 .goBackToSite {
   border: 2px solid white;
   height: 40px;
@@ -318,6 +358,10 @@ h1,h2,h3,h4,h5,h6 {
   border: 1px solid black;
   position: inline-block;
   float: left;
+}
+
+.lastFlavour {
+  margin-left: 10px;
 }
 
 .loginButton {

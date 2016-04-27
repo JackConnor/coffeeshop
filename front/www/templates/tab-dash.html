@@ -78,6 +78,92 @@
         Caff&eacute Paraggi
       </div>
       <div class="drinkListContainer">
+        <div class="categoryContainerRecommended">
+          <div class="categoryTitle">
+            Recent
+          </div>
+          <!-- //////////////// -->
+          <div class="drinkCellLastOrder optionClosed drinkCell_{{$index}}" ng-click='client.addLastOrderCart()'>
+            <div class="optionsPart">
+              <div class="sizeContainer col-xs-12">
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeSmall">
+                    <i class="">S</i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeMedium">
+                    <i class="">M</i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeLarge">
+                    <i class="">L</i>
+                  </div>
+                </div>
+                <p class='sizeLabel'>PICK A SIZE</p>
+              </div>
+              <div class="moreOptionsContainer col-xs-12">
+                <!-- {{menuitem.customFields}} -->
+                <div class="optionCell" ng-if='client.lastOrder.menuitems[0].customFields.espressoShots.on'>
+                  <div class="optionEspressoShot">
+                    <div class="col-xs-6 optionText">
+                      Espresso Shot
+                    </div>
+                    <div class="col-xs-6 espressoMath optionInput">
+                      <span class='fa fa-minus espressoMath-less'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more'></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell" ng-if='client.lastOrder.menuitems[0].customFields.flavourShot.on'>
+                  <div class="optionFlavor">
+                    <div class="col-xs-6 optionText">
+                      Add a Flavour
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="flavourDropdown" name="">
+                        <option value="almond">Almond</option>
+                        <option value="chocolate">Chocolate</option>
+                        <option value="caramel">Caramel</option>
+                        <option value="pumpkin_spice">Pumpkin Spice</option>
+                        <option value="white_chocolate">White Chocolate</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="openMore col-xs-12">
+                <span class='moreDrinkOps'>
+                  More Options <i class="icon ion-ios-arrow-down"></i>
+                </span>
+              </div>
+              <div class="modalActionContainer col-xs-12">
+                <div class="modalActionSubmit col-xs-8 col-xs-offset-2">
+                  <button class='submitItem'>ADD TO ORDER</button>
+                </div>
+              </div>
+            </div>
+            <div class="drinkPhotoHolder">
+              <img class='drinkPhoto' src="{{client.lastOrder.menuitems[0].itemId.photoLink}}" alt="" />
+            </div>
+            <div class="drinkIn">
+              <div class="drinkIn-name">{{client.lastOrder.menuitems[0].itemId.name}} - {{client.lastOrder.menuitems[0].customizations[0].size}}</div>
+              <div class="drinkIn-price">{{client.lastOrder.menuitems[0].price | currency}}</div>
+              <div class="drinkIn-allDetails">
+                <span ng-show='client.lastOrder.menuitems[0].customizations[0].shots > 0'>
+                  espresso shots: {{client.lastOrder.menuitems[0].customizations[0].shots}}
+                </span>
+                <span class='lastFlavour' ng-show='client.lastOrder.menuitems[0].customizations[0].flavours'>
+                  add'l flavor: {{client.lastOrder.menuitems[0].customizations[0].flavours}}
+                </span>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- ///// -->
+        </div>
         <div class="categoryContainerHotDrinks">
           <div class="categoryTitle">
             HOT DRINKS
@@ -121,6 +207,7 @@
                     </div>
                     <div class="col-xs-6 optionInput">
                       <select class="flavourDropdown" name="">
+                        <option disabled selected>select</option>
                         <option value="almond">Almond</option>
                         <option value="chocolate">Chocolate</option>
                         <option value="caramel">Caramel</option>
@@ -133,7 +220,7 @@
               </div>
               <div class="openMore col-xs-12">
                 <span class='moreDrinkOps'>
-                  More Drink Options <i class="icon ion-ios-arrow-down"></i>
+                  More Options <i class="icon ion-ios-arrow-down"></i>
                 </span>
               </div>
               <div class="modalActionContainer col-xs-12">
@@ -209,7 +296,7 @@
               </div>
               <div class="openMore col-xs-12">
                 <span class='moreDrinkOps'>
-                  More Drink Options <i class="icon ion-ios-arrow-down"></i>
+                  More Options <i class="icon ion-ios-arrow-down"></i>
                 </span>
               </div>
               <div class="modalActionContainer col-xs-12">
