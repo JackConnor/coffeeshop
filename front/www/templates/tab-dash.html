@@ -6,31 +6,33 @@
           <div class="xCart fa fa-times" ng-click='client.closeCart()' ng-if='client.cartModal'></div>
          <i class='fa fa-shopping-cart' ng-click='client.openCart()'></i>
          <div class="listContainer">
-           <div class="shoppingCartList" ng-if='client.cartModal'>
-             <div ng-repeat='item in client.currentOrder' class="shoppingCartCell" >
-               <div class="cartContent  shopping{{item.index}}">
-                 <img class="itemCartImageHolder" src="{{item.itemId.photoLink}}" alt="" />
-                 <div class="checkoutDrinkInfo-name">
-                   {{item.itemId.name}}
+           <ion-scroll class="shoppingCartList" ng-if='client.cartModal'>
+             <div class="cartListInner">
+               <div ng-repeat='item in client.currentOrder' class="shoppingCartCell" >
+                 <div class="cartContent  shopping{{item.index}}">
+                   <img class="itemCartImageHolder" src="{{item.itemId.photoLink}}" alt="" />
+                   <div class="checkoutDrinkInfo-name">
+                     {{item.itemId.name}}
+                   </div>
                  </div>
-               </div>
-               <div class="cartActions">
-                 <div class="cartAction-container" ng-click='client.openOptionsFromCart($event, item, $index)'>
-                   <i class="fa fa-pencil"></i>
+                 <div class="cartActions">
+                   <div class="cartAction-container" ng-click='client.openOptionsFromCart($event, item, $index)'>
+                     <i class="fa fa-pencil"></i>
+                   </div>
+                   <div class="cartAction-container removeItemIcon" ng-click='client.removeItem(item, $index)'>
+                     <i class="fa fa-times"></i>
+                   </div>
                  </div>
-                 <div class="cartAction-container removeItemIcon" ng-click='client.removeItem(item, $index)'>
-                   <i class="fa fa-times"></i>
+                 <div class="cartPrice">
+                   <span>{{item.price | currency}}</span>
                  </div>
-               </div>
-               <div class="cartPrice">
-                 <span>{{item.price | currency}}</span>
                </div>
              </div>
              <div class="emptyCart" ng-show="!client.currentOrder.length">
                <i class="fa fa-frown-o"></i>
                <div>Bummer, nothing in your cart.</div>
              </div>
-           </div>
+           </ion-scroll>
            <div class="checkoutContainer" ng-show="client.currentOrder.length && client.cartModal" >
              <div class="checkoutTotal col-xs-6">
                Total: {{client.orderTotalPrice | currency}}
@@ -78,12 +80,12 @@
         Caff&eacute Paraggi
       </div>
       <div class="drinkListContainer">
-        <div class="categoryContainerRecommended">
+        <div class="categoryContainerRecommended" ng-if='client.hasHistory'>
           <div class="categoryTitle">
             RECENTLY ORDERED
           </div>
           <!-- //////////////// -->
-          <div class="drinkCellLastOrder optionClosed drinkCell_{{$index}}" ng-click='client.addLastOrderCart()'>
+          <div class="drinkCellLastOrder optionClosed drinkCell_{{$index}}" ng-click='client.addLastOrderCart()' ng-if='client.hasHistory'>
             <div class="optionsPart">
               <div class="sizeContainer col-xs-12">
                 <div class="sizeCellContainer col-xs-4">
@@ -117,6 +119,7 @@
                 </div>
                 <div class="optionCell" ng-if='client.lastOrder.menuitems[0].customFields.flavourShot.on'>
                   <div class="optionFlavor">
+                    client.lastOrder.menuitems[0].customFields.flavourShot.on
                     <div class="col-xs-6 optionText">
                       Add a Flavour
                     </div>
@@ -192,8 +195,7 @@
                 <p class='sizeLabel'>PICK A SIZE</p>
               </div>
               <div class="moreOptionsContainer col-xs-12">
-                <!-- {{menuitem.customFields}} -->
-                <div class="optionCell" ng-if='menuitem.customFields.espressoShots.on'>
+                <div class="optionCell" ng-show='menuitem.customFields.espressoShots.on'>
                   <div class="optionEspressoShot">
                     <div class="col-xs-6 optionText">
                       Espresso Shot
@@ -203,7 +205,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="optionCell" ng-if='menuitem.customFields.flavourShot.on'>
+                <div class="optionCell" ng-show='menuitem.customFields.flavourShot.on || client.cartOptionsOpen'>
                   <div class="optionFlavor">
                     <div class="col-xs-6 optionText">
                       Add a Flavour

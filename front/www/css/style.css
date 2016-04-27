@@ -63,6 +63,10 @@ h1,h2,h3,h4,h5,h6 {
   display: inline-block;
 }
 
+.cartListInner {
+  height: auto;
+}
+
 .cartModalHolder {
   width: auto;
   height: auto;
@@ -377,7 +381,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .lastFlavour {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .loginButton {
@@ -895,6 +899,7 @@ h1,h2,h3,h4,h5,h6 {
 .shoppingCartList {
   z-index: 200;
   height: auto;
+  max-height: 270px;
   overflow: hidden;
   overflow-y: scroll;
   padding-left: 5px;
@@ -918,8 +923,7 @@ h1,h2,h3,h4,h5,h6 {
 .cartActions{
   padding-top: 6px;
   margin-left: 30px;
-  width: 100px;
-  position: absolute;
+  width: 230px;
 }
 
 .cartPrice {

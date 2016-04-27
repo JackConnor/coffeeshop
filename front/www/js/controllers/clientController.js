@@ -15,6 +15,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.optionsArray      = false;
     vm.checkoutOpen      = false;
     vm.postCartOpen      = false;
+    vm.hasHistory        = false;
     vm.signinModalClient = true;
     vm.totalShots        = 0;
     vm.currentDrink      = {}
@@ -63,12 +64,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       var lastOrderItem = lastOrderArr.slice(0, [lastOrderArr.length-2]);
       var allOrderedItems = [];
       for (var i = 0; i < lastOrderArr.length; i++) {
-        if(lastOrderArr[i] !== null){
+        if(lastOrderArr[i] !== null && lastOrderArr[i] !== ''){
           singleOrder(lastOrderArr[i])
           .then(function(lastOrderDetails){
             var arr = allOrderedItems.concat(lastOrderDetails.data.data.menuitems)
             allOrderedItems = arr;
             vm.lastOrder = arr;
+            console.log(vm.lastOrder);
           })
         }
       }
@@ -227,9 +229,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     }
 
     function openOptionsFromCart(evt, itemObj, index){
-      console.log(evt.target);
+      vm.cartOptionsOpen = true;
       vm.currentDrink = itemObj;
-      console.log(itemObj);
       if(itemObj.itemId.customFields.espressoShots.on === false){
         $('.optionEspressoShot').parent().remove();
       }
@@ -239,16 +240,14 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       var shotPrice = itemObj.itemId.customFields.espressoShots.addedPrice;
       vm.currentItemShots = itemObj.customizations.shots;
       var offTopEl = $($('.shoppingCartCell')[0]).offset().top;
-      console.log(offTopEl);
       var offTopCont = $('.shoppingCartList').offset().top;
-      console.log(offTopCont);
       var distance = (-index*60) -10
-      console.log(distance);
       var targItem = $(evt.currentTarget).closest('.shoppingCartCell').clone();
-      console.log(targItem);
       targItem.find('.cartActions').remove();
       /////clone the options things so we can add it
-      var optionClone = $($(".optionsPart")[0]).clone();
+      var optionClone = $($(".optionsPart")[1]).clone();
+      // var optionHtml = $(optionClone[0]).html();
+      // console.log(optionHtml);
       targItem.find('.cartPrice').addClass('activeCartPrice');
       targItem.find('.activeCartPrice').css({
         paddingRight: '30px'
@@ -452,6 +451,18 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       }, 500);
     }
     vm.addLastOrderCart = addLastOrderCart;
+
+    function checkHistory(){
+      console.log('kjsdhfkjsdhaflkjahskljfhsdakjlhas');
+      var locObj = window.localStorage.lastOrder;
+      console.log(locObj);
+      console.log(locObj.length);
+      if(locObj.length > 5){
+        vm.hasHistory = true;
+        console.log(vm.hasHistory);
+      }
+    }
+    checkHistory();
 
     //function to create a translucent layer to block all background clicks
     function addLayer(zIndex, jqEl){
@@ -1207,6 +1218,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     //////functions to open/close shopping carts/////
     function openCart(evt){
+      $ionicScrollDelegate.scrollTop();
+      // $ionicScrollDelegate.freezeScroll(true);
       $('.drinkRepeatContainer').animate({
         opacity: 0
       }, 150);
@@ -1255,6 +1268,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     ///////function to close the shopping cart
     function closeCart(){
       vm.moreOptions = false;
+      // $ionicScrollDelegate.freezeScroll(false);
       ////removes the cart and adds it back
       $('#checkout').remove();
       $('.checkoutForm').append(
