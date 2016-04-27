@@ -128,7 +128,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           ,marginLeft: '20px'
           ,marginTop: '10px'
         });
-        addBlackLayer(0, $("ion-content"), 0.3)
+        addBlackLayer(0, $("ion-content"), 0.3);
       }, 500);
       setTimeout(function(){
         $('.drinkListContainer').prepend(clonedEl[0]);
@@ -208,13 +208,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     function openOptionsFromCart(evt, itemObj, index){
       vm.currentDrink = itemObj;
-      console.log(vm.currentDrink);
-      console.log(itemObj.itemId.customFields.flavourShot.on);
       if(itemObj.itemId.customFields.espressoShots.on === false){
         $('.optionEspressoShot').parent().remove();
       }
       if(itemObj.itemId.customFields.flavourShot.on == false){
-        console.log('falsljfslfa');
         $('.optionFlavor').parent().remove();
       }
       var shotPrice = itemObj.itemId.customFields.espressoShots.addedPrice;
@@ -392,14 +389,19 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       jqEl.prepend(
         "<div class='blackLayer'></div>"
       );
+      var opacity = opacity;
       $('.blackLayer').css({
         zIndex: zIndex
         ,opacity: opacity
-      });
+      }, 250);
+      $('.blackLayer').animate({
+        backgroundColor: 'black'
+      }, 500);
     }
 
     function openMoreOptions(parentEl){
       if(vm.moreOptions === false){
+        $ionicScrollDelegate.scrollTo(0, 90, true);
         parentEl.animate({
           height: '425px'
         }, 300);
@@ -425,6 +427,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         }, 300);
         parentEl.find('.moreDrinkOps').text('More Drink Options');
         vm.moreOptions = false;
+        $ionicScrollDelegate.scrollTo(0, 30, true);
       }
     }
     // vm.openMoreOptions = openMoreOptions;
@@ -1137,8 +1140,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         fontSize: 60+"px"
         ,paddingTop: 0+'px'
         ,paddingRight: 5+'px'
-        ,color: 'black'
-      }, 250);
+        ,color: '#323232'
+      }, 350);
       $('.cartModalHolder').animate({
         width: 90+"%"
         ,marginLeft: 0+'%'
@@ -1146,13 +1149,17 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         ,paddingTop: 10+'px'
         ,height: 400+"px"
         ,marginRight: 5+"%"
+        ,backgroundColor: 'white'
+      }, 350);
+      setTimeout(function(){
+        addBlackLayer(0, $("ion-content"), 0.3);
       }, 250);
       setTimeout(function(){
         $('.cartModalHolder').prepend(
           "<div class='cartTitle'>Your Order</div>"
         );
         $('.cartModalHolder').animate({
-          borderWidth: 5
+          borderWidth: 2
         }, 300);
       }, 450);
       setTimeout(function(){
@@ -1192,8 +1199,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           ,marginLeft: 0+'%'
           ,marginTop: 0+'px'
           ,paddingTop: 2+'px'
-          ,height: "60px"
+          ,height: "30px"
           ,marginRight: 0+"px"
+          ,backgroundColor: 'transparent'
         }, 250);
       // }, 135);
       $('.clearLayer').remove();
