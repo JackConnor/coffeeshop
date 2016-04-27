@@ -168,28 +168,30 @@
               <div class="sizeContainer col-xs-12">
                 <div class="sizeCellContainer col-xs-4">
                   <div class="sizeCell sizeSmall">
-                    <i class="icon ion-coffee"></i>
+                    <i class="">S</i>
                   </div>
                 </div>
                 <div class="sizeCellContainer col-xs-4">
                   <div class="sizeCell sizeMedium">
-                    <i class="icon ion-coffee"></i>
+                    <i class="">M</i>
                   </div>
                 </div>
                 <div class="sizeCellContainer col-xs-4">
                   <div class="sizeCell sizeLarge">
-                    <i class="icon ion-coffee"></i>
+                    <i class="">L</i>
                   </div>
                 </div>
+                <p class='sizeLabel'>PICK A SIZE</p>
               </div>
               <div class="moreOptionsContainer col-xs-12">
+                <!-- {{menuitem.customFields}} -->
                 <div class="optionCell" ng-if='menuitem.customFields.espressoShots.on'>
                   <div class="optionEspressoShot">
                     <div class="col-xs-6 optionText">
                       Espresso Shot
                     </div>
                     <div class="col-xs-6 espressoMath optionInput">
-                      <span class='fa fa-minus espressoMath-less' ng-click='client.subtractShot()'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more'></span>
+                      <span class='fa fa-minus espressoMath-less'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more'></span>
                     </div>
                   </div>
                 </div>
@@ -226,79 +228,13 @@
             </div>
             <div class="drinkIn">
               <div class="drinkIn-name">{{menuitem.name}}</div>
-              <div class="drinkIn-price">${{menuitem.price}}</div>
+              <div class="drinkIn-price">{{menuitem.price | currency}}</div>
               <div class="nextArrow">
                 <p class='fa fa-angle-right'></p>
               </div>
             </div>
           </div>
         </div>
-        <!-- <div class=" drinkCell optionClosed drinkCell_{{$index}}" ng-repeat='menuitem in client.data' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
-          <div class="optionsPart">
-            <div class="sizeContainer col-xs-12">
-              <div class="sizeCellContainer col-xs-4">
-                <div class="sizeCell sizeSmall">
-                  <i class="icon ion-coffee"></i>
-                </div>
-              </div>
-              <div class="sizeCellContainer col-xs-4">
-                <div class="sizeCell sizeMedium">
-                  <i class="icon ion-coffee"></i>
-                </div>
-              </div>
-              <div class="sizeCellContainer col-xs-4">
-                <div class="sizeCell sizeLarge">
-                  <i class="icon ion-coffee"></i>
-                </div>
-              </div>
-            </div>
-            <div class="moreOptionsContainer col-xs-12">
-              <div class="optionCell">
-                <div class="optionEspressoShot">
-                  <div class="col-xs-6 optionText">
-                    Espresso Shot
-                  </div>
-                  <div class="col-xs-6 espressoMath optionInput">
-                    <span class='fa fa-minus espressoMath-less' ng-click='client.subtractShot()'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more' ng-click='client.addShot()'></span>
-                  </div>
-                </div>
-              </div>
-              <div class="optionCell">
-                <div class="optionFlavor">
-                  <div class="col-xs-6 optionText">
-                    Add a Flavour
-                  </div>
-                  <div class="col-xs-6 optionInput">
-                    <select class="flavourDropdown" name="">
-                      <option value="almond">Almond</option>
-                      <option value="chocolate">Chocolate</option>
-                      <option value="caramel">Caramel</option>
-                      <option value="pumpkin_spice">Pumpkin Spice</option>
-                      <option value="white_chocolate">White Chocolate</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="openMore col-xs-12">
-              <span class='moreDrinkOps'>
-                More Drink Options <i class="icon ion-ios-arrow-down"></i>
-              </span>
-            </div>
-            <div class="modalActionContainer col-xs-12">
-              <div class="modalActionSubmit col-xs-8 col-xs-offset-2">
-                <button class='submitItem'>ADD TO ORDER</button>
-              </div>
-            </div>
-          </div>
-          <div class="drinkPhotoHolder">
-            <img class='drinkPhoto' src="{{menuitem.photoLink}}" alt="" />
-          </div>
-          <div class="drinkIn">
-            <div class="drinkIn-name">{{menuitem.name}}</div>
-            <div class="drinkIn-price">${{menuitem.price}}</div>
-          </div>
-        </div> -->
       </div>
     </div>
   </ion-content>
