@@ -33,7 +33,7 @@
            </div>
            <div class="checkoutContainer" ng-show="client.currentOrder.length && client.cartModal" >
              <div class="checkoutTotal col-xs-6">
-               {{client.orderTotalPrice | currency}}
+               Total: {{client.orderTotalPrice | currency}}
              </div>
              <div class="checkoutButton col-xs-5"ng-click='client.getToken()'>
                Checkout
