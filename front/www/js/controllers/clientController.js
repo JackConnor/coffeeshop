@@ -70,6 +70,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     /////opens the options modal when user selects an item
     function openOptionsModal(currentDrink, index, evt){
+      console.log(evt.target);
       vm.ogPrice = currentDrink.price;
       vm.currentOpenModal = $(evt.currentTarget)[0].classList[2];
       console.log(vm.currentOpenModal);
@@ -227,17 +228,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       if(vm.cartModal === true){
         if(itemObj.customizations.size === 'small'){
           $(sizeArr[0]).css({
-            backgroundColor: '#dddddd'
+            backgroundColor: '#666666'
+            ,color: 'white'
           });
         }
         else if(itemObj.customizations.size === 'medium') {
           $(sizeArr[1]).css({
-            backgroundColor: '#dddddd'
+            backgroundColor: '#666666'
+            ,color: 'white'
           });
         }
         else if(itemObj.customizations.size === 'large') {
           $(sizeArr[2]).css({
-            backgroundColor: '#dddddd'
+            backgroundColor: '#666666'
+            ,color: 'white'
           });
         }
         // vm.totalShots = itemObj.shots;
@@ -439,11 +443,24 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.subtractShot = subtractShot;
 
     function choseSize(evt){
+      console.log(vm.currentDrink.customFields);
       if($(evt.target).hasClass('sizeSmall')){
         var elSize = 'small';
         var elem = $(evt.target);
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
 
-        if(vm.currentDrink.customFields.size.sizes.value === null){
+        if(vm.currentDrink.customFields.size.sizes.value === false){
           vm.currentDrink.customFields.size.sizes.value = 'small'
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
@@ -473,8 +490,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       if($(evt.target).parent().hasClass('sizeSmall')){
         var elSize = 'small';
         var elem = $(evt.target).parent();
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
 
-        if(vm.currentDrink.customFields.size.sizes.value === null){
+        if(vm.currentDrink.customFields.size.sizes.value === false){
           vm.currentDrink.customFields.size.sizes.value = 'small'
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
@@ -504,7 +533,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       else if($(evt.target).hasClass('sizeMedium')){
         var elSize = 'medium';
         var elem = $(evt.target);
-        if(vm.currentDrink.customFields.size.sizes.value === null){
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
+
+        if(vm.currentDrink.customFields.size.sizes.value === false){
           vm.currentDrink.customFields.size.sizes.value = 'medium';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.medium;
           $('.activePrice').text('');
@@ -536,7 +578,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       else if($(evt.target).parent().hasClass('sizeMedium')){
         var elSize = 'medium';
         var elem = $(evt.target).parent();
-        if(vm.currentDrink.customFields.size.sizes.value === null){
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
+
+        if(vm.currentDrink.customFields.size.sizes.value === false){
           vm.currentDrink.customFields.size.sizes.value = 'medium';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.medium;
           $('.activePrice').text('');
@@ -568,21 +623,37 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       else if($(evt.target).hasClass('sizeLarge')){
         var elSize = 'large';
         var elem = $(evt.target);
-        if(vm.currentDrink.customFields.size.sizes.value === null){
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
+
+        if(vm.currentDrink.customFields.size.sizes.value === false){
           vm.currentDrink.customFields.size.sizes.value = 'large';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
+          console.log(vm.currentDrink);
           $('.activePrice').text('');
           $('.activePrice').text("$"+vm.currentDrink.price);
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'small'){
           vm.currentDrink.customFields.size.sizes.value = 'large';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
+          console.log(vm.currentDrink);
           $('.activePrice').text('');
           $('.activePrice').text("$"+vm.currentDrink.price);
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
           vm.currentDrink.customFields.size.sizes.value = 'large';
           vm.currentDrink.price -= (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
+          console.log(vm.currentDrink);
           $('.activePrice').text('');
           $('.activePrice').text("$"+vm.currentDrink.price);
         }
@@ -598,23 +669,40 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         });
       }
       else if($(evt.target).parent().hasClass('sizeLarge')){
+        console.log(vm.currentDrink.customFields);
         var elSize = 'large';
         var elem = $(evt.target).parent();
-        if(vm.currentDrink.customFields.size.sizes.value === null){
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
+
+        if(vm.currentDrink.customFields.size.sizes.value === false){
           vm.currentDrink.customFields.size.sizes.value = 'large';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
+          console.log(vm.currentDrink);
           $('.activePrice').text('');
           $('.activePrice').text("$"+vm.currentDrink.price);
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'small'){
           vm.currentDrink.customFields.size.sizes.value = 'large';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
+          console.log(vm.currentDrink);
           $('.activePrice').text('');
           $('.activePrice').text("$"+vm.currentDrink.price);
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
           vm.currentDrink.customFields.size.sizes.value = 'large';
           vm.currentDrink.price += (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
+          console.log(vm.currentDrink);
           $('.activePrice').text('');
           $('.activePrice').text("$"+vm.currentDrink.price);
         }
@@ -629,7 +717,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           ,color: '#323232'
         })
       }
-      if(elSize === 'small'){
+      console.log(vm.currentDrink.price);
+      if(elSize === 'small' && lastElSize === true){
         if(elem.hasClass('selected')){
           elem.css({
             backgroundColor: 'transparent'
@@ -645,7 +734,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           elem.addClass('selected')
         }
       }
-      else if(elSize === 'medium'){
+      else if(elSize === 'medium' && lastElSize === true){
         if(elem.hasClass('selected')){
           elem.css({
             backgroundColor: 'transparent'
@@ -661,7 +750,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           elem.addClass('selected')
         }
       }
-      else if(elSize === 'large'){
+      else if(elSize === 'large' && lastElSize === true){
         if(elem.hasClass('selected')){
           elem.css({
             backgroundColor: 'transparent'
@@ -680,69 +769,110 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     }
 
     function choseSizeCart(evt){
-      console.log(evt);
-      console.log('yoouoyoyoyo');
+      console.log($(evt.target));
+      console.log($(evt.target).hasClass('selected'));
       if($(evt.target).hasClass('sizeSmall')){
-        console.log('small');
         var elSize = 'small';
+        var lastElSizeFunc = function(){
+          if(evt.target.hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
         var elem = $(evt.target);
-
         if(vm.currentDrink.customizations.size === 'medium'){
           vm.currentDrink.customizations.size = 'small';
-          console.log('medium to small');
           vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.medium;
           $('.activeCartPrice').text('');
           $('.activeCartPrice').text("$"+vm.currentDrink.price);
+          animateSmall();
         }
         else if(vm.currentDrink.customizations.size === 'large'){
           vm.currentDrink.customizations.size = 'small';
           vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.large;
           $('.activeCartPrice').text('');
           $('.activeCartPrice').text("$"+vm.currentDrink.price);
+          animateSmall();
         }
         //////animate
-        $('.sizeMedium').removeClass('selected');
-        $('.sizeMedium').css({
-          backgroundColor: 'transparent'
-        })
-        $('.sizeLarge').removeClass('selected');
-        $('.sizeLarge').css({
-          backgroundColor: 'transparent'
-        });
+        function animateSmall(){
+          $('.sizeMedium').removeClass('selected');
+          $('.sizeMedium').css({
+            backgroundColor: 'transparent'
+            ,color: '#323232'
+          })
+          $('.sizeLarge').removeClass('selected');
+          $('.sizeLarge').css({
+            backgroundColor: 'transparent'
+            ,color: '#323232'
+          });
+        }
       }
       if($(evt.target).parent().hasClass('sizeSmall')){
-        console.log('sm');
         var elSize = 'small';
         var elem = $(evt.target).parent();
-        console.log(vm.currentDrink);
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
 
         if(vm.currentDrink.customizations.size === 'medium'){
           vm.currentDrink.customizations.size = 'small';
-          console.log('medium to small');
           vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.medium;
           $('.activeCartPrice').text('');
           $('.activeCartPrice').text("$"+vm.currentDrink.price);
+          animateSmall();
         }
         else if(vm.currentDrink.customizations.size === 'large'){
           vm.currentDrink.customizations.size = 'small';
           vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.large;
           $('.activeCartPrice').text('');
           $('.activeCartPrice').text("$"+vm.currentDrink.price);
+          animateSmall();
         }
         //////animate
-        $('.sizeMedium').removeClass('selected');
-        $('.sizeMedium').css({
-          backgroundColor: 'transparent'
-        })
-        $('.sizeLarge').removeClass('selected');
-        $('.sizeLarge').css({
-          backgroundColor: 'transparent'
-        });
+        function animateSmall(){
+          $('.sizeMedium').removeClass('selected');
+          $('.sizeMedium').css({
+            backgroundColor: 'transparent'
+            ,color: '#323232'
+          })
+          $('.sizeLarge').removeClass('selected');
+          $('.sizeLarge').css({
+            backgroundColor: 'transparent'
+            ,color: '#323232'
+          });
+        }
       }
       else if($(evt.target).hasClass('sizeMedium')){
-        console.log('med');
         var elSize = 'medium';
         var elem = $(evt.target);
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
 
         if(vm.currentDrink.customizations.size === 'small'){
           vm.currentDrink.customizations.size = 'medium';
@@ -759,16 +889,29 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         })
         $('.sizeLarge').removeClass('selected');
         $('.sizeLarge').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         });
       }
       else if($(evt.target).parent().hasClass('sizeMedium')){
-        console.log('med');
         var elSize = 'medium';
         var elem = $(evt.target).parent();
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
 
         if(vm.currentDrink.customizations.size === 'small'){
           vm.currentDrink.customizations.size = 'medium';
@@ -785,16 +928,29 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         })
         $('.sizeLarge').removeClass('selected');
         $('.sizeLarge').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         });
       }
       else if($(evt.target).hasClass('sizeLarge')){
-        console.log('lg');
         var elSize = 'large';
         var elem = $(evt.target);
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
 
         if(vm.currentDrink.customizations.size === 'small'){
           vm.currentDrink.customizations.size = 'large';
@@ -811,16 +967,29 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         });
         $('.sizeMedium').removeClass('selected');
         $('.sizeMedium').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         });
       }
       else if($(evt.target).parent().hasClass('sizeLarge')){
-        console.log('lg');
         var elSize = 'large';
         var elem = $(evt.target).parent();
+        var lastElSizeFunc = function(){
+          if($(evt.target).hasClass('selected')){
+            return false;
+          }
+          else if ($(evt.target).parent().hasClass('selected')){
+            return false;
+          }
+          else {
+            return true;
+          }
+        }
+        var lastElSize = lastElSizeFunc();
 
         if(vm.currentDrink.customizations.size === 'small'){
           vm.currentDrink.customizations.size = 'large';
@@ -837,50 +1006,58 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         })
         $('.sizeMedium').removeClass('selected');
         $('.sizeMedium').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         })
       }
-      if(elSize === 'small'){
+      if(elSize === 'small' && lastElSize === true){
         if(elem.hasClass('selected')){
           elem.css({
             backgroundColor: 'transparent'
+            ,color: '#323232'
           })
           elem.removeClass('selected')
         }
         else {
           elem.css({
-            backgroundColor: '#dddddd'
+            backgroundColor: '#666666'
+            ,color: 'white'
           })
           elem.addClass('selected')
         }
       }
-      else if(elSize === 'medium'){
+      else if(elSize === 'medium' && lastElSize === true){
         if(elem.hasClass('selected')){
           elem.css({
-            backgroundColor: 'white'
+            backgroundColor: 'transparent'
+            ,color: '#323232'
           })
           elem.removeClass('selected')
         }
         else {
           elem.css({
-            backgroundColor: '#dddddd'
+            backgroundColor: '#666666'
+            ,color: 'white'
           })
           elem.addClass('selected')
         }
       }
-      else if(elSize === 'large'){
+      else if(elSize === 'large' && lastElSize === true){
         if(elem.hasClass('selected')){
           elem.css({
             backgroundColor: 'white'
+            ,color: '#323232'
           })
           elem.removeClass('selected')
         }
         else {
           elem.css({
-            backgroundColor: '#dddddd'
+            backgroundColor: '#666666'
+            ,color: 'white'
           })
           elem.addClass('selected')
         }
