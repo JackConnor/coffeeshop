@@ -14,7 +14,6 @@ angular.module('historyController', ['getLastOrderFactory'])
     function getHistory(){
       if(localStorage.hasOwnProperty('lastOrder')){
         vm.lastOrder = localStorage.lastOrder.split('-&-');
-        alert(vm.lastOrder)
       }
       else {
         vm.lastOrder = [];
@@ -32,21 +31,6 @@ angular.module('historyController', ['getLastOrderFactory'])
               ,url: "http://52.39.40.7/orders/one/"+vm.lastOrder[i]
             })
             .then(function(lastOrderObj){
-              console.log(lastOrderObj);
-              console.log(lastOrderObj.data.data);
-              // for (var j = 0; j < lastOrderObj.data.data.menuitems.length; j++) {
-              //   $http({
-              //     method: "GET"
-              //     ,url: '52.29.40.7/menuitems/full/'+lastOrderObj.data.data.menuitems[j]._id
-              //   })
-              //   .then(function(menuItem){
-              //     console.log(menuItem);
-              //     console.log(lastOrderObj);
-              //     console.log(lastOrderObj.data.data);
-              //     lastOrderObj.data.data.menuitems[j] = menuItem.data.data;
-              //     console.log(lastOrderObj);
-              //   })
-              // }
               vm.lastOrderHistory.push(lastOrderObj.data.data);
             });
           }

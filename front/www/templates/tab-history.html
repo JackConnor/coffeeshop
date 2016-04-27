@@ -6,9 +6,6 @@
           <!-- {{order}} -->
           Ordered On: {{order.createdAt}}
         </div>
-        <!-- <div class="orderMenuList col-xs-" ng-repeat='menuitem in order.menuitems'>
-          {{menuitem.itemId.name}}
-        </div> -->
         <div class=" drinkCellHistory" ng-repeat='menuitem in order.menuitems' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
           <div class="drinkPhotoHolderHistory">
             <img class='drinkPhoto' src="{{menuitem.itemId.photoLink}}" alt="" />
