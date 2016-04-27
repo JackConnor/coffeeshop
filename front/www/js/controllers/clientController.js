@@ -2,24 +2,25 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
   .controller('clientCtrl', clientCtrl);
 
-  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken', 'braintreeProcess', '$location'];
+  clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken', 'braintreeProcess', '$location', '$ionicScrollDelegate'];
 
-  function clientCtrl($http, $timeout, menuItems, $rootScope, braintreeToken, $location){
-
+  function clientCtrl($http, $timeout, menuItems, $rootScope, braintreeToken, braintreeProcess, $location, $ionicScrollDelegate){
     //////////////////////////////////////////////
     ////////All Global Variables//////////////////
     //////////////////////////////////////////////
     var vm = this;
-    vm.optionsModal    = false;
-    vm.moreOptions     = false;
-    vm.cartModal       = false;
-    vm.optionsArray    = false;
-    vm.checkoutOpen    = false;
-    vm.postCartOpen    = false;
-    vm.totalShots      = 0;
-    vm.currentDrink    = {}
-    vm.currentOrder    = [];
-    vm.orderTotalPrice = 0;
+    vm.optionsModal      = false;
+    vm.moreOptions       = false;
+    vm.cartModal         = false;
+    vm.optionsArray      = false;
+    vm.checkoutOpen      = false;
+    vm.postCartOpen      = false;
+    vm.signinModalClient = true;
+    vm.totalShots        = 0;
+    vm.currentDrink      = {}
+    vm.currentOrder      = [];
+    vm.orderTotalPrice   = 0;
+    vm.lastScrollPosition;
     vm.ogPrice;
     vm.openCart;
     vm.data;////////this is all menuItems
@@ -81,6 +82,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       clonedEl.find('.openMore').on('click', function(){
         openMoreOptions(clonedEl);
       });
+      clonedEl.find('.nextArrow').animate({
+        opacity: 0
+      }, 250);
       if(typeof evt.currentTarget !== 'string'){
         clonedEl.find('.submitItem')[0].id = $(evt.currentTarget)[0].classList[2];
         var elOffset   = $(evt.currentTarget).offset().top;
@@ -104,7 +108,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       removeCircle.remove();
       clonedEl.css({
         marginTop: distance
-        ,borderBottom: "0px solid black"
+        ,borderBottom: "0px solid #D4D4D4"
         ,borderWidth: 0
         ,borderRadius: '5px'
       });
@@ -117,12 +121,16 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       clonedEl.find('.drinkIn-price').animate({
         opacity: 0
       }, 150);
+      vm.lastScrollPosition = $ionicScrollDelegate.getScrollPosition().top;
+      console.log(vm.lastScrollPosition);
+      $ionicScrollDelegate.scrollTop(true);
       setTimeout(function(){
         clonedEl.find('.drinkIn-price').css({
           float: 'left'
           ,marginLeft: '20px'
           ,marginTop: '10px'
         });
+        addBlackLayer(0, $("ion-content"), 0.3)
       }, 500);
       setTimeout(function(){
         $('.drinkListContainer').prepend(clonedEl[0]);
@@ -131,14 +139,14 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         clonedEl.animate({
           height: '325px'
           ,width: '90%'
-          ,marginTop: '10px'
+          ,marginTop: '35px'
           ,marginLeft: '5%'
         }, 300);
         clonedEl.find('.drinkPhotoHolder').animate({
           width: '75px'
           ,height: '75px'
           ,marginTop: '20px'
-          ,marginLeft: '30px'
+          ,marginLeft: '40px'
         }, 300);
         clonedEl.find('.drinkIn').animate({
           fontSize: '28px'
@@ -178,8 +186,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       $('.optionOpen').animate({
         opacity: 0
       }, 200);
+      $ionicScrollDelegate.scrollTo(0, vm.lastScrollPosition, false);
       setTimeout(function(){
         $('.optionOpen').remove();
+        $('.blackLayer').remove();
       }, 200);
       $('.optionClosed').animate({
         opacity: 1
@@ -191,6 +201,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         opacity: 0
         ,height: 0
       }, 500);
+      $('.nextArrow').animate({
+        opacity: 1
+      }, 250);
       vm.moreOptions = false;
 
     }
@@ -348,7 +361,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           return totalPrice;
         }
       }
-
     }
 
     //function to create a translucent layer to block all background clicks
@@ -450,10 +462,12 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.sizeMedium').removeClass('selected');
         $('.sizeMedium').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         })
         $('.sizeLarge').removeClass('selected');
         $('.sizeLarge').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         });
       }
       if($(evt.target).parent().hasClass('sizeSmall')){
@@ -479,10 +493,12 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.sizeMedium').removeClass('selected');
         $('.sizeMedium').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         })
         $('.sizeLarge').removeClass('selected');
         $('.sizeLarge').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         });
       }
       else if($(evt.target).hasClass('sizeMedium')){
@@ -509,10 +525,12 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         })
         $('.sizeLarge').removeClass('selected');
         $('.sizeLarge').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         });
       }
       else if($(evt.target).parent().hasClass('sizeMedium')){
@@ -539,10 +557,12 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         })
         $('.sizeLarge').removeClass('selected');
         $('.sizeLarge').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         });
       }
       else if($(evt.target).hasClass('sizeLarge')){
@@ -569,10 +589,12 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         });
         $('.sizeMedium').removeClass('selected');
         $('.sizeMedium').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         });
       }
       else if($(evt.target).parent().hasClass('sizeLarge')){
@@ -599,22 +621,26 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         })
         $('.sizeMedium').removeClass('selected');
         $('.sizeMedium').css({
           backgroundColor: 'transparent'
+          ,color: '#323232'
         })
       }
       if(elSize === 'small'){
         if(elem.hasClass('selected')){
           elem.css({
             backgroundColor: 'transparent'
+            ,color: '#323232'
           })
           elem.removeClass('selected')
         }
         else {
           elem.css({
-            backgroundColor: '#dddddd'
+            backgroundColor: '#666666'
+            ,color: 'white'
           })
           elem.addClass('selected')
         }
@@ -622,13 +648,15 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       else if(elSize === 'medium'){
         if(elem.hasClass('selected')){
           elem.css({
-            backgroundColor: 'white'
+            backgroundColor: 'transparent'
+            ,color: '#323232'
           })
           elem.removeClass('selected')
         }
         else {
           elem.css({
-            backgroundColor: '#dddddd'
+            backgroundColor: '#666666'
+            ,color: 'white'
           })
           elem.addClass('selected')
         }
@@ -636,18 +664,19 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       else if(elSize === 'large'){
         if(elem.hasClass('selected')){
           elem.css({
-            backgroundColor: 'white'
+            backgroundColor: 'transparent'
+            ,color: '#323232'
           })
           elem.removeClass('selected')
         }
         else {
           elem.css({
-            backgroundColor: '#dddddd'
+            backgroundColor: '#666666'
+            ,color: 'white'
           })
           elem.addClass('selected')
         }
       }
-      console.log(vm.currentDrink);
     }
 
     function choseSizeCart(evt){
@@ -972,9 +1001,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           width: "auto"
           ,marginLeft: 0+'%'
           ,marginTop: 0+'px'
-          ,paddingTop: 15+'px'
+          ,paddingTop: 2+'px'
           ,height: "60px"
-          ,marginRight: 0+"%"
+          ,marginRight: 0+"px"
         }, 250);
       // }, 135);
       $('.clearLayer').remove();
@@ -1089,7 +1118,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                   vm.message = 'Processing your payment...';
                   $http({
                     method: 'POST',
-                    url: 'http://192.168.0.7:3000/payments/process',
+                    url: 'http://52.39.40.7/payments/process',
                     data: {
                       amount: vm.orderTotalPrice
                       ,payment_method_nonce: nonce
@@ -1111,7 +1140,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                       console.log(vm.currentOrder);
                       $http({
                         method: "POST"
-                        ,url: 'http://192.168.0.7:3000/orders'
+                        ,url: 'http://52.39.40.7/orders'
                         ,data: orderObj
                       })
                       .then(function(data){
@@ -1119,7 +1148,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                         var orderId = data.data.data._id;
                         //////////we store up to fie localstorage orders on a device, seperated by  an -&-
                         storeLocal(orderId);
-                        vm.socket = io.connect('http://192.168.0.7:3000/');
+                        vm.socket = io.connect('http://52.39.40.7/');
                         vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
                       })
                       //
@@ -1205,16 +1234,23 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function storeLocal(newOrderId){
       if(localStorage.hasOwnProperty('lastOrder')){
         var stor = localStorage.lastOrder;
-        var splitStor = stor.split('-&-').splice(0, stor.split('-&-').length-1);
+        console.log(stor);
+        if(stor == null){
+          var splitStor = ''
+        }
+        else {
+          var splitStor = stor.split('-&-').splice(0, stor.split('-&-').length-1);
+        }
         if(splitStor.length < 5){
-          localStorage.lastOrder+=newOrderId+"-&-";
+          var newStor = localStorage.lastOrder+=newOrderId+"-&-";
+          localStorage.setItem('lastOrder', newStor);
         }
         else {
           splitStor = splitStor.reverse();
           splitStor = splitStor.slice(0, 4);
           splitStor = splitStor.reverse();
           splitStor.push(newOrderId+"-&-");
-          localStorage.lastOrder = splitStor.join('-&-');
+          localStorage.setItem('lastOrder', splitStor.join('-&-'));
         }
       }
       else {

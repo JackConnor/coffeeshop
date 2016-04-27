@@ -1,9 +1,6 @@
 <ion-view>
   <ion-content >
     <div class="navContainer">
-      <div class="logoContainer">
-        CoffeeNation
-      </div>
       <div class="cartHolder">
         <div class="cartModalHolder">
           <div class="xCart fa fa-times" ng-click='client.closeCart()' ng-if='client.cartModal'></div>
@@ -84,30 +81,33 @@
     </div>
     <!-- End post checkout modal -->
     <div class="drinkRepeatContainer col-xs-12">
+      <div class="restName">
+        Caff&eacute Paraggi
+      </div>
       <div class="drinkListContainer">
         <div class="categoryContainerHotDrinks">
           <div class="categoryTitle">
-            Hot Drinks
+            HOT DRINKS
           </div>
           <div class=" drinkCell optionClosed drinkCell_{{$index}}" ng-repeat='menuitem in client.hotDrinks' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
             <div class="optionsPart">
               <div class="sizeContainer col-xs-12">
                 <div class="sizeCellContainer col-xs-4">
                   <div class="sizeCell sizeSmall">
-                    <i class="icon ion-coffee"></i>
+                    <i class="">S</i>
                   </div>
                 </div>
                 <div class="sizeCellContainer col-xs-4">
                   <div class="sizeCell sizeMedium">
-                    <i class="icon ion-coffee"></i>
+                    <i class="">M</i>
                   </div>
                 </div>
                 <div class="sizeCellContainer col-xs-4">
                   <div class="sizeCell sizeLarge">
-                    <i class="icon ion-coffee"></i>
+                    <i class="">L</i>
                   </div>
                 </div>
-                <p class='sizeLabel'>choose a size</p>
+                <p class='sizeLabel'>PICK A SIZE</p>
               </div>
               <div class="moreOptionsContainer col-xs-12">
                 <!-- {{menuitem.customFields}} -->
@@ -155,12 +155,15 @@
             <div class="drinkIn">
               <div class="drinkIn-name">{{menuitem.name}}</div>
               <div class="drinkIn-price">{{menuitem.price | currency}}</div>
+              <div class="nextArrow">
+                <p class='fa fa-angle-right'></p>
+              </div>
             </div>
           </div>
         </div>
         <div class="categoryContainerColdDrinks">
           <div class="categoryTitle">
-            Cold Drinks
+            COLD DRINKS
           </div>
           <div class=" drinkCell optionClosed drinkCell_{{$index}}" ng-repeat='menuitem in client.coldDrinks' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
             <div class="optionsPart">
@@ -226,6 +229,9 @@
             <div class="drinkIn">
               <div class="drinkIn-name">{{menuitem.name}}</div>
               <div class="drinkIn-price">${{menuitem.price}}</div>
+              <div class="nextArrow">
+                <p class='fa fa-angle-right'></p>
+              </div>
             </div>
           </div>
         </div>

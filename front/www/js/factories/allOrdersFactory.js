@@ -9,7 +9,7 @@ angular.module('allOrdersFactory', [])
     function getOrders(){
       return $http({
         method: "GET"
-        ,url: 'http://192.168.0.7:3000/orders'
+        ,url: 'http://52.39.40.7/orders'
       })
     }
     return getOrders;

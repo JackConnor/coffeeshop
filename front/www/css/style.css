@@ -2,6 +2,8 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 /****** Drink List View ******/
 
+
+
 h1,h2,h3,h4,h5,h6 {
     /*font-family: 'Montserrat', sans-serif;*/
 }
@@ -35,7 +37,7 @@ h1,h2,h3,h4,h5,h6 {
 .cartHolder {
   position: absolute;
   width: 100%;
-  height: 45px;
+  height: 35px;
   text-align: right;
   border: 0px solid black;
   z-index: 30;
@@ -49,8 +51,9 @@ h1,h2,h3,h4,h5,h6 {
 .cartModalHolder {
   width: auto;
   height: auto;
+  padding-top: 2px;
   padding-right: 15px;
-  padding-top: 15px;
+  margin-right: 0px;
   float: right;
   border: 0px solid black;
   overflow: hidden;
@@ -88,11 +91,12 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .categoryTitle {
-  background-color: #bbc3cc;
-  height: 35px;
-  font-size: 25px;
-  padding-top: 5px;
+  background-color: #666666;
+  height: 25px;
+  font-size: 18px;
+  padding-top: 3px;
   padding-left: 5px;
+  color: white;
 }
 
 #checkout {
@@ -163,8 +167,9 @@ h1,h2,h3,h4,h5,h6 {
   text-align: left;
   font-size: 22px;
   margin-top: -3px;
-  margin-left: -3px;
+  margin-left: -10px;
   position: absolute;
+  z-index: 11;
 }
 
 .coffeeSize {
@@ -191,9 +196,11 @@ h1,h2,h3,h4,h5,h6 {
   height: 70px;
   width: 100%;
   padding: 10px 5px;
-  border: 0px solid black;
-  border-bottom: 1px solid black;
+  border: 0px solid #D4D4D4;
+  border-bottom: 1px solid #D4D4D4;
   display: flex;
+  background-color: white;
+  z-index: 10;
 }
 
 .drinkCell:first-child{
@@ -218,21 +225,20 @@ h1,h2,h3,h4,h5,h6 {
   line-height: 0.85;
 	padding-left: 20px;
   padding-top: 10px;
-  font-size: 23px;
+  font-size: 18px;
   display: inline-block;
-  width: 200px;
+  width: 100%;
 }
 
 .drinkIn-price{
   /*font-size: 1em;
   color: black;*/
   /*margin-left: 20px;*/
-  font-size: 23px;
+  font-size: 18px;
   margin-top: 3px;
   display: inline-block;
   width: auto;
-  float: right;
-  margin-right: 15px;
+  margin-left: 22px;
 }
 
 .drinkPhotoHolder {
@@ -265,16 +271,15 @@ h1,h2,h3,h4,h5,h6 {
 }
 .espressoMath {
   text-align: right;
-  font-size: 18px;
-  margin-top: 4px;
+  font-size: 14px;
 }
 
 .espressoMath-less{
-  margin-right:15px;
+  margin-right:14px;
 }
 
 .espressoMath-number{
-  margin-right:15px;
+  margin-right:14px;
 }
 
 .goBackToSite {
@@ -308,13 +313,26 @@ h1,h2,h3,h4,h5,h6 {
   float: left;
 }
 
+.loginButton {
+  width: auto;
+  z-index: 100000;
+}
+
 .logoContainer {
   font-size: 27px;
-  padding-left: 10px;
-  padding-top: 10px;
   font-weight: 900;
-  color: #b20000;
+  width: 100%;
+  text-align: right;
+  height: 40px;
+  padding-right: 10px;
+  padding-top: 8px;
+  color: #666666;
   position: absolute;
+}
+
+.logoContainer img{
+  width: 100%;
+  height: 100%;
 }
 
 .modalActionContainer{
@@ -346,6 +364,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .modalActionSubmit button{
   background-color: #1abc9c;
+  color: white;
 }
 
 .moreDrinkOps {
@@ -353,16 +372,27 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .moreOptionsContainer{
-  margin-bottom: 10px;
   height: 0px;
   opacity: 0;
+  margin-top: 15px;
 }
 
 .navContainer {
-  margin-top: 10px;
+  margin-top: 18px;
   width: 100%;
-  height: 55px;
+  height: 35px;
   /*background-color: green;*/
+}
+
+.nextArrow {
+  position: absolute;
+  width: 98%;
+  color: #666666;
+  font-size: 18px;
+  left: 0;
+  margin-top: -40px;
+  text-align: right;
+  z-index: 0;
 }
 
 .noPadding {
@@ -370,19 +400,17 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .openMore {
-  height: 50px;
+  height: 40px;
   text-align: center;
   font-size: 18px;
   color: grey;
-  padding-top: 10px;
   outline: none;
 }
 
 .optionCell{
-  height: 50px;
-  border: 1px solid black;
+  height: 35px;
+  border: 1px solid #D4D4D4;
   border-width: 0 0 1px;
-  padding: 10px 5px;
 }
 
 .optionCell:first-child{
@@ -401,14 +429,16 @@ h1,h2,h3,h4,h5,h6 {
 
 .optionInput{
   text-align: right;
-  padding: 0;
+  padding: 0px;
+  padding-top: 5px;
+  padding-right: 5px;
 }
 
 .optionInput select{
   width: 100px;
   border: 1px solid #cccccc;
   border-radius: 3px;
-  color: black;
+  color: #323232;
   font-size: 16px;
   padding: 2px 6px;
 }
@@ -436,9 +466,9 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .optionText{
-  font-size: 16px;
-  margin-top: 3px;
-  padding: 0;
+  font-size: 14px;
+  margin-top: 0px;
+  padding: 5px 0 0 5px;
 }
 
 .orderCell {
@@ -571,6 +601,29 @@ h1,h2,h3,h4,h5,h6 {
   position: absolute;
 }
 
+.restName {
+  height: 45px;
+  font-size: 25px;
+  text-align: left;
+  color: #323232;
+  border-top: 1px solid #D4D4D4;
+  border-bottom: 1px solid #D4D4D4;
+  padding-top: 10px;
+  padding-left: 5px;
+}
+
+.signinModalClient {
+  width: 100%;
+}
+
+.signinModalClientInner {
+  width: 150px;
+  height: 50px;
+  background-color: blue;
+  float: right;
+  z-index: 5;
+}
+
 .signupCreditCard {
   width: 80%;
   margin-left: 10%;
@@ -599,29 +652,16 @@ h1,h2,h3,h4,h5,h6 {
 .sizeLabel {
   font-size: 12px;
   margin-left: 10%;
+  margin-top: 8px;
   text-align: left;
+  position: absolute;
 }
 
 .sizeLarge{
-  padding-top: 6px;
-  border: 2px solid black;
+  padding-top: 15px;
+  border: 2px solid #666666;
   width: 60px;
   height: 60px;
-  display: inline-block;
-  text-align: center;
-  font-size: 19px;
-  border-radius: 50%;
-}
-
-.sizeLarge i{
-  font-size: 40px;
-}
-
-.sizeMedium{
-  padding-top: 5px;
-  border: 2px solid black;
-  width: 50px;
-  height: 50px;
   display: inline-block;
   text-align: center;
   font-size: 19px;
@@ -629,20 +669,36 @@ h1,h2,h3,h4,h5,h6 {
   margin-top: 10px;
 }
 
+.sizeLarge i{
+  font-size: 40px;
+}
+
+.sizeMedium{
+  padding-top: 13px;
+  border: 2px solid #666666;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  text-align: center;
+  font-size: 19px;
+  border-radius: 50%;
+  margin-top: 20px;
+}
+
 .sizeMedium i{
   font-size: 35px;
 }
 
 .sizeSmall{
-  padding-top: 3px;
-  border: 2px solid black;
+  padding-top: 7px;
+  border: 2px solid #666666;
   width: 40px;
   height: 40px;
   display: inline-block;
   text-align: center;
   font-size: 19px;
   border-radius: 50%;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .sizeSmall i{
@@ -653,8 +709,12 @@ h1,h2,h3,h4,h5,h6 {
   background-color: #1abc9c;
 }*/
 
+.tab-item {
+  color: white;
+}
+
 .tab-item.tab-item-active, .tab-item.active, .tab-item.activated {
-    color: white;
+    color: #545454;
 }
 
 .thankYouImageHolder {
@@ -918,7 +978,7 @@ h1,h2,h3,h4,h5,h6 {
 
 body {
     font-family: 'Montserrat', sans-serif;
-    color: black;
+    color: #323232;
 }
 
 .progress-pie-chart {
