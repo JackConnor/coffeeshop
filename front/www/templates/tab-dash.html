@@ -83,7 +83,7 @@
             Recent
           </div>
           <!-- //////////////// -->
-          <div class="drinkCellLastOrder optionClosed drinkCell_{{$index}}" ng-click='client.addLastOrderCart()'>
+          <div class="drinkCellLastOrder optionClosed drinkCell_{{$index}}">
             <div class="optionsPart">
               <div class="sizeContainer col-xs-12">
                 <div class="sizeCellContainer col-xs-4">
@@ -147,6 +147,9 @@
               <img class='drinkPhoto' src="{{client.lastOrder.menuitems[0].itemId.photoLink}}" alt="" />
             </div>
             <div class="drinkIn">
+              <div class="addLastButton" ng-click='client.addLastOrderCart()'>
+                Add
+              </div>
               <div class="drinkIn-name">{{client.lastOrder.menuitems[0].itemId.name}} - {{client.lastOrder.menuitems[0].customizations[0].size}}</div>
               <div class="drinkIn-price">{{client.lastOrder.menuitems[0].price | currency}}</div>
               <div class="drinkIn-allDetails">

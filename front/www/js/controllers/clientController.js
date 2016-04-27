@@ -408,15 +408,35 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     ////////function to add last order to yoru cart
     function addLastOrderCart(){
-      console.log(vm.currentOrder);
-      console.log(vm.lastOrder.menuitems[0]);
       var newCartItem = {}
       newCartItem.customizations = vm.lastOrder.menuitems[0].customizations[0];
       newCartItem.itemId = vm.lastOrder.menuitems[0].itemId;
       newCartItem.price = vm.lastOrder.menuitems[0].price;
       newCartItem.status = vm.lastOrder.menuitems[0].status;
-      console.log(newCartItem);
       vm.currentOrder.push(newCartItem);
+      // delete vm.lastOrder.menuitems[0];
+      // console.log(vm.lastOrder);
+      var lastClone = $(".drinkCellLastOrder").clone();
+      lastClone.css({
+        position: 'absolute'
+        ,outline: '3px solid black'
+        ,marginTop: '-100px'
+        ,backgroundColor: 'transparent'
+      });
+      lastClone.html('')
+      $('.categoryContainerRecommended').append(
+        lastClone
+      );
+      lastClone.animate({
+        marginTop: '-200px'
+        ,width: '30px'
+        ,height: '30px'
+        ,marginLeft: '86%'
+        ,opacity: .25
+      }, 500);
+      setTimeout(function(){
+        lastClone.remove();
+      }, 500);
     }
     vm.addLastOrderCart = addLastOrderCart;
 
