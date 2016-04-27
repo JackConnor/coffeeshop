@@ -217,10 +217,14 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       }
       var shotPrice = itemObj.itemId.customFields.espressoShots.addedPrice;
       vm.currentItemShots = itemObj.customizations.shots;
-      var offTopEl = $(evt.currentTarget).closest('.shoppingCartCell').offset().top;
+      var offTopEl = $($('.shoppingCartCell')[0]).offset().top;
+      console.log(offTopEl);
       var offTopCont = $('.shoppingCartList').offset().top;
-      var distance = offTopEl - offTopCont-10;
+      console.log(offTopCont);
+      var distance = (-index*60) -10
+      console.log(distance);
       var targItem = $(evt.currentTarget).closest('.shoppingCartCell').clone();
+      console.log(targItem);
       targItem.find('.cartActions').remove();
       /////clone the options things so we can add it
       var optionClone = $($(".optionsPart")[0]).clone();
