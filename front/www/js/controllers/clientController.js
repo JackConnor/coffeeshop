@@ -36,12 +36,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     //////////////////////////////////////////////
     ////////All Data Function (i/o)///////////////
     //////////////////////////////////////////////
-    console.log('wat');
     ///////function returns all menu items for restaurant
     menuItems()
     .then(function(items){
-      console.log('yoooooooo');
-      console.log(items);
       vm.data = items.data.data;/////all menu items
       var dataLength = vm.data.length;
       vm.hotDrinks  = [];
@@ -314,6 +311,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           opacity: 1
           ,height: '300px'
         }, 200);
+        $('.checkoutDrinkInfo-name').animate({
+          opacity: 1
+        }, 250);
       }, 200);
     }
     vm.openOptionsFromCart = openOptionsFromCart;
@@ -340,7 +340,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       }, 250);
       opEl.animate({
         opacity: 0
-      }, 450)
+      }, 450);
+      $('.checkoutDrinkInfo-name').animate({
+        opacity: 0
+      }, 250);
       setTimeout(function(){
         opEl.find('.optionsPart').remove();
         opEl.find('.cartOpClose').remove();
@@ -1160,6 +1163,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     ///////function to close the shopping cart
     function closeCart(){
+      vm.moreOptions = false;
       ////removes the cart and adds it back
       $('#checkout').remove();
       $('.checkoutForm').append(
@@ -1411,7 +1415,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function storeLocal(newOrderId){
       if(localStorage.hasOwnProperty('lastOrder')){
         var stor = localStorage.lastOrder;
-        console.log(stor);
         if(stor == null){
           var splitStor = ''
         }
