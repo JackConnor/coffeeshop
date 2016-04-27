@@ -80,10 +80,10 @@
       <div class="drinkListContainer">
         <div class="categoryContainerRecommended">
           <div class="categoryTitle">
-            Recent
+            RECENTLY ORDERED
           </div>
           <!-- //////////////// -->
-          <div class="drinkCellLastOrder optionClosed drinkCell_{{$index}}">
+          <div class="drinkCellLastOrder optionClosed drinkCell_{{$index}}" ng-click='client.addLastOrderCart()'>
             <div class="optionsPart">
               <div class="sizeContainer col-xs-12">
                 <div class="sizeCellContainer col-xs-4">
@@ -144,20 +144,20 @@
               </div>
             </div>
             <div class="drinkPhotoHolder">
-              <img class='drinkPhoto' src="{{client.lastOrder.menuitems[0].itemId.photoLink}}" alt="" />
+              <img class='drinkPhoto' src="{{client.lastOrder[0].itemId.photoLink}}" alt="" />
             </div>
             <div class="drinkIn">
-              <div class="addLastButton" ng-click='client.addLastOrderCart()'>
+              <!-- <div class="addLastButton" ng-click='client.addLastOrderCart()'>
                 Add
-              </div>
-              <div class="drinkIn-name">{{client.lastOrder.menuitems[0].itemId.name}} - {{client.lastOrder.menuitems[0].customizations[0].size}}</div>
-              <div class="drinkIn-price">{{client.lastOrder.menuitems[0].price | currency}}</div>
+              </div> -->
+              <div class="drinkIn-name">{{client.lastOrder[0].itemId.name}} - {{client.lastOrder[0].customizations[0].size}}</div>
+              <div class="drinkIn-price">{{client.lastOrder[0].price | currency}}</div>
               <div class="drinkIn-allDetails">
-                <span ng-show='client.lastOrder.menuitems[0].customizations[0].shots > 0'>
-                  espresso shots: {{client.lastOrder.menuitems[0].customizations[0].shots}}
+                <span ng-show='client.lastOrder[0].customizations[0].shots > 0'>
+                  espresso shots: {{client.lastOrder[0].customizations[0].shots}}
                 </span>
-                <span class='lastFlavour' ng-show='client.lastOrder.menuitems[0].customizations[0].flavours'>
-                  add'l flavor: {{client.lastOrder.menuitems[0].customizations[0].flavours}}
+                <span class='lastFlavour' ng-show='client.lastOrder[0].customizations[0].flavours'>
+                  add'l flavor: {{client.lastOrder[0].customizations[0].flavours}}
                 </span>
               </div>
             </div>

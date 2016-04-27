@@ -60,12 +60,19 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function getLastOrder(){
       var lastOrderStr = window.localStorage.lastOrder;
       var lastOrderArr = lastOrderStr.split('-&-');
-      var lastOrderItem = lastOrderArr[lastOrderArr.length-2];
-      singleOrder(lastOrderItem)
-      .then(function(lastOrderDetails){
-        vm.lastOrder = lastOrderDetails.data.data;
-        console.log(vm.lastOrder);
-      })
+      var lastOrderItem = lastOrderArr.slice(0, [lastOrderArr.length-2]);
+      var allOrderedItems = [];
+      for (var i = 0; i < lastOrderArr.length; i++) {
+        if(lastOrderArr[i] !== null){
+          singleOrder(lastOrderArr[i])
+          .then(function(lastOrderDetails){
+            var arr = allOrderedItems.concat(lastOrderDetails.data.data.menuitems)
+            allOrderedItems = arr;
+            vm.lastOrder = arr;
+          })
+        }
+      }
+
     }
     getLastOrder();
 
@@ -222,6 +229,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function openOptionsFromCart(evt, itemObj, index){
       console.log(evt.target);
       vm.currentDrink = itemObj;
+      console.log(itemObj);
       if(itemObj.itemId.customFields.espressoShots.on === false){
         $('.optionEspressoShot').parent().remove();
       }
@@ -409,12 +417,17 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     ////////function to add last order to yoru cart
     function addLastOrderCart(){
       var newCartItem = {}
-      newCartItem.customizations = vm.lastOrder.menuitems[0].customizations[0];
-      newCartItem.itemId = vm.lastOrder.menuitems[0].itemId;
-      newCartItem.price = vm.lastOrder.menuitems[0].price;
-      newCartItem.status = vm.lastOrder.menuitems[0].status;
+      newCartItem.customizations = vm.lastOrder[0].customizations[0];
+      newCartItem.itemId = vm.lastOrder[0].itemId;
+      newCartItem.price = vm.lastOrder[0].price;
+      newCartItem.status = vm.lastOrder[vm.lastOrder.length-1].status;
       vm.currentOrder.push(newCartItem);
-      // delete vm.lastOrder.menuitems[0];
+      vm.orderTotalPrice += newCartItem.price;
+      console.log(vm.lastOrder);
+      vm.lastOrder = vm.lastOrder.slice(1, vm.lastOrder.length)
+      if(vm.lastOrder.length === 0){
+        getLastOrder();
+      }
       // console.log(vm.lastOrder);
       var lastClone = $(".drinkCellLastOrder").clone();
       lastClone.css({
