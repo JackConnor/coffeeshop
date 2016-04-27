@@ -341,6 +341,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function closeCartOptions(itemObj){
       ////data stuff
       var targetIndex = itemObj;
+      console.log(targetIndex);
       var currentItem = vm.currentOrder[targetIndex];
       currentItem.customizations.shots = vm.totalShots;
       currentItem.customizations.flavours = $('.flavourCart').val();
@@ -358,7 +359,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         opacity: 0
       }, 250);
       $('.cartOptionOpen').css({
-        marginTop: '-7px'
+        marginTop: -itemObj*60+'px'-10
       })
       opEl.animate({
         opacity: 0
