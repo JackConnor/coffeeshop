@@ -343,7 +343,6 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .modalActionContainer{
-  display: flex;
   padding: 10px 0;
 }
 
@@ -858,14 +857,20 @@ h1,h2,h3,h4,h5,h6 {
 
 .cartActions{
   padding-top: 6px;
-  margin-left: 80px;
+  margin-left: 30px;
+  width: 100px;
+  position: absolute;
 }
 
 .cartPrice {
-  width: 100px;
+  width: 100%;
   padding-top: 12px;
   font-size: 18px;
-  text-align: right;
+  text-align: center;
+}
+
+.cartPrice span {
+  float: right;
 }
 
 .cartAction-container{

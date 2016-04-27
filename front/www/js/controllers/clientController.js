@@ -225,6 +225,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       /////clone the options things so we can add it
       var optionClone = $($(".optionsPart")[0]).clone();
       targItem.find('.cartPrice').addClass('activeCartPrice');
+      targItem.find('.activeCartPrice').css({
+        paddingRight: '30px'
+      });
       ////quick loop to add the proper size
       var sizeArr = optionClone.find('.sizeCell');
       var sizeLength = sizeArr.length;
@@ -255,10 +258,11 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       optionClone.find('.modalActionSubmit').remove();
       optionClone.find('.espressoMath-number').text(itemObj.customizations.shots)
       optionClone.css({
-        "position": 'relative'
+        "position": 'absolute'
         ,marginTop: '55px'
-        ,marginLeft: '-156px'
+        ,marginLeft: '-100%'
       });
+
       targItem.find('.checkoutDrinkInfo-name').css({
         marginTop: '12px'
       });
@@ -420,7 +424,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           parentEl.find('.moreOptionsContainer').animate({
             opacity: 1
           }, 500);
-          parentEl.find('.moreDrinkOps').text('Close Drink Options');
+          parentEl.find('.moreDrinkOps').html('Close Drink Options <span><i class="fa fa-angle-up"></i></span>');
         }, 200);
         vm.moreOptions = true;
       }
@@ -433,7 +437,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           height: '0px'
           ,opacity: 0
         }, 300);
-        parentEl.find('.moreDrinkOps').text('More Drink Options');
+        parentEl.find('.moreDrinkOps').html('More Drink Options <span><i class="fa fa-angle-down"></i></span>');
         vm.moreOptions = false;
         $ionicScrollDelegate.scrollTo(0, 30, true);
       }
@@ -1138,7 +1142,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     //////functions to open/close shopping carts/////
     function openCart(evt){
-      console.log(vm.currentOrder);
       $('.drinkRepeatContainer').animate({
         opacity: 0
       }, 150);
