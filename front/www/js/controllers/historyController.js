@@ -13,7 +13,8 @@ angular.module('historyController', ['getLastOrderFactory'])
 
     function getHistory(){
       if(localStorage.hasOwnProperty('lastOrder')){
-        vm.lastOrder = localStorage.lastOrder.split('-&-').reverse();
+        vm.lastOrder = localStorage.lastOrder.split('-&-');
+        alert(vm.lastOrder)
       }
       else {
         vm.lastOrder = [];

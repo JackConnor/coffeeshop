@@ -1447,22 +1447,25 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function storeLocal(newOrderId){
       if(localStorage.hasOwnProperty('lastOrder')){
         var stor = localStorage.lastOrder;
-        if(stor == null){
+        if(stor === null && stor === ''){
           var splitStor = ''
         }
         else {
           var splitStor = stor.split('-&-').splice(0, stor.split('-&-').length-1);
         }
         if(splitStor.length < 5){
-          var newStor = localStorage.lastOrder+=newOrderId+"-&-";
+          var newStor = localStorage.lastOrder
+          newStor += newOrderId+"-&-";
+          console.log(localStorage);
           localStorage.setItem('lastOrder', newStor);
+          console.log(localStorage);
         }
         else {
-          splitStor = splitStor.reverse();
           splitStor = splitStor.slice(0, 4);
-          splitStor = splitStor.reverse();
           splitStor.push(newOrderId+"-&-");
+          console.log(localStorage);
           localStorage.setItem('lastOrder', splitStor.join('-&-'));
+          console.log(localStorage);
         }
       }
       else {
