@@ -59,7 +59,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .cartHolder i {
-  font-size: 30px;
+  font-size: 35px;
   display: inline-block;
 }
 
@@ -106,6 +106,15 @@ h1,h2,h3,h4,h5,h6 {
   padding-left: 15px;
   margin-top: 15px;
   opacity: 0;
+}
+
+.cartTotal {
+  position: absolute;
+  color: white;
+  padding-left: 15px;
+  padding-top: 3px;
+  font-weight: bolder;
+  font-size: 14px;
 }
 
 .categoryTitle {
@@ -532,7 +541,7 @@ h1,h2,h3,h4,h5,h6 {
   height: 0;
   position: absolute;
   display: block;
-  z-index: 0;
+  z-index: -1;
 }
 
 .optionText{

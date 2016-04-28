@@ -17,6 +17,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.postCartOpen      = false;
     vm.hasHistory        = false;
     vm.signinModalClient = true;
+    vm.totalItems        = 0;
     vm.totalShots        = 0;
     vm.currentDrink      = {}
     vm.currentOrder      = [];
@@ -95,12 +96,21 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.splashIntro').animate({
           opacity: 0
         }, 800);
-      }, 2500);
+      }, 1500);
       setTimeout(function(){
         $('.splashIntro').remove();
-      }, 3500);
+      }, 2300);
     }
     unloadIntro();
+
+    ///function to control number in the cart
+    function cartNumberAdd(){
+      vm.totalItems += 1;
+    }
+
+    function cartNumberMinus(){
+      vm.totalItems -= 1;
+    }
 
     /////opens the options modal when user selects an item
     function openOptionsModal(currentDrink, index, evt){
@@ -474,6 +484,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       if(vm.lastOrder.length === 0){
         getLastOrder();
       }
+      cartNumberAdd();
       // console.log(vm.lastOrder);
       var lastClone = $(".drinkCellLastOrder").clone();
       lastClone.css({
@@ -537,15 +548,19 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function openMoreOptions(parentEl){
       console.log(parentEl);
       if(vm.moreOptions === false){
-        // $ionicScrollDelegate.scrollTo(0, 90, true);
+        $ionicScrollDelegate.scrollTo(0, 20, true);
         parentEl.animate({
           height: '425px'
         }, 300);
         parentEl.find('.moreOptionsContainer').animate({
           height: '100px'
         }, 300);
+        parentEl.find('.optionsPart').css({
+          zIndex: 0
+        });
         $('.shoppingCartList').animate({
           height: '366px'
+          ,maxHeight: '366px'
         }, 300);
         $('.cartModalHolder').animate({
           height: '500px'
@@ -560,6 +575,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       }
       //////the ext part actuall closes it
       else {
+        $ionicScrollDelegate.scrollTo(0, 0, true);
         parentEl.animate({
           height: '325px'
         }, 300);
@@ -567,6 +583,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           height: '0px'
           ,opacity: 0
         }, 300);
+        parentEl.find('.optionsPart').css({
+          zIndex: 0
+        });
         $('.shoppingCartList').animate({
           maxHeight: '270px'
         }, 250);
@@ -1230,7 +1249,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     vm.removeItem = function(something, index) {
       vm.orderTotalPrice -= vm.currentOrder[index].price
-      vm.currentOrder.splice(index, 1)
+      vm.currentOrder.splice(index, 1);
+      cartNumberMinus();
     }
 
     function submitDrinkOptions(evt) {
@@ -1262,6 +1282,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.orderTotalPrice += vm.currentDrink.price;
         ///////put all settings back to zero
         vm.currentOrder.push(drinkDetails);
+        setTimeout(function(){
+          console.log(vm.currentOrder.length);
+          cartNumberAdd();
+        }, 1000);
         vm.currentDrink = {};
         vm.totalShots   = 0;
         vm.moreOptions = false;
@@ -1284,12 +1308,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       $('.drinkRepeatContainer').animate({
         opacity: 0
       }, 150);
+      $('.optionsPart').css({
+        zIndex: 0
+      });
       // setTimeout(function(){
       $('.cartHolder i').animate({
         fontSize: 60+"px"
         ,paddingTop: 0+'px'
         ,paddingRight: 5+'px'
         ,color: '#323232'
+      }, 350);
+      $('.cartTotal').animate({
+        marginLeft: '218px'
+        ,paddingTop: '13px'
+        ,fontSize: '25px'
       }, 350);
       $('.cartModalHolder').animate({
         width: 90+"%"
@@ -1335,12 +1367,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       $('.checkoutForm').append(
         "<div id='checkout'></div>"
       );
+      $('.optionsPart').css({
+        zIndex: 0
+      });
       $('.cartModalHolder').animate({
         borderWidth: 0
       }, 200);
+      $('.cartTotal').animate({
+        marginLeft: '241px'
+        ,paddingTop: '3px'
+        ,fontSize: '14px'
+      }, 250);
       // setTimeout(function(){
         $('.cartHolder i').animate({
-          fontSize: 30+"px"
+          fontSize: 35+"px"
           ,paddingTop: 0+'px'
           ,paddingRight: 0+'px'
         }, 250);
@@ -1349,7 +1389,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           ,marginLeft: 0+'%'
           ,marginTop: 0+'px'
           ,paddingTop: 2+'px'
-          ,height: "30px"
+          ,height: "35px"
           ,marginRight: 0+"px"
           ,backgroundColor: 'transparent'
         }, 250);

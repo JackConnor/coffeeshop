@@ -1,17 +1,20 @@
+<div class="splashIntro">
+  <img src="img/introSplash.png" alt="" />
+  <div class="splashIntroContent">
+    CoffeeNation
+  </div>
+</div>
 <ion-view>
   <ion-content >
-    <div class="splashIntro">
-      <img src="http://s32.postimg.org/u4eqcybsl/Screen_Shot_2016_04_27_at_5_47_17_PM.png" alt="" />
-      <div class="splashIntroContent">
-        CoffeeNation
-      </div>
-    </div>
     <div class="navContainer">
       <div class="cartHolder">
         <div class="cartModalHolder">
           <div class="xCart fa fa-times" ng-click='client.closeCart()' ng-if='client.cartModal'></div>
-         <i class='fa fa-shopping-cart' ng-click='client.openCart()'></i>
-         <div class="listContainer">
+          <p class='cartTotal'>
+            {{client.totalItems}}
+          </p>
+           <i class='fa fa-shopping-cart' ng-click='client.openCart()'></i>
+           <div class="listContainer">
            <ion-scroll class="shoppingCartList" ng-if='client.cartModal' delegate-handle='cartList'>
              <div class="cartListInner">
                <div ng-repeat='item in client.currentOrder' class="shoppingCartCell" >
