@@ -355,8 +355,9 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .extrasTitle {
-  font-size: 18px;
-  margin-top: 5px;
+  padding: 0px;
+  font-size: 14px;
+  margin-top: 2px;
 }
 
 .flavourDropdown {
@@ -639,7 +640,7 @@ h1,h2,h3,h4,h5,h6 {
   font-size: 18px;
   font-weight: 900;
   margin-top: 15px;
-  margin-left: 25px;
+  margin-left: 10px;
 }
 
 .orderDate {
@@ -658,8 +659,8 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .orderName {
-  font-size: 25px;
-  margin-left: 25px;
+  font-size: 14px;
+  margin-left: 10px;
   padding-top: 20px;
 }
 
@@ -879,7 +880,8 @@ h1,h2,h3,h4,h5,h6 {
 
 .vendorSize {
   font-weight: 100;
-  font-size: 18px;
+  font-size: 14px;
+  margin-left: 10px;
 }
 
 /*//////////////////still ned to oranzie*/

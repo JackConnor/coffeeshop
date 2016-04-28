@@ -15,19 +15,19 @@
         </div>
         <div class="orderCellInner center" on-swipe-right='vendor.cellSwipeRight($event)'   on-swipe-left='vendor.cellSwipeLeft($event)'>
           <div class='orderCellTitle col-xs-4'>
-            <span class='orderName'>{{item.itemId.name}} <span class='vendorSize'> - {{item.customizations[0].size}}</span></span>
+            <span class='orderName'>{{item.itemId.name}} <br><span class='vendorSize'> {{item.customizations[0].size}}</span></span>
             <br>
             <span class='orderCustomerName'>{{item.name}}</span>
           </div>
           <div class="orderCellDetails col-xs-5">
-            <p class='extrasTitle'>
+            <!-- <p class='extrasTitle'>
               Extras
-            </p>
+            </p> -->
             <div class="orderCellShots" ng-if='item.customizations[0].shots > 0'>
               Espresso shots: {{item.customizations[0].shots}}
             </div>
             <div class="orderCellFlavours" ng-if='item.customizations[0].flavours'>
-              Additional flavours: {{item.customizations[0].flavours}}
+              Flavours: {{item.customizations[0].flavours}}
             </div>
           </div>
           <div class="orderClock">
