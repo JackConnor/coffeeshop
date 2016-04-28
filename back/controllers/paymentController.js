@@ -1,8 +1,8 @@
 //DECLARING VARIABLES
 //===========================
 var braintree = require('braintree')
- var Dev = require( '../.Dev.js' )
-
+var Dev = require( '../.Dev.js' )
+console.log(Dev.merchantId);
 
 var gateway = braintree.connect({
   environment: braintree.Environment.Sandbox,
@@ -17,8 +17,10 @@ function getToken(req, res){
 
     gateway.clientToken.generate({}, function (err, token){
       if (err) {
+        console.log(err);
         throw err
       } else {
+        console.log(token);
         res.json({ "client_token": token.clientToken})
       }
     })
