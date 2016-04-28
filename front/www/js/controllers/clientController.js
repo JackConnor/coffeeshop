@@ -61,6 +61,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function getLastOrder(){
       var lastOrderStr = window.localStorage.lastOrder;
       var lastOrderArr = lastOrderStr.split('-&-');
+      console.log(lastOrderArr);
       var lastOrderItem = lastOrderArr.slice(0, [lastOrderArr.length-2]);
       var allOrderedItems = [];
       for (var i = 0; i < lastOrderArr.length; i++) {
@@ -86,6 +87,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     //////////////////////////////////////////////
     ////////All Animation Functions///////////////
     //////////////////////////////////////////////
+
+    /////splash intro function
+    function unloadIntro(){
+      console.log('osdafjlkasjflksaj');
+      setTimeout(function(){
+        $('.splashIntro').animate({
+          opacity: 0
+        }, 800);
+      }, 2500);
+      setTimeout(function(){
+        $('.splashIntro').remove();
+      }, 3500);
+    }
+    unloadIntro();
 
     /////opens the options modal when user selects an item
     function openOptionsModal(currentDrink, index, evt){

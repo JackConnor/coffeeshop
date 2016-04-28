@@ -46,11 +46,8 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
     });
 
     function markAsDone(evt, itemId, status){
-      console.log('yo');
       processItem(itemId, status)
       .then(function(updatedItem){
-        console.log(updatedItem);
-        console.log($(evt.currentTarget).parent());
         var parentEl = $(evt.currentTarget).parent();
         var sibRight = parentEl.find('.orderCellRight');
         var sibLeft  = parentEl.find('.orderCellLeft');

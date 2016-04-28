@@ -9,7 +9,7 @@ angular.module('singleOrderFactory', [])
       console.log(orderId);
       return $http({
         method: "GET"
-        ,url: "http://192.168.0.9:3000/orders/one/"+orderId
+        ,url: "http://52.39.40.7/orders/one/"+orderId
       })
     }
     return getSingleOrder;
