@@ -5,6 +5,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
   clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken', 'braintreeProcess', '$location', '$ionicScrollDelegate', 'singleOrder'];
 
   function clientCtrl($http, $timeout, menuItems, $rootScope, braintreeToken, braintreeProcess, $location, $ionicScrollDelegate, singleOrder){
+    window.location.hash = '/vendor';
+    window.location.reload();
     //////////////////////////////////////////////
     ////////All Global Variables//////////////////
     //////////////////////////////////////////////
