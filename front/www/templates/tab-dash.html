@@ -6,7 +6,7 @@
           <div class="xCart fa fa-times" ng-click='client.closeCart()' ng-if='client.cartModal'></div>
          <i class='fa fa-shopping-cart' ng-click='client.openCart()'></i>
          <div class="listContainer">
-           <ion-scroll class="shoppingCartList" ng-if='client.cartModal'>
+           <ion-scroll class="shoppingCartList" ng-if='client.cartModal' delegate-handle='cartList'>
              <div class="cartListInner">
                <div ng-repeat='item in client.currentOrder' class="shoppingCartCell" >
                  <div class="cartContent  shopping{{item.index}}">

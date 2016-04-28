@@ -203,6 +203,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     /////////function to close the options modal
     function closeModal(){
       /////animation work
+      $ionicScrollDelegate.freezeAllScrolls(false);
       $('.optionOpen').animate({
         opacity: 0
       }, 200);
@@ -229,6 +230,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     }
 
     function openOptionsFromCart(evt, itemObj, index){
+      $ionicScrollDelegate.$getByHandle('cartList').scrollTo(0, 0 , true);
+      $ionicScrollDelegate.freezeAllScrolls(true);
       vm.cartOptionsOpen = true;
       vm.currentDrink = itemObj;
       if(itemObj.itemId.customFields.espressoShots.on === false){
@@ -239,7 +242,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       }
       var shotPrice = itemObj.itemId.customFields.espressoShots.addedPrice;
       vm.currentItemShots = itemObj.customizations.shots;
-      var offTopEl = $($('.shoppingCartCell')[0]).offset().top;
+      var offTopEl = $($('.shoppingCartCell')[index]).offset().top;
       var offTopCont = $('.shoppingCartList').offset().top;
       var distance = (-index*60) -10
       var targItem = $(evt.currentTarget).closest('.shoppingCartCell').clone();
@@ -296,16 +299,16 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       targItem.append(optionClone);
       targItem.addClass('cartOptionOpen')
       targItem.append(
-        "<div class='cartOpClose'>Close Options</div>"
+        "<div class='cartOpClose'>Close</div>"
       );
       targItem.css({
         height: '60px'
         ,paddingLeft: '10px'
         ,paddingTop: '10px'
         ,position: 'absolute'
-        ,marginTop: distance+'px'
-        ,width: '90%'
-        ,left: '5%'
+        ,marginTop: distance+10+'px'
+        ,width: '100%'
+        ,left: '0%'
         ,border: '2px solid #666666'
         ,zIndex: 5
       });
@@ -326,10 +329,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         }
         else {
           $('.cartOpClose').animate({
-            marginTop: '241px'
-          }, 300);
+            marginTop: '210px'
+          }, 250);
         }
       });
+      // $('.cartModalHolder').animate({
+      //   height: '550px'
+      // }, 250);
       targItem.find('.closeOptions').on('click', function(){
         closeCartOptions();
       });
@@ -342,7 +348,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       });
 
       targItem.animate({
-        height: '375px'
+        height: '298px'
         ,backgroundColor: 'white'
       }, 350);
       setTimeout(function(){
@@ -361,7 +367,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function closeCartOptions(itemObj){
       ////data stuff
       var targetIndex = itemObj;
-      console.log(targetIndex);
       var currentItem = vm.currentOrder[targetIndex];
       currentItem.customizations.shots = vm.totalShots;
       currentItem.customizations.flavours = $('.flavourCart').val();
@@ -379,7 +384,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         opacity: 0
       }, 250);
       $('.cartOptionOpen').css({
-        marginTop: -itemObj*60+'px'-10
+        marginTop: -itemObj*60+'px'
       })
       opEl.animate({
         opacity: 0
@@ -488,13 +493,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     }
 
     function openMoreOptions(parentEl){
+      console.log(parentEl);
       if(vm.moreOptions === false){
-        $ionicScrollDelegate.scrollTo(0, 90, true);
+        // $ionicScrollDelegate.scrollTo(0, 90, true);
         parentEl.animate({
           height: '425px'
         }, 300);
         parentEl.find('.moreOptionsContainer').animate({
           height: '100px'
+        }, 300);
+        $('.shoppingCartList').animate({
+          maxHeight: '400px'
+        }, 300);
+        $('.cartModalHolder').animate({
+          height: '550px'
         }, 300);
         setTimeout(function(){
           parentEl.find('.moreOptionsContainer').animate({
@@ -513,9 +525,15 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           height: '0px'
           ,opacity: 0
         }, 300);
+        $('.shoppingCartList').animate({
+          maxHeight: '270px'
+        }, 250);
+        $('.cartModalHolder').animate({
+          height: '550px'
+        }, 300);
         parentEl.find('.moreDrinkOps').html('More Options <span><i class="fa fa-angle-down"></i></span>');
         vm.moreOptions = false;
-        $ionicScrollDelegate.scrollTo(0, 30, true);
+        // $ionicScrollDelegate.scrollTo(0, 30, true);
       }
     }
 
@@ -1233,7 +1251,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       $('.cartModalHolder').animate({
         width: 90+"%"
         ,marginLeft: 0+'%'
-        ,marginTop: 40+'px'
+        ,marginTop: 10+'px'
         ,paddingTop: 10+'px'
         ,height: 400+"px"
         ,marginRight: 5+"%"
