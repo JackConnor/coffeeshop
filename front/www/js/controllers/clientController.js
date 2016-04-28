@@ -1445,8 +1445,39 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         .success(function (data) {
           ///////begin braintree injection
           vm.submitName = function(){
-            var name = $('.checkoutName').val();
-            if(name.length > 0){
+            var emailVal = $('.checkoutName').val();
+            function checkValidEmail(){
+              var emLength = emailVal.length;
+              var atIndex = null;
+              var dotIndex = null;
+              for (var i = 0; i < emLength; i++) {
+                if(emailVal[i] === '@' && i !== emLength-1){
+                  atIndex = i;
+                }
+                else if(emailVal[i] === '.' && i !== emLength-1){
+                  dotIndex = i;
+                }
+                else if(i === emLength-1){
+                  if(atIndex === null){
+                    alert('you need n @ sign');
+                    return false;
+                  }
+                  else if(dotIndex === null){
+                    alert('you need a . i there');
+                    return false
+                  }
+                  else if((atIndex >= dotIndex-2) || (atIndex === 0)){
+                    alert('I think you have an issue with your email address');
+                    return false;
+                  }
+                  else {
+                    return true;
+                  }
+                }
+              }
+            }
+            var isValidEmail = checkValidEmail();
+            if(emailVal.length > 0 && isValidEmail){
               $('.checkoutName').animate({
                 opacity: 0
               }, 250);
@@ -1485,8 +1516,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
               container: 'checkout' ,
               // Form is not submitted by default when paymentMethodNonceReceived is implemented
               paymentMethodNonceReceived: function (event, nonce) {
-                console.log('nonce');
-                console.log(nonce);
                 vm.paymentNonce = nonce;
                 //////if-statement to check if user has added a name
                 if($('.checkoutName').val().length > 0){
