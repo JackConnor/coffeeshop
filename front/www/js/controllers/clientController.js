@@ -5,8 +5,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
   clientCtrl.$inject = ['$http', '$timeout', 'menuItems', '$rootScope', 'braintreeToken', 'braintreeProcess', '$location', '$ionicScrollDelegate', 'singleOrder'];
 
   function clientCtrl($http, $timeout, menuItems, $rootScope, braintreeToken, braintreeProcess, $location, $ionicScrollDelegate, singleOrder){
-    window.location.hash = '/vendor';
-    window.location.reload();
     //////////////////////////////////////////////
     ////////All Global Variables//////////////////
     //////////////////////////////////////////////
@@ -59,12 +57,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     .catch( function( err ) {
       console.log( 'Error', err )
     } );
-
     ////function to get the data from last order
     function getLastOrder(){
+      if(!window.localStorage.lastOrder){
+        window.localStorage.lastOrder = '';
+      }
       var lastOrderStr = window.localStorage.lastOrder;
       var lastOrderArr = lastOrderStr.split('-&-');
-      console.log(lastOrderArr);
       var lastOrderItem = lastOrderArr.slice(0, [lastOrderArr.length-2]);
       var allOrderedItems = [];
       for (var i = 0; i < lastOrderArr.length; i++) {
@@ -78,10 +77,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           })
         }
       }
-
     }
     getLastOrder();
-
     //////////////////////////////////////////////
     ////////End Data Function (i/o)///////////////
     //////////////////////////////////////////////
@@ -92,22 +89,24 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     //////////////////////////////////////////////
 
     /////splash intro function
-    function unloadIntro(){
-      console.log('osdafjlkasjflksaj');
-      setTimeout(function(){
-        $('.splashIntro').animate({
-          opacity: 0
-        }, 800);
-      }, 1500);
-      setTimeout(function(){
-        $('.splashIntro').remove();
-      }, 2300);
-    }
-    unloadIntro();
+    // function unloadIntro(){
+    //   console.log('osdafjlkasjflksaj');
+    //   setTimeout(function(){
+    //     $('.splashIntro').animate({
+    //       opacity: 0
+    //     }, 800);
+    //   }, 1500);
+    //   setTimeout(function(){
+    //     $('.splashIntro').remove();
+    //   }, 2300);
+    // }
+    // unloadIntro();
 
     ///function to control number in the cart
     function cartNumberAdd(){
+      console.log('adding');
       vm.totalItems += 1;
+      console.log(vm.totalItems);
     }
 
     function cartNumberMinus(){
@@ -116,10 +115,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     /////opens the options modal when user selects an item
     function openOptionsModal(currentDrink, index, evt){
-      console.log(evt.target);
       vm.ogPrice = currentDrink.price;
       vm.currentOpenModal = $(evt.currentTarget)[0].classList[2];
-      console.log(vm.currentOpenModal);
       var shotPrice = currentDrink.customFields.espressoShots.addedPrice;
       vm.currentDrink = currentDrink
       var index = index;
@@ -470,7 +467,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       newCartItem.status = vm.lastOrder[vm.lastOrder.length-1].status;
       vm.currentOrder.push(newCartItem);
       vm.orderTotalPrice += newCartItem.price;
-      console.log(vm.lastOrder);
       vm.lastOrder = vm.lastOrder.slice(1, vm.lastOrder.length)
       if(vm.lastOrder.length === 0){
         getLastOrder();
@@ -502,13 +498,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.addLastOrderCart = addLastOrderCart;
 
     function checkHistory(){
-      console.log('kjsdhfkjsdhaflkjahskljfhsdakjlhas');
       var locObj = window.localStorage.lastOrder;
-      console.log(locObj);
-      console.log(locObj.length);
       if(locObj.length > 5){
         vm.hasHistory = true;
-        console.log(vm.hasHistory);
       }
     }
     checkHistory();
@@ -1262,6 +1254,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           console.log("no size selected")
       }
       if(!drinkDetails.customizations.size == ''){
+        $timeout(function(){
+          cartNumberAdd();
+        }, 300);
         drinkDetails.itemId = vm.currentDrink;
         drinkDetails.customizations.flavours = $('.flavourDropdown').val();
         drinkDetails.customizations.toppings = $('.toppingDropdown').val();
@@ -1273,10 +1268,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.orderTotalPrice += vm.currentDrink.price;
         ///////put all settings back to zero
         vm.currentOrder.push(drinkDetails);
-        setTimeout(function(){
-          console.log(vm.currentOrder.length);
-          cartNumberAdd();
-        }, 1000);
         vm.currentDrink = {};
         vm.totalShots   = 0;
         vm.moreOptions = false;
