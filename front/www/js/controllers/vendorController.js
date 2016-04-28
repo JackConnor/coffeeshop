@@ -73,7 +73,7 @@ angular.module('vendorController', ['allOrdersFactory', 'processItemFactory', 'a
     ////quick function to convert the inline date using moment.js
     function convertDate(isoDate){
       // var convDate = moment(isoDate).format("DD-MM-YYYY")
-      var convDate = moment(isoDate).format("X")
+      var convDate = moment(isoDate).format("X");
       return (convDate/60)
     }
     vm.convertDate = convertDate;

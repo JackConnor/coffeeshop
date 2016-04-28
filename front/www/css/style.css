@@ -354,6 +354,11 @@ h1,h2,h3,h4,h5,h6 {
   margin-right:14px;
 }
 
+.extrasTitle {
+  font-size: 18px;
+  margin-top: 5px;
+}
+
 .flavourDropdown {
   width: 140px;
 }
@@ -553,15 +558,25 @@ h1,h2,h3,h4,h5,h6 {
 .orderCell {
   height: 100px;
   width: 100%;
-  border-bottom: 2px dashed gray;
-  border-right: 2px solid gray;
-  border-left: 2px solid gray;
+  border-bottom: 2px solid #D4D4D4;
 }
 
 .orderCellDetails {
   height: 100%;
   display: inline-block;
   font-size: 12px;
+}
+
+.orderCellFlavours {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.orderCellInner {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /*outline: 1px solid gray;*/
 }
 
 .orderCellLeft {
@@ -576,13 +591,6 @@ h1,h2,h3,h4,h5,h6 {
   font-weight: 900;
   padding: 15px 5px 0 5px;
   text-align: center;
-}
-
-.orderCellInner {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  /*outline: 1px solid gray;*/
 }
 
 .orderCellRight {
@@ -604,6 +612,8 @@ h1,h2,h3,h4,h5,h6 {
 
 .orderCellShots {
   display: block;
+  font-size: 14px;
+  margin-top: 5px
 }
 
 .orderCellSize {
@@ -612,7 +622,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .orderCellTitle {
   /*display: inline-block;*/
-  padding: 0px;
+  padding: 15px 0 0 0px;
 }
 
 .orderClock {
@@ -626,10 +636,10 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .orderCustomerName {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 900;
-  margin-top: 2px;
-  margin-left: 5px;
+  margin-top: 15px;
+  margin-left: 25px;
 }
 
 .orderDate {
@@ -648,9 +658,9 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .orderName {
-  font-size: 19px;
-  margin-left: 5px;
-  font-weight: 900;
+  font-size: 25px;
+  margin-left: 25px;
+  padding-top: 20px;
 }
 
 .orderSection {
@@ -865,6 +875,11 @@ h1,h2,h3,h4,h5,h6 {
   height: 40px;
   padding-top: 0px;
   margin-top: -42px;
+}
+
+.vendorSize {
+  font-weight: 100;
+  font-size: 18px;
 }
 
 /*//////////////////still ned to oranzie*/

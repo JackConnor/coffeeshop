@@ -17,7 +17,7 @@
            <div class="listContainer">
            <ion-scroll class="shoppingCartList" ng-if='client.cartModal' delegate-handle='cartList'>
              <div class="cartListInner">
-               <div ng-repeat='item in client.currentOrder' class="shoppingCartCell" >
+               <div ng-repeat='item in client.currentOrder' id='{{$index}}' class="shoppingCartCell" >
                  <div class="cartContent  shopping{{item.index}}">
                    <img class="itemCartImageHolder" src="{{item.itemId.photoLink}}" alt="" />
                    <div class="checkoutDrinkInfo-name">
@@ -46,7 +46,7 @@
              <div class="checkoutTotal col-xs-6">
                Total: {{client.orderTotalPrice | currency}}
              </div>
-             <div class="checkoutButton col-xs-5"ng-click='client.getToken()'>
+             <div class="checkoutButton col-xs-5" ng-click='client.getToken()'>
                Checkout
              </div>
              <h4 class='col-xs-12 addNameOrder'>Add Name to Your Order</h4>

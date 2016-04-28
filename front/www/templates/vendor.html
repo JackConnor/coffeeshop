@@ -15,14 +15,14 @@
         </div>
         <div class="orderCellInner center" on-swipe-right='vendor.cellSwipeRight($event)'   on-swipe-left='vendor.cellSwipeLeft($event)'>
           <div class='orderCellTitle col-xs-4'>
-            <span class='orderName'>{{item.itemId.name}}</span>
+            <span class='orderName'>{{item.itemId.name}} <span class='vendorSize'> - {{item.customizations[0].size}}</span></span>
             <br>
             <span class='orderCustomerName'>{{item.name}}</span>
           </div>
           <div class="orderCellDetails col-xs-5">
-            <div class="orderCellSize" ng-if='item.customizations[0].size'>
-              {{item.customizations[0].size}}
-            </div>
+            <p class='extrasTitle'>
+              Extras
+            </p>
             <div class="orderCellShots" ng-if='item.customizations[0].shots > 0'>
               Espresso shots: {{item.customizations[0].shots}}
             </div>
@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="orderClock">
-            {{ vendor.currentDate - (vendor.convertDate(item.createdDate)) | number: 0}}<span class='minuteM'>M</span>
+            {{ vendor.currentDate - (vendor.convertDate(item.createdDate)) | number: 0}} <span class='minuteM'>Minutes Old</span>
           </div>
         </div>
         <div class="orderCellRight" ng-click='vendor.markAsDone($event, item._id, "complete")'>

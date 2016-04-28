@@ -427,17 +427,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.shoppingCartList').animate({
           height: autoHeight
         }, 300);
-      // if($('.shoppingCartList').css('height') !==){
-      //   $('.shoppingCartList').css({
-      //     height: 'auto'
-      //   });
-      //   var autoHeight = $('.shoppingCartList').height();
-      //   console.log(autoHeight);
-      //   $('.shoppingCartList').animate({
-      //     height: autoHeight
-      //   }, 300);
-      // }
-
       opEl.animate({
         opacity: 0
       }, 450);
@@ -451,11 +440,11 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           opEl.remove();
         }, 250)
       }, 420);
-      $('.cartPrice span').text("$"+vm.currentDrink.price);
+      $('.cartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
       vm.totalShots = 0;
       vm.currentDrink = null;
       var newTotal = getPrice();
-      $('.checkoutTotal').text("$"+newTotal);
+      $('.checkoutTotal').text("$"+newTotal.toFixed(2));
     }
 
     /////function to get total price
@@ -602,9 +591,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       vm.totalShots++;
       vm.currentDrink.price += shotPrice;
       $('.activePrice').text('');
-      $('.activePrice').text("$"+vm.currentDrink.price);
+      $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
       $('.activeCartPrice span').text('');
-      $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+      $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
       vm.currentOrder.shots = vm.totalShots;
       $('.espressoMath-number').text(vm.totalShots);
     }
@@ -615,7 +604,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.totalShots--;
         vm.currentDrink.price -= shotPrice;
         $('.activeCartPrice span').text('');
-        $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+        $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
         vm.currentOrder.shots = vm.totalShots;
       }
       // vm.currentOrder.shotss = vm.totalShots;
@@ -648,13 +637,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.customFields.size.sizes.value = 'small';
           vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.medium;
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'large'){
           vm.currentDrink.customFields.size.sizes.value = 'small';
           vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.large;
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         //////animate
         $('.sizeMedium').removeClass('selected');
@@ -691,13 +680,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.customFields.size.sizes.value = 'small';
           vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.medium;
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'large'){
           vm.currentDrink.customFields.size.sizes.value = 'small';
           vm.currentDrink.price -= vm.currentDrink.customFields.size.sizes.large;
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         //////animate
         $('.sizeMedium').removeClass('selected');
@@ -731,19 +720,19 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.customFields.size.sizes.value = 'medium';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.medium;
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'small'){
           vm.currentDrink.customFields.size.sizes.value = 'medium';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.medium;
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'large'){
           vm.currentDrink.customFields.size.sizes.value = 'medium';
           vm.currentDrink.price -= (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
@@ -776,19 +765,19 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.customFields.size.sizes.value = 'medium';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.medium;
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'small'){
           vm.currentDrink.customFields.size.sizes.value = 'medium';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.medium;
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'large'){
           vm.currentDrink.customFields.size.sizes.value = 'medium';
           vm.currentDrink.price -= (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
@@ -822,21 +811,21 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
           console.log(vm.currentDrink);
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'small'){
           vm.currentDrink.customFields.size.sizes.value = 'large';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
           console.log(vm.currentDrink);
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
           vm.currentDrink.customFields.size.sizes.value = 'large';
           vm.currentDrink.price -= (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
           console.log(vm.currentDrink);
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
@@ -871,21 +860,21 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
           console.log(vm.currentDrink);
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'small'){
           vm.currentDrink.customFields.size.sizes.value = 'large';
           vm.currentDrink.price += vm.currentDrink.customFields.size.sizes.large;
           console.log(vm.currentDrink);
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customFields.size.sizes.value === 'medium'){
           vm.currentDrink.customFields.size.sizes.value = 'large';
           vm.currentDrink.price += (vm.currentDrink.customFields.size.sizes.large - vm.currentDrink.customFields.size.sizes.medium)
           console.log(vm.currentDrink);
           $('.activePrice').text('');
-          $('.activePrice').text("$"+vm.currentDrink.price);
+          $('.activePrice').text("$"+vm.currentDrink.price.toFixed(2));
         }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
@@ -971,14 +960,14 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.customizations.size = 'small';
           vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.medium;
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
           animateSmall();
         }
         else if(vm.currentDrink.customizations.size === 'large'){
           vm.currentDrink.customizations.size = 'small';
           vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.large;
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
           animateSmall();
         }
         //////animate
@@ -1015,14 +1004,14 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.customizations.size = 'small';
           vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.medium;
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
           animateSmall();
         }
         else if(vm.currentDrink.customizations.size === 'large'){
           vm.currentDrink.customizations.size = 'small';
           vm.currentDrink.price -= vm.currentDrink.itemId.customFields.size.sizes.large;
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
           animateSmall();
         }
         //////animate
@@ -1059,13 +1048,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.customizations.size = 'medium';
           vm.currentDrink.price += vm.currentDrink.itemId.customFields.size.sizes.medium;
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customizations.size === 'large'){
           vm.currentDrink.customizations.size = 'medium';
           vm.currentDrink.price -= (vm.currentDrink.itemId.customFields.size.sizes.large - vm.currentDrink.itemId.customFields.size.sizes.medium)
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
         }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
@@ -1098,13 +1087,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.customizations.size = 'medium';
           vm.currentDrink.price += vm.currentDrink.itemId.customFields.size.sizes.medium;
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customizations.size === 'large'){
           vm.currentDrink.customizations.size = 'medium';
           vm.currentDrink.price -= (vm.currentDrink.itemId.customFields.size.sizes.large - vm.currentDrink.itemId.customFields.size.sizes.medium)
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
         }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
@@ -1137,13 +1126,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.customizations.size = 'large';
           vm.currentDrink.price += vm.currentDrink.itemId.customFields.size.sizes.large;
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customizations.size === 'medium'){
           vm.currentDrink.customizations.size = 'large';
           vm.currentDrink.price -= (vm.currentDrink.itemId.customFields.size.sizes.large - vm.currentDrink.itemId.customFields.size.sizes.medium)
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
         }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
@@ -1176,13 +1165,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           vm.currentDrink.customizations.size = 'large';
           vm.currentDrink.price += vm.currentDrink.itemId.customFields.size.sizes.large;
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
         }
         else if(vm.currentDrink.customizations.size === 'medium'){
           vm.currentDrink.customizations.size = 'large';
           vm.currentDrink.price += (vm.currentDrink.itemId.customFields.size.sizes.large - vm.currentDrink.itemId.customFields.size.sizes.medium)
           $('.activeCartPrice span').text('');
-          $('.activeCartPrice span').text("$"+vm.currentDrink.price);
+          $('.activeCartPrice span').text("$"+vm.currentDrink.price.toFixed(2));
         }
         $('.sizeSmall').removeClass('selected');
         $('.sizeSmall').css({
@@ -1290,7 +1279,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.totalShots   = 0;
         vm.moreOptions = false;
         setTimeout(function(){
-          $("."+vm.currentOpenModal).find('.drinkIn-price').text('$'+vm.ogPrice);
+          $("."+vm.currentOpenModal).find('.drinkIn-price').text('$'+vm.ogPrice.toFixed(2));
         }, 700);
         $('.activePrice').removeClass('activePrice');
         closeModal();
@@ -1417,7 +1406,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     vm.closeCart = closeCart;
 
     ///////payment and braintree injection function
-    vm.getToken = function () {
+    vm.getToken = getToken;
+    function getToken() {
+      var optionId = $('.cartOptionOpen').id
       if(!vm.checkoutOpen){
         // animation stuff
         var listOffset = $('.shoppingCartList').offset().top;
