@@ -324,7 +324,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         openMoreOptions(targItem);
         if(vm.moreOptions === true){
           $('.cartOpClose').animate({
-            marginTop: '341px'
+            marginTop: '305px'
           }, 300);
         }
         else {
@@ -366,6 +366,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     function closeCartOptions(itemObj){
       ////data stuff
+      $ionicScrollDelegate.freezeAllScrolls(false);
       var targetIndex = itemObj;
       var currentItem = vm.currentOrder[targetIndex];
       currentItem.customizations.shots = vm.totalShots;
@@ -503,10 +504,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           height: '100px'
         }, 300);
         $('.shoppingCartList').animate({
-          maxHeight: '400px'
+          maxHeight: '366px'
         }, 300);
         $('.cartModalHolder').animate({
-          height: '550px'
+          height: '500px'
         }, 300);
         setTimeout(function(){
           parentEl.find('.moreOptionsContainer').animate({
@@ -529,7 +530,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           maxHeight: '270px'
         }, 250);
         $('.cartModalHolder').animate({
-          height: '550px'
+          height: '410px'
         }, 300);
         parentEl.find('.moreDrinkOps').html('More Options <span><i class="fa fa-angle-down"></i></span>');
         vm.moreOptions = false;
