@@ -1188,7 +1188,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     // vm.choseSize = choseSize;
 
     vm.removeItem = function(something, index) {
-        vm.currentOrder.splice(index, 1)
+      vm.orderTotalPrice -= vm.currentOrder[index].price
+      vm.currentOrder.splice(index, 1)
     }
 
     function submitDrinkOptions(evt) {
