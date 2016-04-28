@@ -333,9 +333,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           }, 250);
         }
       });
-      // $('.cartModalHolder').animate({
-      //   height: '550px'
-      // }, 250);
+      var shoppingCartHeight = $('.shoppingCartList').height();
+      console.log(shoppingCartHeight);
+      if(shoppingCartHeight < 270){
+        $('.shoppingCartList').animate({
+          height: '270px'
+        }, 300);
+      }
       targItem.find('.closeOptions').on('click', function(){
         closeCartOptions();
       });
@@ -386,7 +390,29 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       }, 250);
       $('.cartOptionOpen').css({
         marginTop: -itemObj*60+'px'
-      })
+      });
+        $('.shoppingCartList').css({
+          height: 'auto'
+        });
+        var autoHeight = $('.shoppingCartList').height();
+        $('.shoppingCartList').css({
+          height: '270'
+        });
+        console.log(autoHeight);
+        $('.shoppingCartList').animate({
+          height: autoHeight
+        }, 300);
+      // if($('.shoppingCartList').css('height') !==){
+      //   $('.shoppingCartList').css({
+      //     height: 'auto'
+      //   });
+      //   var autoHeight = $('.shoppingCartList').height();
+      //   console.log(autoHeight);
+      //   $('.shoppingCartList').animate({
+      //     height: autoHeight
+      //   }, 300);
+      // }
+
       opEl.animate({
         opacity: 0
       }, 450);
@@ -504,7 +530,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           height: '100px'
         }, 300);
         $('.shoppingCartList').animate({
-          maxHeight: '366px'
+          height: '366px'
         }, 300);
         $('.cartModalHolder').animate({
           height: '500px'
@@ -513,7 +539,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           parentEl.find('.moreOptionsContainer').animate({
             opacity: 1
           }, 500);
-          parentEl.find('.moreDrinkOps').html('Close Options <span><i class="fa fa-angle-up"></i></span>');
+          parentEl.find('.moreDrinkOps').html('Close <span><i class="fa fa-angle-up"></i></span>');
         }, 200);
         vm.moreOptions = true;
       }
