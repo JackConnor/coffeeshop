@@ -54,7 +54,15 @@ angular.module('starter', ['ionic', 'starter.services', 'clientController', 'log
     .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
-        controller: 'loginCtrl'
+        controller: 'loginCtrl',
+        controllerAs: 'login'
+    })
+
+    .state('loginPayment', {
+        url: '/login/payment/:nonce',
+        templateUrl: 'templates/login.html',
+        controller: 'loginCtrl',
+        controllerAs: 'login'
     })
 
     .state('tab.payment', {

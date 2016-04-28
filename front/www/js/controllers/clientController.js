@@ -1485,6 +1485,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
               container: 'checkout' ,
               // Form is not submitted by default when paymentMethodNonceReceived is implemented
               paymentMethodNonceReceived: function (event, nonce) {
+                console.log('nonce');
+                console.log(nonce);
+                vm.paymentNonce = nonce;
                 //////if-statement to check if user has added a name
                 if($('.checkoutName').val().length > 0){
                   vm.message = 'Processing your payment...';
@@ -1497,6 +1500,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                     }
                   })
                   .success(function (data) {
+                    console.log(data);
                     if (data.success) {
                       vm.message = 'Payment authorized, thanks.';
                       vm.isError = false;
@@ -1518,6 +1522,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                       .then(function(data){
                         vm.postCartOpen = true;
                         var orderId = data.data.data._id;
+
                         //////////we store up to fie localstorage orders on a device, seperated by  an -&-
                         storeLocal(orderId);
                         vm.socket = io.connect('http://52.39.40.7/');
@@ -1635,8 +1640,20 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     //////function to go to login page
     function toLoginPage(){
-      window.location.hash = "#/login";
-      window.location.reload();
+      var newCustomerDetails = {};
+      var paymentNonce = vm.paymentNonce;
+      console.log(paymentNonce);
+      $http({
+        url: 'http://192.168.0.3:3000/payments/new_customer/'+paymentNonce
+        ,method: "GET"
+        // ,data: 'rawr'
+      })
+      .then(function(data){
+        console.log("data");
+        console.log(data);
+      })
+      // window.location.hash = "#/login/payment/"+paymentNonce;
+      // window.location.reload();
     }
     vm.toLoginPage = toLoginPage;
 
