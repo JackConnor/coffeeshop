@@ -1422,6 +1422,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.addNameOrder').css({
           marginLeft: '0%'
         });
+
         $('.addNameButton').css({
           marginLeft: '45%'
         });
@@ -1429,6 +1430,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
           $('.checkoutName').animate({
             opacity: 1
           });
+          if(window.localStorage.lastEmail && window.localStorage.lastEmail.length > 4){
+            $('.checkoutName').val(window.localStorage.lastEmail);
+          }
           $('.addNameOrder').animate({
             opacity: 1
           });
@@ -1471,6 +1475,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                     return false;
                   }
                   else {
+                    window.localStorage.lastEmail = emailVal;
                     return true;
                   }
                 }
