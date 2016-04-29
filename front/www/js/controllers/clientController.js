@@ -575,7 +575,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         $('.cartModalHolder').animate({
           height: '410px'
         }, 300);
-        parentEl.find('.moreDrinkOps').html('More Options <span><i class="fa fa-angle-down"></i></span>');
+        parentEl.find('.moreDrinkOps').html('Options <span><i class="fa fa-angle-down"></i></span>');
         vm.moreOptions = false;
         // $ionicScrollDelegate.scrollTo(0, 30, true);
       }
@@ -1547,7 +1547,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                       if(vm.signedInUser){
                         orderObj.decoded.id = signedInUser.id
                       }
-                      console.log(vm.currentOrder);
                       $http({
                         method: "POST"
                         ,url: 'http://52.39.40.7/orders'
@@ -1561,7 +1560,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                         })
                         .then(function(err, emailData){
                           if(err){console.log(err)}
-                          console.log(emailData);
                           vm.postCartOpen = true;
                           var orderId = data.data.data._id;
                           //////////we store up to fie localstorage orders on a device, seperated by  an -&-
