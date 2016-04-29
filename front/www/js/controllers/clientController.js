@@ -1554,13 +1554,21 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                         ,data: orderObj
                       })
                       .then(function(data){
-                        vm.postCartOpen = true;
-                        var orderId = data.data.data._id;
-
-                        //////////we store up to fie localstorage orders on a device, seperated by  an -&-
-                        storeLocal(orderId);
-                        vm.socket = io.connect('http://52.39.40.7/');
-                        vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
+                        $http({
+                          url: "http://192.168.0.2:3000/orders/email"
+                          ,method: "POST"
+                          ,data: {userEmail: $('.checkoutName').val()}
+                        })
+                        .then(function(err, emailData){
+                          if(err){console.log(err)}
+                          console.log(emailData);
+                          vm.postCartOpen = true;
+                          var orderId = data.data.data._id;
+                          //////////we store up to fie localstorage orders on a device, seperated by  an -&-
+                          storeLocal(orderId);
+                          vm.socket = io.connect('http://52.39.40.7/');
+                          vm.socket.emit('orders', {message: 'Order Biatches', order: data.data});
+                        })
                       })
                       //
 
