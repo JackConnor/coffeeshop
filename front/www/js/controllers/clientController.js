@@ -121,6 +121,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     /////opens the options modal when user selects an item
     function openOptionsModal(currentDrink, index, evt){
+      console.log(vm.totalShots);
       console.log(evt.currentTarget.className.split(' ')[2]);
       vm.ogPrice = currentDrink.price;
       vm.currentOpenModal = $(evt.currentTarget)[0].classList[2];
@@ -262,7 +263,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     function openOptionsFromCart(evt, itemObj, index){
       $ionicScrollDelegate.$getByHandle('cartList').scrollTo(0, 0 , true);
-      $ionicScrollDelegate.freezeAllScrolls(true);
+      // $ionicScrollDelegate.freezeAllScrolls(true);
       vm.currentDrink = itemObj;
       console.log(itemObj);
       vm.cartOptionsOpen = true;
@@ -292,6 +293,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       var distance = (-index*60) -10
       var targItem = $(evt.currentTarget).closest('.shoppingCartCell').clone();
       targItem.find('.cartActions').remove();
+      $(".cartActions").hide();
       /////clone the options things so we can add it
       var optionClone = $($(".optionsPart")[1]).clone();
       console.log(optionClone);
@@ -470,7 +472,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       var cartHeight = $(".cartModalHolder").height();
       $('.cartModalHolder').height(cartHeight+optionHeight);
       $(".cartOpClose").css({
-        marginTop: 210+optionHeight+"px"
+        marginTop: 220+optionHeight+"px"
       });
 
       setTimeout(function(){
@@ -488,6 +490,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     function closeCartOptions(itemObj){
       ////data stuff
+      $(".cartActions").show();
       $ionicScrollDelegate.freezeAllScrolls(false);
       var targetIndex = itemObj;
       var currentItem = vm.currentOrder[targetIndex];
@@ -623,6 +626,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     }
 
     function openMoreOptions(parentEl){
+      console.log(vm.totalShots);
       console.log(parentEl);
       console.log(vm.currentDrink);
       var totalOptions = 0;
@@ -1345,6 +1349,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     }
 
     function submitDrinkOptions(evt) {
+      $(".espressoMath-number").text(0);
       var drinkDetails = {customizations: {}}
       var sizeEl = $('.selected');
       var drinkPrice = vm.currentDrink.price;
@@ -1382,6 +1387,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         console.log(vm.currentOrder);
         vm.currentDrink = {};
         vm.totalShots   = 0;
+        console.log(vm.totalShots);
         vm.moreOptions = false;
         setTimeout(function(){
           $("."+vm.currentOpenModal).find('.drinkIn-price').text('$'+vm.ogPrice.toFixed(2));
