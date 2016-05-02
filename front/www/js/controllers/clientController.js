@@ -70,6 +70,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         if(lastOrderArr[i] !== null && lastOrderArr[i] !== ''){
           singleOrder(lastOrderArr[i])
           .then(function(lastOrderDetails){
+            console.log(lastOrderDetails);
             var arr = allOrderedItems.concat(lastOrderDetails.data.data.menuitems)
             allOrderedItems = arr;
             vm.lastOrder = arr;
@@ -115,6 +116,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     /////opens the options modal when user selects an item
     function openOptionsModal(currentDrink, index, evt){
+      console.log(evt.currentTarget.className.split(' ')[2]);
       vm.ogPrice = currentDrink.price;
       vm.currentOpenModal = $(evt.currentTarget)[0].classList[2];
       var shotPrice = currentDrink.customFields.espressoShots.addedPrice;
@@ -1237,11 +1239,9 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     }
 
     function submitDrinkOptions(evt) {
-      console.log(vm.ogPrice);
       var drinkDetails = {customizations: {}}
       var sizeEl = $('.selected');
       var drinkPrice = vm.currentDrink.price;
-      console.log(vm.currentDrink);
       if(sizeEl.hasClass('sizeSmall')){
         drinkDetails.customizations.size = 'small';
       }
@@ -1253,7 +1253,8 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       } else {
           console.log("no size selected")
       }
-      if(!drinkDetails.customizations.size == ''){
+      var sizeBool = vm.currentDrink.customFields.size.on;
+      if(drinkDetails.customizations.size !== '' || sizeBool == false){
         $timeout(function(){
           cartNumberAdd();
         }, 300);
@@ -1273,11 +1274,11 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.moreOptions = false;
         setTimeout(function(){
           $("."+vm.currentOpenModal).find('.drinkIn-price').text('$'+vm.ogPrice.toFixed(2));
-        }, 700);
+        }, 300);
         $('.activePrice').removeClass('activePrice');
         closeModal();
       }
-      else {
+      else if(sizeBool === true && drinkDetails.customizations.size == ''){
         alert('Please Choose a Size');
       }
     }
@@ -1527,7 +1528,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                   vm.message = 'Processing your payment...';
                   $http({
                     method: 'POST',
-                    url: 'http://52.39.40.7/payments/process',
+                    url: 'http://192.168.0.8:3000/payments/process',
                     data: {
                       amount: vm.orderTotalPrice
                       ,payment_method_nonce: nonce
@@ -1549,12 +1550,12 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
                       }
                       $http({
                         method: "POST"
-                        ,url: 'http://52.39.40.7/orders'
+                        ,url: 'http://192.168.0.8:3000/orders'
                         ,data: orderObj
                       })
                       .then(function(data){
                         $http({
-                          url: "http://192.168.0.2:3000/orders/email"
+                          url: "http://192.168.0.8:3000/orders/email"
                           ,method: "POST"
                           ,data: {userEmail: $('.checkoutName').val()}
                         })
