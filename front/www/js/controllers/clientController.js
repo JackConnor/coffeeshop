@@ -126,6 +126,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       vm.currentOpenModal = $(evt.currentTarget)[0].classList[2];
       var shotPrice = currentDrink.customFields.espressoShots.addedPrice;
       vm.currentDrink = currentDrink
+      console.log(vm.currentDrink);
       var index = index;
       var clonedEl = $(evt.currentTarget).clone();
       clonedEl.find('.drinkIn-price').addClass('activePrice');
@@ -262,14 +263,28 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     function openOptionsFromCart(evt, itemObj, index){
       $ionicScrollDelegate.$getByHandle('cartList').scrollTo(0, 0 , true);
       $ionicScrollDelegate.freezeAllScrolls(true);
-      vm.cartOptionsOpen = true;
       vm.currentDrink = itemObj;
-      if(itemObj.itemId.customFields.espressoShots.on === false){
-        $('.optionEspressoShot').parent().remove();
+      console.log(itemObj);
+      vm.cartOptionsOpen = true;
+      var totalOptions = 0;
+      for(field in vm.currentDrink.itemId.customFields){
+        console.log(field);
+        console.log(vm.currentDrink.itemId.customFields[field].on);
+        if(vm.currentDrink.itemId.customFields[field].on && field !== 'size'){
+          console.log(field);
+          console.log('included');
+          totalOptions ++;
+        }
       }
-      if(itemObj.itemId.customFields.flavourShot.on == false){
-        $('.optionFlavor').parent().remove();
-      }
+      console.log(totalOptions);
+      var optionHeight = totalOptions*37-50;
+      console.log(optionHeight);
+      // if(itemObj.itemId.customFields.espressoShots.on === false){
+      //   $('.optionEspressoShot').parent().remove();
+      // }
+      // if(itemObj.itemId.customFields.flavourShot.on == false){
+      //   $('.optionFlavor').parent().remove();
+      // }
       var shotPrice = itemObj.itemId.customFields.espressoShots.addedPrice;
       vm.currentItemShots = itemObj.customizations.shots;
       var offTopEl = $($('.shoppingCartCell')[index]).offset().top;
@@ -279,36 +294,98 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       targItem.find('.cartActions').remove();
       /////clone the options things so we can add it
       var optionClone = $($(".optionsPart")[1]).clone();
-      // var optionHtml = $(optionClone[0]).html();
-      // console.log(optionHtml);
+      console.log(optionClone);
+      if(vm.currentDrink.itemId.customFields.size.on){
+        var sizeCont =  '<div class="sizeContainer col-xs-12">'+
+                          '<div class="sizeCellContainer col-xs-4">'+
+                            '<div class="sizeCell sizeSmall">'+
+                              '<i class="">8oz</i>'+
+                            '</div>'+
+                          '</div>'+
+                          '<div class="sizeCellContainer col-xs-4">'+
+                            '<div class="sizeCell sizeMedium">'+
+                              '<i class="">12oz</i>'+
+                            '</div>'+
+                          '</div>'+
+                          '<div class="sizeCellContainer col-xs-4">'+
+                            '<div class="sizeCell sizeLarge">'+
+                              '<i class="">16oz</i>'+
+                            '</div>'+
+                          '</div>'+
+                          '<p class="sizeLabel">Choose Size</p>'+
+                        '</div>'
+      }
+
+
+      console.log(vm.currentDrink.itemId.customFields.size.on === false);
+      console.log(vm.currentDrink.itemId.customFields);
+      if(vm.currentDrink.itemId.customFields.espressoShots.on){
+        optionClone.find('.moreOptionsContainer').prepend(
+          '<div class="optionCell">'+
+            '<div class="optionEspressoShot">'+
+              '<div class="col-xs-6 optionText">'+
+                'Espresso Shots'+
+              '</div>'+
+              '<div class="col-xs-6 espressoMath optionInput">'+
+                "<span class='fa fa-minus espressoMath-less'></span>" +
+                '<span class="espressoMath-number">'+vm.currentDrink.customizations.shots+'</span>'+
+                '<span class="fa fa-plus espressoMath-more"></span>'+
+              "</div>"+
+            "</div>"+
+          '</div>'
+        );
+      }
+      if(!vm.currentDrink.itemId.customFields.cream.on){
+        optionClone.find(".optionCream").parent().remove();
+      }
+      else {
+        optionClone.find(".creamDown").val(vm.currentDrink.customizations.cream)
+      }
+      if(!vm.currentDrink.itemId.customFields.cream.on){
+        optionClone.find(".optionSugar").parent().remove();
+      }
+      else {
+        optionClone.find(".sugarDown").val(vm.currentDrink.customizations.sugar)
+      }
+      if(!vm.currentDrink.itemId.customFields.flavourShot.on){
+        optionClone.find(".optionFlavour").parent().remove();
+      }
+      else {
+        optionClone.find(".optionFlavor").val(vm.currentDrink.customizations.flavour)
+      }
+      optionClone.prepend(
+        sizeCont
+      );
+      $('.sizeContainer').css({
+        marginTop: '5px'
+      });
       targItem.find('.cartPrice').addClass('activeCartPrice');
       targItem.find('.activeCartPrice').css({
         paddingRight: '30px'
       });
       ////quick loop to add the proper size
-      var sizeArr = optionClone.find('.sizeCell');
-      var sizeLength = sizeArr.length;
+      // var sizeLength = sizeArr.length;
       //////
       if(vm.cartModal === true){
         if(itemObj.customizations.size === 'small'){
-          $(sizeArr[0]).css({
+          optionClone.find('.sizeSmall').css({
             backgroundColor: '#666666'
             ,color: 'white'
           });
         }
         else if(itemObj.customizations.size === 'medium') {
-          $(sizeArr[1]).css({
+          optionClone.find('.sizeMedium').css({
             backgroundColor: '#666666'
             ,color: 'white'
           });
         }
         else if(itemObj.customizations.size === 'large') {
-          $(sizeArr[2]).css({
+          optionClone.find('.sizeLarge').css({
             backgroundColor: '#666666'
             ,color: 'white'
           });
         }
-        // vm.totalShots = itemObj.shots;
+        vm.totalShots = itemObj.shots;
         optionClone.find('.flavourDropdown').val(itemObj.customizations.flavours);
         optionClone.find('.flavourDropdown').addClass('flavourCart');
       }
@@ -319,9 +396,13 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         ,marginTop: '55px'
         ,marginLeft: '-100%'
       });
+      optionClone.find('.openMore').remove();
+      optionClone.find(".moreOptionsContainer").css({
+        opacity: 1
+      })
 
       targItem.find('.checkoutDrinkInfo-name').css({
-        marginTop: '12px'
+        marginTop: '5px'
       });
       targItem.find('.cartPrice span').css({
         marginLeft: '120px'
@@ -336,7 +417,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         ,paddingLeft: '10px'
         ,paddingTop: '10px'
         ,position: 'absolute'
-        ,marginTop: distance+10+'px'
+        ,marginTop: distance+3+'px'
         ,width: '100%'
         ,left: '0%'
         ,border: '2px solid #666666'
@@ -350,24 +431,25 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         closeCartOptions(index);
       });
       targItem.find('.sizeCell').on('click', choseSizeCart);
-      targItem.find('.openMore').on('click', function(){
-        openMoreOptions(targItem);
-        if(vm.moreOptions === true){
-          $('.cartOpClose').animate({
-            marginTop: '305px'
-          }, 300);
-        }
-        else {
-          $('.cartOpClose').animate({
-            marginTop: '210px'
-          }, 250);
-        }
-      });
+      // targItem.find('.openMore').on('click', function(){
+      //   openMoreOptions(targItem);
+      //   if(vm.moreOptions === true){
+      //     $('.cartOpClose').animate({
+      //       marginTop: '210px'
+      //     }, 300);
+      //   }
+      //   else {
+      //     $('.cartOpClose').animate({
+      //       marginTop: '210px'
+      //     }, 250);
+      //   }
+      // });
       var shoppingCartHeight = $('.shoppingCartList').height();
       console.log(shoppingCartHeight);
       if(shoppingCartHeight < 270){
         $('.shoppingCartList').animate({
-          height: '270px'
+          height: 270+optionHeight+'px'
+          ,maxHeight: 270+optionHeight+'px'
         }, 300);
       }
       targItem.find('.closeOptions').on('click', function(){
@@ -382,9 +464,15 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       });
 
       targItem.animate({
-        height: '298px'
+        height: 298+optionHeight
         ,backgroundColor: 'white'
       }, 350);
+      var cartHeight = $(".cartModalHolder").height();
+      $('.cartModalHolder').height(cartHeight+optionHeight);
+      $(".cartOpClose").css({
+        marginTop: 210+optionHeight+"px"
+      });
+
       setTimeout(function(){
         optionClone.animate({
           opacity: 1
@@ -551,7 +639,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
       var optionOffset = totalOptions * 38;
       console.log(optionOffset);
       if(vm.moreOptions === false){
-        $ionicScrollDelegate.scrollTo(0, 20, true);
+        $ionicScrollDelegate.scrollTo(0, optionOffset-50, true);
         parentEl.animate({
           height: 325+optionOffset+"px"
         }, 300);
@@ -1278,6 +1366,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         }, 300);
         drinkDetails.itemId = vm.currentDrink;
         drinkDetails.customizations.flavours = $('.flavourDropdown').val();
+        drinkDetails.customizations.cream = $('.creamDown').val();
+        drinkDetails.customizations.sugar = $('.sugarDown').val();
+        console.log(drinkDetails.customizations.sugar);
+        console.log(drinkDetails.customizations.cream);
         drinkDetails.customizations.toppings = $('.toppingDropdown').val();
         drinkDetails.customizations.shots = vm.totalShots;
         drinkDetails.status = 'active';
@@ -1287,6 +1379,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         vm.orderTotalPrice += vm.currentDrink.price;
         ///////put all settings back to zero
         vm.currentOrder.push(drinkDetails);
+        console.log(vm.currentOrder);
         vm.currentDrink = {};
         vm.totalShots   = 0;
         vm.moreOptions = false;
