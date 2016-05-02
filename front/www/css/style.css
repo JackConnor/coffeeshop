@@ -768,7 +768,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .sizeLarge i{
-  font-size: 25px;
+  font-size: 15px;
 }
 
 .sizeMedium{
@@ -784,7 +784,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .sizeMedium i{
-  font-size: 25px;
+  font-size: 15px;
 }
 
 .sizeSmall{
@@ -800,7 +800,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .sizeSmall i{
-  font-size: 25px;
+  font-size: 15px;
 }
 
 .splashIntro {

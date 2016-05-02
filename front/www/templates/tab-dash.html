@@ -130,7 +130,7 @@
                   <div class="optionFlavor">
                     client.lastOrder.menuitems[0].customFields.flavourShot.on
                     <div class="col-xs-6 optionText">
-                      Add a Flavour
+                      Flavored Syrup
                     </div>
                     <div class="col-xs-6 optionInput">
                       <select class="flavourDropdown" name="">
@@ -185,29 +185,48 @@
           </div>
           <div class=" drinkCell optionClosed drinkCell_{{$index}}" ng-repeat='menuitem in client.hotDrinks' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
             <div class="optionsPart">
-              <div class="sizeContainer col-xs-12">
+              <!-- {{menuitem}} -->
+              <div class="sizeContainer col-xs-12" ng-if='menuitem.customFields.size.on'>
                 <div class="sizeCellContainer col-xs-4">
                   <div class="sizeCell sizeSmall">
-                    <i class="">S</i>
+                    <i class="">8oz</i>
                   </div>
                 </div>
                 <div class="sizeCellContainer col-xs-4">
                   <div class="sizeCell sizeMedium">
-                    <i class="">M</i>
+                    <i class="">12oz</i>
                   </div>
                 </div>
                 <div class="sizeCellContainer col-xs-4">
                   <div class="sizeCell sizeLarge">
-                    <i class="">L</i>
+                    <i class="">16oz</i>
                   </div>
                 </div>
-                <p class='sizeLabel'>PICK A SIZE</p>
+                <p class='sizeLabel'>Choose Size</p>
               </div>
               <div class="moreOptionsContainer col-xs-12">
+                <div class="optionCell" ng-show='menuitem.customFields.cream.on'>
+                  <div class="optionEspressoShot">
+                    <div class="col-xs-6 optionText">
+                      Cream/Milk
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="creamDown" name="">
+                        <option disabled selected>select</option>
+                        <option value="two_percent">2% Milk</option>
+                        <option value="one_percent">1% Milk</option>
+                        <option value="soy">Soy Milk</option>
+                        <option value="coconut">Coconut Milk</option>
+                        <option value="heavy_cream">Heavy Cream</option>
+                        <option value="nonfat">Nonfat Milk</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
                 <div class="optionCell" ng-show='menuitem.customFields.espressoShots.on'>
                   <div class="optionEspressoShot">
                     <div class="col-xs-6 optionText">
-                      Espresso Shot
+                      Espresso Shots
                     </div>
                     <div class="col-xs-6 espressoMath optionInput">
                       <span class='fa fa-minus espressoMath-less'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more'></span>
@@ -222,11 +241,8 @@
                     <div class="col-xs-6 optionInput">
                       <select class="flavourDropdown" name="">
                         <option disabled selected>select</option>
-                        <option value="almond">Almond</option>
-                        <option value="chocolate">Chocolate</option>
-                        <option value="caramel">Caramel</option>
-                        <option value="pumpkin_spice">Pumpkin Spice</option>
-                        <option value="white_chocolate">White Chocolate</option>
+                        <option value="vanilla">Vanilla</option>
+                        <option value="carmel">Carmel</option>
                       </select>
                     </div>
                   </div>
@@ -294,15 +310,12 @@
                 <div class="optionCell" ng-if='menuitem.customFields.espressoShots.on'>
                   <div class="optionFlavor">
                     <div class="col-xs-6 optionText">
-                      Add a Flavour
+                      Flavored Syrup
                     </div>
                     <div class="col-xs-6 optionInput">
-                      <select class="flavourDropdown" name="">
-                        <option value="almond">Almond</option>
-                        <option value="chocolate">Chocolate</option>
-                        <option value="caramel">Caramel</option>
-                        <option value="pumpkin_spice">Pumpkin Spice</option>
-                        <option value="white_chocolate">White Chocolate</option>
+                      <select class="flavourDropdown">
+                        <option value="carmel">Carmel</option>
+                        <option value="chocolate">Vanilla</option>
                       </select>
                     </div>
                   </div>
