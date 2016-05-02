@@ -8,6 +8,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     //////////////////////////////////////////////
     ////////All Global Variables//////////////////
     //////////////////////////////////////////////
+    // window.localStorage.lastOrder = null
     var vm = this;
     vm.optionsModal      = false;
     vm.moreOptions       = false;
@@ -41,6 +42,7 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     ///////function returns all menu items for restaurant
     menuItems()
     .then(function(items){
+      console.log(items);
       vm.data = items.data.data;/////all menu items
       var dataLength = vm.data.length;
       vm.hotDrinks  = [];
@@ -59,7 +61,10 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
     } );
     ////function to get the data from last order
     function getLastOrder(){
-      if(!window.localStorage.lastOrder){
+      console.log(window.localStorage);
+      var windowStor = window.localStorage.lastOrder;
+      console.log(typeof windowStor);
+      if(!windowStor || typeof windowStor !== 'string' || windowStor == null || windowStor == 'null' || windowStor == undefined){
         window.localStorage.lastOrder = '';
       }
       var lastOrderStr = window.localStorage.lastOrder;
@@ -168,7 +173,6 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
         opacity: 0
       }, 150);
       vm.lastScrollPosition = $ionicScrollDelegate.getScrollPosition().top;
-      console.log(vm.lastScrollPosition);
       $ionicScrollDelegate.scrollTop(true);
       setTimeout(function(){
         clonedEl.find('.drinkIn-price').css({
@@ -532,13 +536,27 @@ angular.module('clientController', ['menuItemsFactory', 'braintreeTokenFactory',
 
     function openMoreOptions(parentEl){
       console.log(parentEl);
+      console.log(vm.currentDrink);
+      var totalOptions = 0;
+      for(field in vm.currentDrink.customFields){
+        console.log(field);
+        console.log(vm.currentDrink.customFields[field].on);
+        if(vm.currentDrink.customFields[field].on && field !== 'size'){
+          console.log('included');
+          totalOptions ++;
+        }
+      }
+      //////each option is 35px
+      console.log(totalOptions);
+      var optionOffset = totalOptions * 38;
+      console.log(optionOffset);
       if(vm.moreOptions === false){
         $ionicScrollDelegate.scrollTo(0, 20, true);
         parentEl.animate({
-          height: '425px'
+          height: 325+optionOffset+"px"
         }, 300);
         parentEl.find('.moreOptionsContainer').animate({
-          height: '100px'
+          height: optionOffset
         }, 300);
         parentEl.find('.optionsPart').css({
           zIndex: 0
