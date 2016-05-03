@@ -164,4 +164,4 @@ module.exports = function(app){
   ///////////////////////////////////
 }
 
-mongoose.connect("mongodb://jackconnor:Skateboard1@ds037195.mongolab.com:37195/skate_site");
+mongoose.connect("mongodb://jackconnor:Skateboard1@ds031751.mongolab.com:31751/skate_site");

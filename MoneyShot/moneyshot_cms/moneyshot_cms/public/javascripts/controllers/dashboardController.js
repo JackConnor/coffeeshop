@@ -71,6 +71,7 @@ angular.module('dashboardController', [])
       var price = $('.popupPrice').val();
       submitPrice(photoId, price)
       .then(function(newPhoto){
+        console.log(newPhoto);
         self.soldPhotos.push(newPhoto.data);
         self.yesNoPopupVariable = false;
         //////function to slice out the photo from the allphotos array

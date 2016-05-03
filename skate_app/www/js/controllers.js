@@ -2,7 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('ChatsCtrl', function($scope, Chats, $http) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -10,7 +10,14 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-
+  $http({
+    method: "GET"
+    ,url: "http://kiwilink.co/api/newUser"
+  })
+  .then(function(posts){
+    console.log(posts);
+  })
+  console.log('yooyoyoyo');
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);
