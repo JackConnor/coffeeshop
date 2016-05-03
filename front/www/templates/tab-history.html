@@ -1,0 +1,26 @@
+<ion-view>
+  <ion-content class="padding">
+    <div class="ordersList">
+      <div class="orderHistoryCell" ng-repeat='order in history.lastOrderHistory'>
+        <div class="orderDate col-xs-12">
+          <!-- {{order}} -->
+          Ordered On: {{order.createdAt}}
+        </div>
+        <div class=" drinkCellHistory" ng-repeat='menuitem in order.menuitems' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
+          <div class="drinkPhotoHolderHistory">
+            <img class='drinkPhoto' src="{{menuitem.itemId.photoLink}}" alt="" />
+          </div>
+          <div class="drinkIn">
+            <div class="drinkIn-name">{{menuitem.itemId.name}}</div>
+            <div class="drinkIn-price">{{menuitem.price | currency}}</div>
+          </div>
+        </div>
+
+
+
+
+
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

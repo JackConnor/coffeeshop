@@ -1,0 +1,20 @@
+<ion-view class="loginView" hide-nav-bar="true">
+    <ion-content class="padding">
+        <div class="container introPush">
+        <div class="row row-center">
+            <div class="col text-center">
+                <span><img class="coffeeImg circle" src="img/coffee.png" alt=""></span>
+                <h1>Login</h1>
+            </div>
+        </div>
+        <label class="item item-input">
+            <input type="text" placeholder="Username" ng-model="data.username">
+        </label>
+        <label class="item item-input">
+            <input type="password" placeholder="Password" ng-model="data.password">
+        </label>
+        <a class="button button-block button-calm" ng-click="login.login()">Login</a>
+        <a href="/#/tab/dash" class="button button-block button-calm" >Skip Login</a>
+        </div>
+    </ion-content>
+</ion-view>

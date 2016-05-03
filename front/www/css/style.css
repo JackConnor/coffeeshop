@@ -1,0 +1,1228 @@
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+/****** Drink List View ******/
+
+
+
+h1,h2,h3,h4,h5,h6 {
+    /*font-family: 'Montserrat', sans-serif;*/
+}
+
+.addLastButton {
+  position: absolute;
+  width: 80px;
+  margin-left: 190px;
+  height: 100px;
+  margin-top: -10px;
+  color: white;
+  font-size: 25px;
+  opacity: 0.3;
+  background-color: #1abc9c;
+  z-index: 50;
+  padding-top: 40px;
+  text-align: center;
+}
+
+.addNameButton {
+  height: 35px;
+  width: 45%;
+  margin-left: 200%;
+  margin-top: 10px;
+  text-align: center;
+  padding-top: 7px;
+  font-size: 15px;
+  border: 2px solid gray;
+  opacity: 0;
+}
+
+.addNameOrder {
+  text-align: center;
+  margin-left: 200%;
+  opacity: 0;
+}
+
+.blackLayer {
+  width: 100%;
+  height: 1000px;
+  margin-top: -100px;
+  position: absolute;
+  background-color: transparent;
+}
+
+.cartHolder {
+  position: absolute;
+  width: 100%;
+  height: 35px;
+  text-align: right;
+  border: 0px solid black;
+  z-index: 30;
+}
+
+.cartHolder i {
+  font-size: 35px;
+  display: inline-block;
+}
+
+.cartListInner {
+  height: 100%;
+}
+
+.cartModalHolder {
+  width: auto;
+  height: auto;
+  padding-top: 2px;
+  padding-right: 15px;
+  margin-right: 0px;
+  float: right;
+  border: 0px solid #D4D4D4;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.cartOpClose{
+  margin-top: 210px;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  font-size: 18px;
+  padding-top: 12px;
+  width: 100%;
+  height: 45px;
+  background-color: #666666;
+  color: white;
+  z-index: 50001;
+}
+
+.cartj {
+  border: 0px solid black;
+}
+
+.cartTitle {
+  position: absolute;
+  width: 75%;
+  text-align: left;
+  text-align: center;
+  font-size: 25px;
+  padding-left: 15px;
+  margin-top: 15px;
+  opacity: 0;
+}
+
+.cartTotal {
+  position: absolute;
+  color: white;
+  padding-left: 15px;
+  padding-top: 3px;
+  font-weight: bolder;
+  font-size: 14px;
+}
+
+.categoryTitle {
+  background-color: #666666;
+  height: 25px;
+  font-size: 18px;
+  padding-top: 3px;
+  padding-left: 5px;
+  color: white;
+}
+
+#checkout {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 10px;
+  z-index: 850;
+}
+
+.checkoutDrinkInfo-name {
+  opacity: 0;
+  font-size: 18px;
+  width: 120px;
+  margin-left: 50px;
+  position: absolute;
+}
+
+.checkoutName {
+  width: 80%;
+  outline: 2px solid gray;
+  margin-top: 5px;
+  text-align: center;
+  font-size: 23px;
+  margin-left: 200%;
+  opacity: 0;
+  z-index: 1600;
+}
+
+.checkoutSubmit {
+  float: right;
+  margin-right: 10%;
+  display: block;
+  width: 80px;
+  height: 0px;
+  opacity: 0;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
+.checkoutButton {
+  background-color: #1abc9c;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 10px;
+  font-size: 19px;
+  border-radius: 3px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.checkoutContainer {
+  height: 75px;
+  width: 105%;
+  background-color: white;
+}
+
+.checkoutTotal {
+  font-size: 18px;
+  text-align: center;
+  padding-top: 20px;
+  /*margin-bottom: 15px;*/
+}
+
+.clearLayer {
+  width: 100%;
+  height: 1000px;
+  margin-top: -100px;
+  background-color: black;
+  opacity: 0.1;
+}
+
+.closeOptions {
+  text-align: left;
+  font-size: 22px;
+  margin-top: -3px;
+  margin-left: -10px;
+  position: absolute;
+  z-index: 11;
+}
+
+.coffeeSize {
+  color: white;
+  font-size: 35px;
+  margin-left: -61px;
+  position: absolute;
+  padding-top: 20px;
+  padding-left: 2px;
+}
+
+.drinkAction{
+	width: 40px;
+	padding-left: 10px;
+}
+
+.drinkAction i{
+	font-size: 30px;
+	line-height: 50px;
+	color: dodgerblue;
+}
+
+.drinkCell{
+  height: 70px;
+  width: 100%;
+  padding: 10px 5px;
+  border: 0px solid #D4D4D4;
+  border-bottom: 1px solid #D4D4D4;
+  display: flex;
+  background-color: white;
+  z-index: 10;
+}
+
+.drinkCellLastOrder{
+  height: 100px;
+  width: 100%;
+  padding: 10px 5px;
+  border: 0px solid #D4D4D4;
+  border-bottom: 1px solid #D4D4D4;
+  display: flex;
+  background-color: white;
+  z-index: 10;
+}
+
+.drinkCell:first-child{
+  /*border-width: 1px 0 1px;*/
+}
+
+.drinkCellHistory{
+  height: 90px;
+  width: 100%;
+  border: 0px solid black;
+  border-bottom: 1px solid black;
+  display: flex;
+}
+
+.drinkIn{
+	flex-grow: 1;
+  height: auto;
+  width: 50px;
+}
+
+
+.drinkIn-allDetails {
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 20px;
+  font-size: 14px;
+  font-weight: 100;
+}
+
+.drinkIn-name{
+  line-height: 0.85;
+	padding-left: 20px;
+  font-weight: bold;
+  padding-top: 5px;
+  font-size: 18px;
+  display: inline-block;
+  width: 100%;
+}
+
+.drinkIn-nameLast{
+  line-height: 0.85;
+	padding-left: 20px;
+  font-weight: bold;
+  padding-top: 5px;
+  font-size: 18px;
+  display: inline-block;
+  width: 120px;
+}
+
+.drinkIn-price{
+  /*font-size: 1em;
+  color: black;*/
+  /*margin-left: 20px;*/
+  font-size: 18px;
+  margin-top: 3px;
+  display: inline-block;
+  width: auto;
+  margin-left: 22px;
+}
+
+.drinkIn-size {
+  font-size: 18px;
+  position: absolute;
+  margin-left: 40%;
+  margin-top: -20px;
+}
+
+.drinkPhotoHolder {
+  width: 50px;
+  height: 50px;
+}
+
+.drinkPhotoHolderHistory {
+  width: 70px;
+  height: 70px;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.drinkPhoto {
+	width: 100%;
+  height: 100%;
+  border-radius: 3px;
+}
+
+
+.drinkRepeatContainer {
+  height: auto;
+  padding: 0px;
+}
+
+.editIcon {
+  font-size: 25px;
+  margin-left: 10px;
+}
+.espressoMath {
+  text-align: right;
+  font-size: 14px;
+}
+
+.espressoMath-less{
+  margin-right:14px;
+}
+
+.espressoMath-number{
+  margin-right:14px;
+}
+
+.extrasTitle {
+  padding: 0px;
+  font-size: 14px;
+  margin-top: 2px;
+}
+
+.flavourDropdown {
+  width: 140px;
+}
+
+.goBackToSite {
+  border: 2px solid white;
+  height: 40px;
+  text-align: center;
+  padding-top: 5px;
+  display: inline-block;
+  margin-top: 20px;
+  color: white;
+  top: 0;
+}
+
+.goToSignupCredit {
+  top: 0;
+  font-size: 14px;
+  border: 2px solid white;
+  height: 40px;
+  text-align: center;
+  padding-top: 5px;
+  display: inline-block;
+  color: white;
+  margin-top: 20px;
+}
+
+.itemCartImageHolder {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+  position: inline-block;
+  float: left;
+}
+
+.lastFlavour {
+  margin-left: 5px;
+}
+
+.loginButton {
+  width: auto;
+  z-index: 100000;
+}
+
+.logoContainer {
+  font-size: 27px;
+  font-weight: 900;
+  width: 100%;
+  text-align: right;
+  height: 40px;
+  padding-right: 10px;
+  padding-top: 8px;
+  color: #666666;
+  position: absolute;
+}
+
+.logoContainer img{
+  width: 100%;
+  height: 100%;
+}
+
+.minuteM {
+  font-size: 14px;
+}
+
+.modalActionContainer{
+  padding: 10px 0;
+}
+
+.modalActionContainer button{
+  width: 100%;
+  height: auto;
+  padding: 8px 0;
+  box-shadow: none;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.modalActionCancel{
+  display: inline-block;
+}
+
+.modalActionCancel button{
+  background-color: #cccccc;
+}
+
+.modalActionSubmit{
+  display: inline-block;
+}
+
+.modalActionSubmit button{
+  background-color: #1abc9c;
+  color: white;
+}
+
+.moreDrinkOps {
+  border-bottom: 1px dotted gray;
+}
+
+.moreOptionsContainer{
+  height: 0px;
+  opacity: 0;
+  margin-top: 15px;
+}
+
+.navContainer {
+  margin-top: 18px;
+  width: 100%;
+  height: 35px;
+  /*background-color: green;*/
+}
+
+.nextArrow {
+  position: absolute;
+  width: 98%;
+  color: #666666;
+  font-size: 18px;
+  left: 0;
+  margin-top: -40px;
+  text-align: right;
+  z-index: 0;
+}
+
+.noPadding {
+  padding: 0px;
+}
+
+.openMore {
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  color: grey;
+  outline: none;
+}
+
+.optionCell{
+  height: 35px;
+  border: 1px solid #D4D4D4;
+  border-width: 0 0 1px;
+}
+
+.optionCell:first-child{
+  border-width: 1px 0 1px;
+}
+
+.optionOpen {
+  position: absolute;
+  z-index: 250
+}
+
+.optionsHeaderTitle{
+  font-size: 20px;
+  padding-top: 12px;
+}
+
+.optionInput{
+  text-align: left;
+  padding: 0px;
+  padding-top: 5px;
+  padding-right: 5px;
+}
+
+.optionInput select{
+  width: 100%;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  color: #323232;
+  font-size: 11px;
+  padding: 2px 6px;
+  float: right;
+}
+
+.optionsModal {
+  height: auto;
+  width: 90%;
+  left: 50%;
+  top: 30px;
+  margin-left: -45%;
+  box-shadow: 0 0 0 400px rgba(0,0,0,.4);
+  border-radius: 5px;
+  background-color: white;
+  position: fixed;
+}
+
+.optionsPart {
+  opacity: 0;
+  width: 100%;
+  margin-top: 90px;
+  height: 0;
+  position: absolute;
+  display: block;
+  z-index: -1;
+}
+
+.optionText{
+  margin-top: 0px;
+  padding: 5px 0 0 5px;
+  text-align: left;
+}
+
+.orderCell {
+  height: 100px;
+  width: 100%;
+  border-bottom: 2px solid #D4D4D4;
+}
+
+.orderCellDetails {
+  height: 100%;
+  display: inline-block;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.orderCellFlavours {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.orderCellInner {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /*outline: 1px solid gray;*/
+}
+
+.orderCellLeft {
+  width: 0%;
+  height: 100px;
+  position: absolute;
+  background-color: #ffffb2;
+  display: inline-block;
+  opacity: 0;
+  color: #a8a8a8;
+  font-size: 18px;
+  font-weight: 900;
+  padding: 15px 5px 0 5px;
+  text-align: center;
+}
+
+.orderCellRight {
+  position: absolute;
+  margin-left: 100%;
+  width: 0%;
+  display: inline-block;
+  height: 100px;
+  margin-top: -100px;
+  background-color: #ccffcc;
+  text-align: center;
+  opacity: 0;
+  color: #a8a8a8;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 15px 5px 0 5px;
+  text-align: center;
+}
+
+.orderCellShots {
+  display: block;
+  font-size: 14px;
+  margin-top: 5px
+}
+
+.orderCellSize {
+  /*height: 100%;*/
+}
+
+.orderCellTitle {
+  /*display: inline-block;*/
+  padding: 15px 0 0 0px;
+}
+
+.orderClock {
+  font-size: 18px;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.orderContainer {
+  height: auto;
+  overflow-y: scroll;
+}
+
+.orderCustomerName {
+  font-size: 14px;
+  margin-top: 35px;
+  margin-left: 10px;
+}
+
+.orderDate {
+  border: 2px solid black;
+  width: 100%;
+}
+
+.orderFlavours {
+  padding: 0px;
+  height: 100%;
+}
+
+.orderHistoryCell {
+  margin-top: 5px;
+  /*background-color: tan;*/
+}
+
+.orderName {
+  font-size: 18px;
+  margin-left: 10px;
+  padding-top: 20px;
+  font-weight: 900;
+}
+
+.orderSection {
+  height: 100%;
+  padding: 0px;
+}
+
+.orderShots {
+  height: 100%;
+}
+
+.orderVendorCell {
+  width: 100%;
+  height: 70px;
+  border-bottom: 1px solid grey;
+  font-size: 23px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.postCheckoutModal {
+  width: 100%;
+  height: 1000px;
+  background-color: #CD8162;
+  margin-top: -65px;
+  z-index: 50;
+  position: absolute;
+}
+
+.restName {
+  height: 45px;
+  font-size: 25px;
+  text-align: left;
+  font-style: italic;
+  color: #323232;
+  border-top: 1px solid #D4D4D4;
+  border-bottom: 1px solid #D4D4D4;
+  padding-top: 10px;
+  padding-left: 5px;
+}
+
+.signinModalClient {
+  width: 100%;
+}
+
+.signinModalClientInner {
+  width: 150px;
+  height: 50px;
+  background-color: blue;
+  float: right;
+  z-index: 5;
+}
+
+.signupCreditCard {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 20px;
+  height: 175px;
+  border: 2px solid white;
+}
+
+.signupCreditText {
+  width: 80%;
+  margin-left: 10%;
+  text-align: center;
+  color: white;
+}
+
+.sizeCellContainer{
+  text-align: center;
+  padding: 0;
+}
+
+.sizeContainer{
+  height: 80px;
+  margin-top: 20px;
+}
+
+.sizeLabel {
+  font-size: 12px;
+  margin-left: 10%;
+  margin-top: 8px;
+  text-align: left;
+  position: absolute;
+}
+
+.sizeLarge{
+  padding-top: 12px;
+  padding-left: 2px;
+  border: 2px solid #666666;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  text-align: center;
+  font-size: 19px;
+  border-radius: 50%;
+  margin-top: 20px;
+}
+
+.sizeLarge i{
+  font-size: 15px;
+}
+
+.sizeMedium{
+  padding-top: 11px;
+  border: 2px solid #666666;
+  width: 45px;
+  height: 45px;
+  display: inline-block;
+  text-align: center;
+  font-size: 19px;
+  border-radius: 50%;
+  margin-top: 25px;
+}
+
+.sizeMedium i{
+  font-size: 15px;
+}
+
+.sizeSmall{
+  padding-top: 7px;
+  border: 2px solid #666666;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  font-size: 19px;
+  border-radius: 50%;
+  margin-top: 30px;
+}
+
+.sizeSmall i{
+  font-size: 15px;
+}
+
+.splashIntro {
+  width: 100%;
+  height: 700px;
+  position: absolute;
+  z-index: 100000;
+  margin-top: -20px;
+  opacity: 1;
+}
+
+.splashIntro img{
+  height: 100%;
+  width: auto;
+}
+
+.splashIntroContent {
+  font-size: 30px;
+  font-style: bold;
+  padding-top: 400px;
+  text-align: center;
+  color: white;
+  width: 100%;
+  background-color: black;
+  opacity: 0.45;
+  height: 700px;
+  margin-top: -700px;
+}
+
+/*.tab-nav {
+  background-color: #1abc9c;
+}*/
+
+.tab-item {
+  color: white;
+}
+
+.tab-item.tab-item-active, .tab-item.active, .tab-item.activated {
+    color: #545454;
+}
+
+.thankYouImageHolder {
+  width: 50%;
+  height: auto;
+  margin-top: 30px;
+  margin-left: 25%;
+}
+
+.thankYouImageHolder img{
+  width: 100%;
+  height: auto;
+}
+
+.thankYouTitle {
+  text-align: center;
+  color: white;
+  font-size: 35px;
+  margin-top: 25px;
+  height: 50px;
+  line-height:1.1;
+}
+
+.toClient {
+  width: 60px;
+  position: absolute;
+  line-height: 1.2;
+  margin-left: 200px;
+  font-size: 14px;
+  height: 15px;
+  padding-top: 0px;
+  margin-top: -17px;
+  text-align: center;
+  background-color: #e3e7ea;
+  opacity: 0.4;
+}
+
+.toReload {
+  width: 60px;
+  line-height: 1.2;
+  position: absolute;
+  margin-left: 260px;
+  height: 15px;
+  padding-top: 0px;
+  margin-top: -17px;
+  text-align: center;
+  background-color: #9fabb7;
+  opacity: 0.4;
+}
+
+.vendorSize {
+  display: block;
+  font-weight: 100;
+  font-size: 14px;
+  margin-top: -5px;
+  margin-left: 10px;
+}
+
+/*//////////////////still ned to oranzie*/
+/*//////////////////still ned to oranzie*/
+/*//////////////////still ned to oranzie*/
+/*//////////////////still ned to oranzie*/
+/*////ssss////?*/
+
+/****** Modal *******/
+
+
+
+
+
+
+
+
+
+/****** Shopping Cart ******/
+
+.cartIcon {
+  font-size: 30px;
+  text-align: right;
+  margin-top: 6px;
+}
+
+.exitCart{
+  padding: 0 15px;
+  margin-top: 10px;
+}
+
+.emptyCart{
+  text-align: center;
+  padding: 40px 0;
+  font-size: 16px;
+  color: #888888;
+  /*width: 80px;
+  margin-left: 10%;
+  margin-top: 150px; */
+}
+
+.emptyCart i{
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.shoppingCartModal h2{
+  font-size: 22px;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 5px 15px 10px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.shoppingCartCell {
+  width: 100%;
+  height: 60px;
+  border: 1px solid #eeeeee;
+  border-width: 0 0 1px;
+  padding: 5px 5px;
+  display: flex;
+}
+
+.shoppingCartCell:first-child{
+  border-width: 1px 0 1px;
+}
+
+.shoppingCartList {
+  z-index: 200;
+  height: auto;
+  max-height: 270px;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-left: 5px;
+}
+
+.cartPhotoHolder {
+  width: 50px;
+  height: 50px;
+}
+
+.cartPhotoHolder img{
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+}
+
+.cartContent{
+  text-align: center;
+}
+
+.cartActions{
+  padding-top: 6px;
+  margin-left: 30px;
+  width: 230px;
+  z-index: 5;
+}
+
+.cartPrice {
+  width: 100%;
+  padding-top: 12px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.cartPrice span {
+  float: right;
+}
+
+.cartAction-container{
+  width: 36px;
+  height: 36px;
+  border: 1px solid #888888;
+  border-radius: 50%;
+  text-align: center;
+  padding-top: 6px;
+  padding-left: 2px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.cartAction-container i{
+  font-size: 20px;
+  color: #888888;
+}
+
+.removeItemIcon{
+  padding-left: 1px;
+}
+
+.payButton {
+  background-color: #1abc9c;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 10px;
+  font-size: 22px;
+  border-radius: 3px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.shoppingCartModal {
+  width: 100%;
+  margin-left: 110%;
+  height: 700px;
+  background-color: white;
+  z-index: 5;
+  position: absolute;
+}
+
+.upLine {
+  height: 80%;
+  margin-top: 5px;
+  float: right;
+  margin-right: 15px;
+  border-right: 2px solid gray;
+}
+
+.accountImg {
+    width: 150px;
+}
+
+.progress-pie-chart {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #E5E5E5;
+  position: relative;
+}
+.progress-pie-chart.gt-50 {
+  background-color: #81CE97;
+}
+
+.ppc-progress {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 200px, 200px, 100px);
+}
+.ppc-progress .ppc-progress-fill {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 100px);
+  top: calc(50% - 100px);
+  width: 200px;
+  height: 200px;
+  clip: rect(0, 100px, 200px, 0);
+  background: #81CE97;
+  transform: rotate(60deg);
+}
+.gt-50 .ppc-progress {
+  clip: rect(0, 100px, 200px, 0);
+}
+.gt-50 .ppc-progress .ppc-progress-fill {
+  clip: rect(0, 200px, 200px, 100px);
+  background: #E5E5E5;
+}
+
+.ppc-percents {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 173.91304px/2);
+  top: calc(50% - 173.91304px/2);
+  width: 173.91304px;
+  height: 173.91304px;
+  background: #fff;
+  text-align: center;
+  display: table;
+}
+.ppc-percents span {
+  display: block;
+  font-size: 2.6em;
+  font-weight: bold;
+  color: #81CE97;
+}
+
+.pcc-percents-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #323232;
+}
+
+.progress-pie-chart {
+  margin: 50px auto 0;
+}
+
+.vendorHeader {
+  height: 55px;
+  text-align: center;
+}
+
+.vendorHeader h2 {
+  color: white;
+  font-size: 28px;
+  padding-top: 10px;
+}
+
+.vendorHeadline {
+  text-align: center;
+  height: 55px;
+  border-bottom: 2px solid gray;
+  font-size: 18px;
+  padding-top: 30px;
+  padding-left: 15px;
+}
+
+.vendorOrderList {
+  height: auto;
+}
+
+.vendorsizeIcon {
+    font-size: 75px;
+    margin-top: 2px;
+    margin-left: 20px;
+}
+
+.beginBack {
+    background: #43cea2; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #43cea2 , #185a9d); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #43cea2 , #185a9d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.newBar {
+    background-color: darkslategrey;
+}
+
+.item {
+    background-color: transparent;
+}
+.card {
+    opacity: 0.8;
+}
+
+.tab-nav {
+    background-color: #1abc9c;
+}
+
+.modal-backdrop {
+    background-color: transparent;
+}
+.cup {
+  width: 50px;
+}
+
+.orderShots {
+
+  border-left: 4px solid grey;
+  padding: 10px;
+}
+
+#order-title {
+  font-weight: 900
+}
+
+#order-name {
+  font-weight: 900
+
+}
+
+.padding h1 {
+    color: white;
+}
+
+.coffeeImg {
+    width: 200px;
+}
+
+.introPush {
+    padding-top: 5%;
+}
+
+.xCart {
+  position: absolute;
+  font-size: 25px;
+  margin-top: -5px;
+  left: 0;
+  padding-left: 30px;
+}

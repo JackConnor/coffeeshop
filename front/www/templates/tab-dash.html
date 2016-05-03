@@ -1,0 +1,424 @@
+<!-- <div class="splashIntro">
+  <img src="img/introSplash.png" alt="" />
+  <div class="splashIntroContent">
+    CoffeeNation
+  </div>
+</div> -->
+<ion-view>
+  <ion-content >
+    <div class="navContainer">
+      <div class="cartHolder">
+        <div class="cartModalHolder">
+          <div class="xCart fa fa-times" ng-click='client.closeCart()' ng-if='client.cartModal'></div>
+          <p class='cartTotal'>
+            {{client.totalItems}}
+          </p>
+           <i class='fa fa-shopping-cart' ng-click='client.openCart()'></i>
+           <div class="listContainer">
+           <ion-scroll class="shoppingCartList" ng-if='client.cartModal' delegate-handle='cartList'>
+             <div class="cartListInner">
+               <div ng-repeat='item in client.currentOrder' id='{{$index}}' class="shoppingCartCell" >
+                 <div class="cartContent  shopping{{item.index}}">
+                   <img class="itemCartImageHolder" src="{{item.itemId.photoLink}}" alt="" />
+                   <div class="checkoutDrinkInfo-name">
+                     {{item.itemId.name}}
+                   </div>
+                 </div>
+                 <div class="cartActions">
+                   <div class="cartAction-container" ng-click='client.openOptionsFromCart($event, item, $index)'>
+                     <i class="fa fa-pencil"></i>
+                   </div>
+                   <div class="cartAction-container removeItemIcon" ng-click='client.removeItem(item, $index)'>
+                     <i class="fa fa-times"></i>
+                   </div>
+                 </div>
+                 <div class="cartPrice">
+                   <span>{{item.price | currency}}</span>
+                 </div>
+               </div>
+             </div>
+             <div class="emptyCart" ng-show="!client.currentOrder.length">
+               <i class="fa fa-frown-o"></i>
+               <div>Bummer, nothing in your cart.</div>
+             </div>
+           </ion-scroll>
+           <div class="checkoutContainer" ng-show="client.currentOrder.length && client.cartModal" >
+             <div class="checkoutTotal col-xs-6">
+               Total: {{client.orderTotalPrice | currency}}
+             </div>
+             <div class="checkoutButton col-xs-5" ng-click='client.getToken()'>
+               Checkout
+             </div>
+             <h4 class='col-xs-12 addNameOrder'>Add Email For Order Confirmation</h4>
+             <input type="text" class='checkoutName' placeholder='Email'>
+             <div class="addNameButton" ng-click='client.submitName()'>
+               Confirm
+             </div>
+             <form class="checkoutForm">
+                <div id="checkout"></div>
+                <input type="submit" value="Submit" class='checkoutSubmit'/>
+             </form>
+           </div>
+         </div>
+        </div>
+      </div>
+    </div>
+    <!-- Post-checkout Modal -->
+    <div class="postCheckoutModal" ng-if='client.postCartOpen'>
+      <div class="thankYouTitle">
+        Thank You for Your Order
+      </div>
+      <div class="thankYouImageHolder">
+        <img ng-src="http://s31.postimg.org/6e78vuj23/thumbsup.jpg" alt="" />
+      </div>
+      <div class="signupCreditCard">
+        <div class="signupCreditText">
+          An Email with your Order Details has been sent, thank you for your Purchase with Caffe Paraggi
+        </div>
+        <!-- <div class="goToSignupCredit col-xs-8 col-xs-offset-2" ng-click='client.toLoginPage()'>
+          Sign Up
+        </div> -->
+        <div class="goBackToSite col-xs-8 col-xs-offset-2" ng-click='client.toBack()'>
+          Back to Site
+        </div>
+      </div>
+    </div>
+    <!-- End post checkout modal -->
+    <div class="drinkRepeatContainer col-xs-12">
+      <div class="restName">
+        Caff&eacute Paraggi
+      </div>
+      <div class="drinkListContainer">
+        <div class="categoryContainerRecommended" ng-if='client.hasHistory'>
+          <div class="categoryTitle">
+            RECENTLY ORDERED
+          </div>
+          <!-- //////////////// -->
+          <div class="drinkCellLastOrder optionClosed drinkCell_{{$index}}" ng-click='client.addLastOrderCart()' ng-if='client.hasHistory'>
+            <div class="optionsPart">
+              <div class="sizeContainer col-xs-12" ng-if='menuitem.customFields.size.on'>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeSmall">
+                    <i class="">8oz</i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeMedium">
+                    <i class="">12oz</i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeLarge">
+                    <i class="">16oz</i>
+                  </div>
+                </div>
+                <p class='sizeLabel'>Choose Size</p>
+              </div>
+              <div class="moreOptionsContainer col-xs-12">
+                <div class="optionCell" ng-show='menuitem.customFields.espressoShots.on'>
+                  <div class="optionEspressoShot">
+                    <div class="col-xs-6 optionText">
+                      Espresso Shots
+                    </div>
+                    <div class="col-xs-6 espressoMath optionInput">
+                      <span class='fa fa-minus espressoMath-less'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more'></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell" ng-show='menuitem.customFields.cream.on'>
+                  <div class="optionCream">
+                    <div class="col-xs-6 optionText">
+                      Cream/Milk
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="creamDown" name="">
+                        <option disabled selected>select</option>
+                        <option value="two_percent">2% Milk</option>
+                        <option value="one_percent">1% Milk</option>
+                        <option value="frothed">Frothed/Steamed Milk</option>
+                        <option value="soy">Soy Milk</option>
+                        <option value="coconut">Coconut Milk</option>
+                        <option value="heavy_cream">Heavy Cream</option>
+                        <option value="nonfat">Nonfat Milk</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell" ng-show='menuitem.customFields.sugar.on'>
+                  <div class="optionSugar">
+                    <div class="col-xs-6 optionText">
+                      Sugar
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="sugarDown" name="">
+                        <option disabled selected>select</option>
+                        <option value="cane_sugar">Cane Sugar</option>
+                        <option value="brown_sugar">Brown Sugar</option>
+                        <option value="splenda">Splenda</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell" ng-show='menuitem.customFields.flavourShot.on || client.cartOptionsOpen'>
+                  <div class="optionFlavor">
+                    <div class="col-xs-6 optionText">
+                      Add a Flavour
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="flavourDropdown" name="">
+                        <option disabled selected>select</option>
+                        <option value="vanilla">Vanilla</option>
+                        <option value="carmel">Carmel</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="openMore col-xs-12">
+                <span class='moreDrinkOps'>
+                  Options <i class="icon ion-ios-arrow-down"></i>
+                </span>
+              </div>
+              <div class="modalActionContainer col-xs-12">
+                <div class="modalActionSubmit col-xs-8 col-xs-offset-2">
+                  <button class='submitItem'>ADD TO ORDER</button>
+                </div>
+              </div>
+            </div>
+            <div class="drinkPhotoHolder">
+              <img class='drinkPhoto' src="{{client.lastOrder[0].itemId.photoLink}}" alt="" />
+            </div>
+            <div class="drinkIn">
+              <div class="drinkIn-name">{{client.lastOrder[0].itemId.name}} <span ng-if='client.lastOrder[0].customizations[0].size'>-</span> {{client.lastOrder[0].customizations[0].size}}</div>
+              <div class="drinkIn-price">{{client.lastOrder[0].price | currency}}</div>
+              <div class="drinkIn-allDetails">
+                <span ng-show='client.lastOrder[0].customizations[0].shots > 0'>
+                  espresso shots: {{client.lastOrder[0].customizations[0].shots}}
+                </span>
+                <span class='lastFlavour' ng-show='client.lastOrder[0].customizations[0].flavours'>
+                  add'l flavor: {{client.lastOrder[0].customizations[0].flavours}}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ///// -->
+        </div>
+        <div class="categoryContainerHotDrinks">
+          <div class="categoryTitle">
+            HOT DRINKS
+          </div>
+          <div class=" drinkCell optionClosed drinkCell_{{$index}}" ng-repeat='menuitem in client.hotDrinks' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
+            <div class="optionsPart">
+              <div class="sizeContainer col-xs-12" ng-if='menuitem.customFields.size.on'>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeSmall">
+                    <i class="">8oz</i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeMedium">
+                    <i class="">12oz</i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeLarge">
+                    <i class="">16oz</i>
+                  </div>
+                </div>
+                <p class='sizeLabel'>Choose Size</p>
+              </div>
+              <div class="moreOptionsContainer col-xs-12">
+                <div class="optionCell" ng-show='menuitem.customFields.espressoShots.on'>
+                  <div class="optionEspressoShot">
+                    <div class="col-xs-6 optionText">
+                      Espresso Shots
+                    </div>
+                    <div class="col-xs-6 espressoMath optionInput">
+                      <span class='fa fa-minus espressoMath-less'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more'></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell" ng-show='menuitem.customFields.cream.on'>
+                  <div class="optionCream">
+                    <div class="col-xs-6 optionText">
+                      Cream/Milk
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="creamDown" name="">
+                        <option disabled selected>select</option>
+                        <option value="two_percent">2% Milk</option>
+                        <option value="one_percent">1% Milk</option>
+                        <option value="frothed">Frothed/Steamed Milk</option>
+                        <option value="soy">Soy Milk</option>
+                        <option value="coconut">Coconut Milk</option>
+                        <option value="heavy_cream">Heavy Cream</option>
+                        <option value="nonfat">Nonfat Milk</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell" ng-show='menuitem.customFields.sugar.on'>
+                  <div class="optionSugar">
+                    <div class="col-xs-6 optionText">
+                      Sugar
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="sugarDown" name="">
+                        <option disabled selected>select</option>
+                        <option value="cane_sugar">Cane Sugar</option>
+                        <option value="brown_sugar">Brown Sugar</option>
+                        <option value="splenda">Splenda</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell" ng-show='menuitem.customFields.flavourShot.on || client.cartOptionsOpen'>
+                  <div class="optionFlavor">
+                    <div class="col-xs-6 optionText">
+                      Add a Flavour
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="flavourDropdown" name="">
+                        <option disabled selected>select</option>
+                        <option value="vanilla">Vanilla</option>
+                        <option value="carmel">Carmel</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="openMore col-xs-12">
+                <span class='moreDrinkOps'>
+                  Options <i class="icon ion-ios-arrow-down"></i>
+                </span>
+              </div>
+              <div class="modalActionContainer col-xs-12">
+                <div class="modalActionSubmit col-xs-8 col-xs-offset-2">
+                  <button class='submitItem'>ADD TO ORDER</button>
+                </div>
+              </div>
+            </div>
+            <div class="drinkPhotoHolder">
+              <img class='drinkPhoto' src="{{menuitem.photoLink}}" alt="" />
+            </div>
+            <div class="drinkIn">
+              <div class="drinkIn-name">{{menuitem.name}}</div>
+              <div class="drinkIn-price">{{menuitem.price | currency}}</div>
+              <div class="nextArrow">
+                <p class='fa fa-angle-right'></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="categoryContainerColdDrinks">
+          <div class="categoryTitle">
+            COLD DRINKS
+          </div>
+          <div class=" drinkCell optionClosed drinkCell_10{{$index}}" ng-repeat='menuitem in client.coldDrinks' ng-click='client.openOptionsModal(menuitem, $index, $event)'>
+            <div class="optionsPart">
+              <div class="sizeContainer col-xs-12" ng-if='menuitem.customFields.size.on'>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeSmall">
+                    <i class="">8oz</i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeMedium">
+                    <i class="">12oz</i>
+                  </div>
+                </div>
+                <div class="sizeCellContainer col-xs-4">
+                  <div class="sizeCell sizeLarge">
+                    <i class="">16oz</i>
+                  </div>
+                </div>
+                <p class='sizeLabel'>Choose Size</p>
+              </div>
+              <div class="moreOptionsContainer col-xs-12">
+                <div class="optionCell" ng-show='menuitem.customFields.espressoShots.on'>
+                  <div class="optionEspressoShot">
+                    <div class="col-xs-6 optionText">
+                      Espresso Shots
+                    </div>
+                    <div class="col-xs-6 espressoMath optionInput">
+                      <span class='fa fa-minus espressoMath-less'></span><span class="espressoMath-number">{{client.totalShots}}</span><span class='fa fa-plus espressoMath-more'></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell" ng-show='menuitem.customFields.cream.on'>
+                  <div class="optionCream">
+                    <div class="col-xs-6 optionText">
+                      Cream/Milk
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="creamDown" name="">
+                        <option disabled selected>select</option>
+                        <option value="two_percent">2% Milk</option>
+                        <option value="one_percent">1% Milk</option>
+                        <option value="frothed">Frothed/Steamed Milk</option>
+                        <option value="soy">Soy Milk</option>
+                        <option value="coconut">Coconut Milk</option>
+                        <option value="heavy_cream">Heavy Cream</option>
+                        <option value="nonfat">Nonfat Milk</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell" ng-show='menuitem.customFields.sugar.on'>
+                  <div class="optionSugar">
+                    <div class="col-xs-6 optionText">
+                      Sugar
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="sugarDown" name="">
+                        <option disabled selected>select</option>
+                        <option value="cane_sugar">Cane Sugar</option>
+                        <option value="brown_sugar">Brown Sugar</option>
+                        <option value="splenda">Splenda</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="optionCell" ng-show='menuitem.customFields.flavourShot.on || client.cartOptionsOpen'>
+                  <div class="optionFlavor">
+                    <div class="col-xs-6 optionText">
+                      Add a Flavour
+                    </div>
+                    <div class="col-xs-6 optionInput">
+                      <select class="flavourDropdown" name="">
+                        <option disabled selected>select</option>
+                        <option value="vanilla">Vanilla</option>
+                        <option value="carmel">Carmel</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="openMore col-xs-12">
+                <span class='moreDrinkOps'>
+                  Options <i class="icon ion-ios-arrow-down"></i>
+                </span>
+              </div>
+              <div class="modalActionContainer col-xs-12">
+                <div class="modalActionSubmit col-xs-8 col-xs-offset-2">
+                  <button class='submitItem'>ADD TO ORDER</button>
+                </div>
+              </div>
+            </div>
+            <div class="drinkPhotoHolder">
+              <img class='drinkPhoto' src="{{menuitem.photoLink}}" alt="" />
+            </div>
+            <div class="drinkIn">
+              <div class="drinkIn-name">{{menuitem.name}}</div>
+              <div class="drinkIn-price">{{menuitem.price | currency}}</div>
+              <div class="nextArrow">
+                <p class='fa fa-angle-right'></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

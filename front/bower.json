@@ -1,0 +1,10 @@
+{
+  "name": "CoffeeNation",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.2.4"
+  },
+  "dependencies": {
+    "ngtouch": "^1.0.1"
+  }
+}
